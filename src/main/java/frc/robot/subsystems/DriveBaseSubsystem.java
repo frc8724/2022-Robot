@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBaseSubsystem extends SubsystemBase {
-    private MotorController left;
-    private MotorController right;
+    private final MotorController left;
+    private final MotorController right;
 
-    private DifferentialDrive drive;
+    private final DifferentialDrive drive;
 
     public DriveBaseSubsystem(MotorController left, MotorController right) {
         this.left = left;
