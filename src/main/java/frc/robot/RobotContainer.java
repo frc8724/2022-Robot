@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.TeleopCommand;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -28,10 +30,17 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem(leftMotor, rightMotor);
 
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    SmartDashboard.putData("Click Me!", new PrintCommand("you clicked me"));
+
+    this.autoChooser.setDefaultOption("hello world", new PrintCommand("hello world"));
+    this.autoChooser.addOption("hello earth", new PrintCommand("hello earth"));
   }
 
   /**
@@ -48,7 +57,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return this.autoChooser.getSelected();
   }
 
   public Command getTeleopCommand() {
