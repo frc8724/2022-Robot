@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TeleopCommand;
 import frc.robot.subsystems.DriveBaseSubsystem;
+import frc.robot.utils.SettableSendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -30,24 +31,25 @@ public class RobotContainer {
 
   private final Joystick driveStick = new Joystick(Constants.DRIVER_STICK_PORT);
 
+  final JoystickButton button1 = new JoystickButton(this.driveStick, 1);
+  final JoystickButton button2 = new JoystickButton(this.driveStick, 2);
+
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem(leftMotor, rightMotor);
 
-  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-
-    SmartDashboard.putData("Click Me!", new PrintCommand("you clicked me"));
-
     this.autoChooser.setDefaultOption("hello world", new PrintCommand("hello world"));
     this.autoChooser.addOption("hello earth", new PrintCommand("hello earth"));
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
+
+    // Configure the button bindings
+    configureButtonBindings();
   }
 
   /**
@@ -59,6 +61,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    button1.whenPressed(() -> autoChooser.setSelected("hello earth"));
+    button2.whenPressed(() -> autoChooser.setSelected("hello world"));
   }
 
   /**
