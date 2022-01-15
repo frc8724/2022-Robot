@@ -26,16 +26,13 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final Spark leftMotor = new Spark(Constants.LEFT_DRIVE_MOTOR_PORT);
-  private final Spark rightMotor = new Spark(Constants.RIGHT_DRIVE_MOTOR_PORT);
-
   private final Joystick driveStick = new Joystick(Constants.DRIVER_STICK_PORT);
 
   final JoystickButton button1 = new JoystickButton(this.driveStick, 1);
   final JoystickButton button2 = new JoystickButton(this.driveStick, 2);
 
   // The robot's subsystems and commands are defined here...
-  private final DriveBaseSubsystem drive = new DriveBaseSubsystem(leftMotor, rightMotor);
+  private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
