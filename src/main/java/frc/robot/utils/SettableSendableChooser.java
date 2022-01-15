@@ -169,10 +169,32 @@ public class SettableSendableChooser<V> implements NTSendable, AutoCloseable {
                 });
     }
 
+    /*
+     * =======================
+     * BEGIN WACK CODE ADDED BY CALEB
+     * =======================
+     */
     public void setSelected(String selected) {
         m_selected = selected;
         for (NetworkTableEntry entry : m_activeEntries) {
             entry.setString(selected);
         }
     }
+
+    public String getSelectedKey() {
+        if (m_selected != null) {
+            return m_selected;
+        } else {
+            return m_defaultChoice;
+        }
+    }
+
+    public Map<String, V> getOptions() {
+        return m_map;
+    }
+    /*
+     * =======================
+     * END WACK CODE ADDED BY CALEB
+     * =======================
+     */
 }
