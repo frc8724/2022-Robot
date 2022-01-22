@@ -17,6 +17,6 @@ public class TeleopCommand extends CommandBase {
 
     @Override
     public void execute() {
-        this.drive.arcadeDrive(this.driverStick.getY(), this.driverStick.getX());
+        this.drive.speedRacerDrive(this.driverStick.getY(), this.driverStick.getX(), false);
     }
 }

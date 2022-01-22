@@ -17,10 +17,23 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int DRIVE_LEFT_FRONT = 1;
-    public static final int DRIVE_LEFT_REAR = 2;
-    public static final int DRIVE_RIGHT_FRONT = 3;
-    public static final int DRIVE_RIGHT_REAR = 4;
+    public final class Talon {
+        public static final int DRIVE_LEFT_FRONT = 1;
+        public static final int DRIVE_LEFT_REAR = 2;
+        public static final int DRIVE_RIGHT_FRONT = 3;
+        public static final int DRIVE_RIGHT_REAR = 4;
 
-    public static final int DRIVER_STICK_PORT = 0;
+        public static final int INTAKE_ROLLERS = 5;
+    }
+
+    public final class PDP {
+        public static final int DRIVE_LEFT_FRONT = 1;
+        public static final int DRIVE_LEFT_REAR = 1;
+        public static final int DRIVE_RIGHT_FRONT = 1;
+        public static final int DRIVE_RIGHT_REAR = 1;
+    }
+
+    public final class Control {
+        public static final int DRIVER_STICK_PORT = 0;
+    }
 }
