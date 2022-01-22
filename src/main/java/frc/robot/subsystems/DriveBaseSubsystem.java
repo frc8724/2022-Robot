@@ -26,8 +26,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
     // PID loop variables
     private final PIDController m_HeadingPid;
-    private final PIDHeadingError m_HeadingError;
-    private final PIDHeadingCorrection m_HeadingCorrection;
+    // private final PIDHeadingError m_HeadingError;
+    // private final PIDHeadingCorrection m_HeadingCorrection;
     private boolean m_HeadingPidPreventWindup = false;
     private static final int LOOPS_GYRO_DELAY = 10;
 
@@ -90,15 +90,14 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
         // create a PID Controller that reads the heading error and outputs the heading
         // correction.
-        m_HeadingError = new PIDHeadingError();
-        m_HeadingError.m_Error = 0.0;
-        m_HeadingCorrection = new PIDHeadingCorrection();
-        m_HeadingPid = new PIDController(HEADING_PID_P, HEADING_PID_I, HEADING_PID_D, m_HeadingError,
-                m_HeadingCorrection, 0.020 /* period in seconds */);
-        m_HeadingPid.setInputRange(-180.0f, 180.0f);
-        m_HeadingPid.setContinuous(true); // treats the input range as "continuous" with wrap-around
-        m_HeadingPid.setOutputRange(-.50, .50); // set the maximum power to correct twist
-        m_HeadingPid.setAbsoluteTolerance(kToleranceDegreesPIDControl);
+        // m_HeadingError = new PIDHeadingError();
+        // m_HeadingError.m_Error = 0.0;
+        // m_HeadingCorrection = new PIDHeadingCorrection();
+        m_HeadingPid = new PIDController(HEADING_PID_P, HEADING_PID_I, HEADING_PID_D, 0.020 /* period in seconds */);
+        m_HeadingPid.enableContinuousInput(-180.0f, 180.0f);
+        // m_HeadingPid.setOutputRange(-.50, .50); // set the maximum power to correct
+        // twist
+        m_HeadingPid.setTolerance(kToleranceDegreesPIDControl);
 
         // confirm all four drive talons are in coast mode
         leftFrontTalon.setNeutralMode(NeutralMode.Coast);
@@ -276,7 +275,7 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
     private void resetAndEnableHeadingPID() {
         m_HeadingPid.reset();
-        m_HeadingPid.enable();
+        // m_HeadingPid.enable();
     }
 
     static private final double STATIONARY = 0.1;
@@ -534,10 +533,10 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         double headingCorrection = 0.0;
 
         // below line is essential to let the Heading PID know the current heading error
-        m_HeadingError.m_Error = m_desiredHeading - getHeading();
+        var headingError = m_desiredHeading - getHeading();
 
         if (m_useHeadingCorrection) {
-            headingCorrection = -m_HeadingCorrection.HeadingCorrection;
+            headingCorrection = -m_HeadingPid.calculate(headingError);
         } else {
             headingCorrection = 0.0;
         }
@@ -546,7 +545,7 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         // integral windup if there is a major heading error
         // TODO: In 2020, this code was causing "wandering" with non-zero HEADING_PID_I.
         // Worked around issue by setting HEADING_PID_I = 0
-        if (Math.abs(m_HeadingError.m_Error) > 10.0) {
+        if (Math.abs(headingError) > 10.0) {
             if (!m_HeadingPidPreventWindup) {
                 m_HeadingPid.setI(0.0);
                 resetAndEnableHeadingPID();
@@ -626,8 +625,9 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
         SmartDashboard.putBoolean("Heading Correction Mode", m_useHeadingCorrection);
         SmartDashboard.putNumber("Heading Desired", m_desiredHeading);
-        SmartDashboard.putNumber("Heading Error", m_HeadingError.m_Error);
-        SmartDashboard.putNumber("Heading Correction", -m_HeadingCorrection.HeadingCorrection);
+        // SmartDashboard.putNumber("Heading Error", m_HeadingError.m_Error);
+        // SmartDashboard.putNumber("Heading Correction",
+        // -m_HeadingCorrection.HeadingCorrection);
 
         // SmartDashboard.putNumber("Joystick Drive Throttle",
         // Robot.oi.driveThrottle());
