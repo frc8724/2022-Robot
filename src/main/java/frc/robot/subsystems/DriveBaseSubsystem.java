@@ -32,10 +32,10 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     private static final int LOOPS_GYRO_DELAY = 10;
 
     // Talons
-    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Drive.DRIVE_LEFT_FRONT);
-    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Drive.DRIVE_LEFT_REAR);
-    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Drive.DRIVE_RIGHT_FRONT);
-    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Drive.DRIVE_RIGHT_REAR);
+    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_FRONT);
+    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_REAR);
+    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_FRONT);
+    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_REAR);
 
     // Sensors
     private AHRS Navx;
