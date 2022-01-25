@@ -10,13 +10,10 @@ import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// TODO:  Address all deprecated code masked by @SuppressWarnings("removal") annotations (not just in Drive.java) 
-@SuppressWarnings("removal")
 public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObject */ {
     History headingHistory = new History();
 
@@ -295,7 +292,7 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         return leftDelta < STATIONARY && rightDelta < STATIONARY;
     }
 
-    private int LoopCounter = 0;
+    private int loopCounter = 0;
 
     public void displayGyroInfo() {
         // SmartDashboard.putNumber("Robot Heading",
@@ -585,14 +582,14 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     public void updateSmartDashboard() {
         displayGyroInfo();
 
-        SmartDashboard.putBoolean("In Autonomous", DriverStation.getInstance().isAutonomous());
+        SmartDashboard.putBoolean("In Autonomous", DriverStation.isAutonomous());
         SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
 
         // ***** KBS: Uncommenting below, as it takes a LONG time to get PDP values
         // updateSdbPdp();
 
-        int matchnumber = DriverStation.getInstance().getMatchNumber();
-        DriverStation.MatchType MatchType = DriverStation.getInstance().getMatchType();
+        int matchnumber = DriverStation.getMatchNumber();
+        DriverStation.MatchType MatchType = DriverStation.getMatchType();
         SmartDashboard.putString("matchInfo", "" + MatchType + '_' + matchnumber);
         SmartDashboard.putNumber("Left Front Encoder Counts", leftFrontTalon.getSelectedSensorPosition(0));
         SmartDashboard.putNumber("Right Front Encoder Counts", rightFrontTalon.getSelectedSensorPosition(0));
