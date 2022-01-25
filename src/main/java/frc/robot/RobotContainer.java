@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.TeleopCommand;
+import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.utils.SettableSendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,6 +71,6 @@ public class RobotContainer {
   }
 
   public Command getTeleopCommand() {
-    return new TeleopCommand(this.drive, this.driveStick);
+    return new DriveBaseTeleopCommand(this.drive, this.driveStick);
   }
 }

@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveBaseSubsystem;
 
-public class TeleopCommand extends CommandBase {
+public class DriveBaseTeleopCommand extends CommandBase {
     private final DriveBaseSubsystem drive;
     private final Joystick driverStick;
 
-    public TeleopCommand(DriveBaseSubsystem drive, Joystick driverStick) {
+    public DriveBaseTeleopCommand(DriveBaseSubsystem drive, Joystick driverStick) {
         this.drive = drive;
         this.driverStick = driverStick;
 
