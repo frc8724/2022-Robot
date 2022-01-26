@@ -34,6 +34,8 @@ public class RobotContainer {
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
+  private final Vision vision = new Vision();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -45,6 +47,8 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+
+    vision.start();
   }
 
   /**
