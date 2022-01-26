@@ -5,15 +5,17 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
+import com.ctre.phoenix.motorcontrol.can.*;
+
 public class Intake extends SubsystemBase{
     private final Solenoid piston = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
-    private final VictorSPX rollersTalon = new VictorSPX(Constants.Talon.INTAKE_ROLLERS);
+    private final VictorSPX rollersTalon = new WPI_VictorSPX(Constants.Talon.INTAKE_ROLLERS);
 
     private final boolean INTAKE_DOWN = false;   
     private final boolean INTAKE_UP = true;
