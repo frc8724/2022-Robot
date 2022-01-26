@@ -42,6 +42,11 @@ public final class Constants {
 
     }
 
+    public final class Solenoid {
+        public static final int INTAKE = 1;
+        public static final int CLIMBER = 2;
+    }
+
     public final class PDP {
         public static final int DRIVE_LEFT_FRONT = 1;
         public static final int DRIVE_LEFT_REAR = 1;
