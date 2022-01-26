@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.subsystems.DriveBaseSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.utils.SettableSendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -29,6 +30,7 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
+  private final Intake intake = new Intake();
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
