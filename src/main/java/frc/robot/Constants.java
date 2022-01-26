@@ -24,6 +24,22 @@ public final class Constants {
         public static final int DRIVE_RIGHT_REAR = 4;
 
         public static final int INTAKE_ROLLERS = 5;
+
+        public static final int MAGAZINE_ROLLERS = 6;
+        public static final int LOADER_ROLLER = 7;
+
+        public static final int ACCELERATOR_WHEEL_L = 8;
+        public static final int ACCELERATOR_WHEEL_R = 9;
+
+        public static final int SHOOTER_WHEEL_L = 10;
+        public static final int SHOOTER_WHEEL_R = 11;
+
+        public static final int CLIMBER_L = 12;
+        public static final int CLIMBER_R = 13;
+
+        public static final int HOOD = 14;
+        public static final int TURRET = 15;
+
     }
 
     public final class PDP {
