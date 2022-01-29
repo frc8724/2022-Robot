@@ -29,10 +29,10 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     private static final int LOOPS_GYRO_DELAY = 10;
 
     // Talons
-    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_FRONT);
-    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_REAR);
-    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_FRONT);
-    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_REAR);
+    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_TOP);
+    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_BOTTOM);
+    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_TOP);
+    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_BOTTOM);
 
     // Sensors
     private AHRS Navx;
@@ -142,6 +142,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         // talon closed loop config
         configureDriveTalon(leftFrontTalon);
         configureDriveTalon(rightFrontTalon);
+
+        zeroHeadingGyro(0.0);
     }
 
     private void configTalon(TalonSRX talon) {
@@ -295,13 +297,17 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     private int loopCounter = 0;
 
     public void displayGyroInfo() {
-        // SmartDashboard.putNumber("Robot Heading",
-        // Utils.twoDecimalPlaces(getHeading()));
+        SmartDashboard.putNumber("Robot Heading",
+                twoDecimalPlaces(getHeading()));
         // SmartDashboard.putNumber("Robot Roll",
         // Utils.twoDecimalPlaces(this.getRoll()));
         // SmartDashboard.putNumber("Robot Pitch",
         // Utils.twoDecimalPlaces(this.getPitch()));
         // SmartDashboard.putNumber("Loop Counter", LoopCounter++);
+    }
+
+    public static double twoDecimalPlaces(double d) {
+        return ((double) ((int) (d * 100))) / 100;
     }
 
     private double m_headingOffset = 0.0;
@@ -310,8 +316,9 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         m_headingOffset = arg_offset;
     }
 
+    // the NaxX is installed facing backwards.
     public double getHeading() {
-        return Navx.getYaw() + m_headingOffset;
+        return -Navx.getYaw() + m_headingOffset;
     }
 
     // the Navx is installed sidways with reference to the front of the robot.
@@ -352,6 +359,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         if (leftPower < -1.0) {
             leftPower = -1.0;
         }
+
+        System.out.printf("Left: %f Right: %f\n", leftPower, rightPower);
 
         if (m_closedLoopMode) {
             rightFrontTalon.set(ControlMode.Velocity, rightPower * m_maxWheelSpeed);
