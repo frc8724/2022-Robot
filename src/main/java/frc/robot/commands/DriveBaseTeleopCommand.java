@@ -1,14 +1,15 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import org.mayheminc.util.MayhemDriverPad;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveBaseSubsystem;
 
 public class DriveBaseTeleopCommand extends CommandBase {
     private final DriveBaseSubsystem drive;
-    private final Joystick driverStick;
+    private final MayhemDriverPad driverStick;
 
-    public DriveBaseTeleopCommand(DriveBaseSubsystem drive, Joystick driverStick) {
+    public DriveBaseTeleopCommand(DriveBaseSubsystem drive, MayhemDriverPad driverStick) {
         this.drive = drive;
         this.driverStick = driverStick;
 
@@ -16,7 +17,20 @@ public class DriveBaseTeleopCommand extends CommandBase {
     }
 
     @Override
+    public void initialize() {
+        this.drive.zeroHeadingGyro(0.0);
+    }
+
+    @Override
     public void execute() {
-        this.drive.speedRacerDrive(this.driverStick.getY(), this.driverStick.getX(), false);
+
+        double throttle = this.driverStick.driveThrottle();
+        double steering = this.driverStick.steeringX();
+        boolean quickTurn = this.driverStick.quickTurn();
+
+        System.out.printf("DriveBaseTeleopCommand execute: %f, %f\n", throttle, steering);
+        // System.out.println("DriveBaseTeleopCommand");
+
+        this.drive.speedRacerDrive(throttle, steering, quickTurn);
     }
 }
