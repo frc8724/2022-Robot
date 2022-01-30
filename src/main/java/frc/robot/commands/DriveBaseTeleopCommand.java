@@ -18,7 +18,7 @@ public class DriveBaseTeleopCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        this.drive.zeroHeadingGyro(0.0);
+        this.drive.init();
     }
 
     @Override
@@ -28,7 +28,8 @@ public class DriveBaseTeleopCommand extends CommandBase {
         double steering = this.driverStick.steeringX();
         boolean quickTurn = this.driverStick.quickTurn();
 
-        System.out.printf("DriveBaseTeleopCommand execute: %f, %f\n", throttle, steering);
+        // System.out.printf("DriveBaseTeleopCommand execute: %f, %f\n", throttle,
+        // steering);
         // System.out.println("DriveBaseTeleopCommand");
 
         this.drive.speedRacerDrive(throttle, steering, quickTurn);
