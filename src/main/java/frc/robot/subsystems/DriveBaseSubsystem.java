@@ -6,7 +6,6 @@ import frc.robot.utils.MayhemTalonSRX;
 import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -140,25 +139,13 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
     // ********************* ENCODER-GETTERS ************************************
 
-    public double getRightEncoder() {
+    private double getRightEncoder() {
         return rightFrontTalon.getSelectedSensorPosition(0);
     }
 
-    public double getLeftEncoder() {
+    private double getLeftEncoder() {
         return leftFrontTalon.getSelectedSensorPosition(0);
     }
-
-    // *************************** GYRO *******************************************
-
-    // public double calculateHeadingError(final double Target) {
-    // final double currentHeading = headingCorrection.getHeading();
-    // double error = Target - currentHeading;
-    // error = error % 360.0;
-    // if (error > 180.0) {
-    // error -= 360.0;
-    // }
-    // return error;
-    // }
 
     static private final double STATIONARY = 0.1;
     static private double m_prevLeftDistance = 0.0;
@@ -233,28 +220,32 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         setMotorPower(leftSideThrottle, rightSideThrottle);
     }
 
+    double m_lastThrottle;
+    double m_lastSteering;
+
     public void speedRacerDrive(double throttle, double rawSteeringX, boolean quickTurn) {
         double leftPower, rightPower;
         double rotation = 0;
         final double QUICK_TURN_GAIN = 0.55; // 2019: .75. 2020: .75 was too fast.
 
-        int throttleSign;
-        if (throttle >= 0.0) {
-            throttleSign = 1;
-        } else {
-            throttleSign = -1;
-        }
+        m_lastThrottle = throttle;
+        m_lastSteering = rawSteeringX;
 
         // check for if steering input is essentially zero for "DriveStraight"
         // functionality
         if ((-0.01 < rawSteeringX) && (rawSteeringX < 0.01)) {
             // no turn being commanded, drive straight or stay still
             m_iterationsSinceRotationCommanded++;
+
             if ((-0.01 < throttle) && (throttle < 0.01)) {
+                System.out.println("Drive: stay still");
+
                 // no motion commanded, stay still
                 m_iterationsSinceMovementCommanded++;
                 rotation = 0.0;
 
+                // if we are standing still and we are turned, assume the new direction is the
+                // correct direction
                 headingCorrection.lockHeading();
             } else {
                 // driving straight
@@ -267,14 +258,18 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
                     // get current heading as desired heading
                     headingCorrection.lockHeading();
                     rotation = 0.0;
+
+                    System.out.println("Drive: drive straight LOCK");
                 } else if (m_iterationsSinceRotationCommanded < LOOPS_GYRO_DELAY) {
                     // not long enough since we were last turning,
                     // just drive straight without special heading maintenance
                     rotation = 0.0;
+                    System.out.println("Drive: drive straight");
                 } else if (m_iterationsSinceRotationCommanded > LOOPS_GYRO_DELAY) {
                     // after more then LOOPS_GYRO_DELAY iterations since commanded turn,
                     // maintain the target heading
                     rotation = headingCorrection.maintainHeading();
+                    System.out.println("Drive: drive straight w/ correction");
                 }
                 m_iterationsSinceMovementCommanded = 0;
             }
@@ -286,6 +281,14 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
             m_iterationsSinceRotationCommanded = 0;
             m_iterationsSinceMovementCommanded = 0;
             if (quickTurn) {
+
+                int throttleSign;
+                if (throttle >= 0.0) {
+                    throttleSign = 1;
+                } else {
+                    throttleSign = -1;
+                }
+
                 // want a high-rate turn (also allows "spin" behavior)
                 // power to each wheel is a combination of the throttle and rotation
                 rotation = rawSteeringX * throttleSign * QUICK_TURN_GAIN;
@@ -310,7 +313,6 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     }
 
     public void rotateToHeading(final double desiredHeading) {
-        // m_desiredHeading = desiredHeading;
         headingCorrection.setDesiredHeading(desiredHeading);
     }
 
@@ -318,6 +320,7 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
     @Override
     public void periodic() {
+        headingCorrection.periodic();
         updateSmartDashboard();
     }
 
@@ -326,6 +329,9 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
         SmartDashboard.putBoolean("In Autonomous", DriverStation.isAutonomous());
         SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
+
+        SmartDashboard.putNumber("Throttle", m_lastThrottle);
+        SmartDashboard.putNumber("Steering", m_lastSteering);
 
         // ***** KBS: Uncommenting below, as it takes a LONG time to get PDP values
         // updateSdbPdp();
