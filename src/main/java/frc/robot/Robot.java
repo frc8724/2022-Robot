@@ -67,6 +67,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    // double leftPower = 12.34;
+    // double rightPower = 56.78;
+    // System.out.printf("Left: %f Right: %f\n", leftPower, rightPower);
+
   }
 
   /**

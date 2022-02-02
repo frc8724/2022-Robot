@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.mayheminc.util.*;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -28,13 +30,19 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final Joystick driveStick = new Joystick(Constants.Control.DRIVER_STICK_PORT);
+  // private final Joystick driveStick = new
+  // Joystick(Constants.Control.DRIVER_STICK_PORT);
+  // Operator Inputs
+  public static final MayhemDriverStick DRIVER_STICK = new MayhemDriverStick();
+  public static final MayhemDriverPad DRIVER_PAD = new MayhemDriverPad();
+  public static final MayhemOperatorPad OPERATOR_PAD = new MayhemOperatorPad();
+  // private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
 
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
-  private final Intake intake = new Intake();
-  private final Magazine magazine = new Magazine();
-  private final Climber climber = new Climber();
+  // private final Intake intake = new Intake();
+  // private final Magazine magazine = new Magazine();
+  // private final Climber climber = new Climber();
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
@@ -60,11 +68,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton button1 = new JoystickButton(this.driveStick, 1);
-    JoystickButton button2 = new JoystickButton(this.driveStick, 2);
+    // JoystickButton button1 = new JoystickButton(DRIVER_PAD, 1);
+    // JoystickButton button2 = new JoystickButton(DRIVER_PAD, 2);
 
-    button1.whenPressed(() -> autoChooser.setSelected("hello earth"));
-    button2.whenPressed(() -> autoChooser.setSelected("hello world"));
+    // button1.whenPressed(() -> autoChooser.setSelected("hello earth"));
+    // button2.whenPressed(() -> autoChooser.setSelected("hello world"));
   }
 
   /**
@@ -77,6 +85,6 @@ public class RobotContainer {
   }
 
   public Command getTeleopCommand() {
-    return new DriveBaseTeleopCommand(this.drive, this.driveStick);
+    return new DriveBaseTeleopCommand(this.drive, DRIVER_PAD);
   }
 }
