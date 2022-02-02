@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autos.PointToBall;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Intake;
@@ -34,21 +34,20 @@ public class RobotContainer {
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
-  private final Vision vision = new Vision();
+  public static final Vision vision = new Vision();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    this.autoChooser.setDefaultOption("hello world", new PrintCommand("hello world"));
-    this.autoChooser.addOption("hello earth", new PrintCommand("hello earth"));
+    this.autoChooser.setDefaultOption("hello world", new PointToBall(this.drive));
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
     // Configure the button bindings
     configureButtonBindings();
 
-    vision.start();
+    vision.init();
   }
 
   /**
