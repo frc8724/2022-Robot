@@ -13,10 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.PointToBall;
 import frc.robot.commands.DriveBaseTeleopCommand;
+import frc.robot.commands.ShooterAdjustShooterWheel;
+import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Magazine;
+import frc.robot.subsystems.Shooter;
 import frc.robot.utils.SettableSendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -30,8 +33,6 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // private final Joystick driveStick = new
-  // Joystick(Constants.Control.DRIVER_STICK_PORT);
   // Operator Inputs
   public static final MayhemDriverStick DRIVER_STICK = new MayhemDriverStick();
   public static final MayhemDriverPad DRIVER_PAD = new MayhemDriverPad();
@@ -43,6 +44,13 @@ public class RobotContainer {
   // private final Intake intake = new Intake();
   // private final Magazine magazine = new Magazine();
   // private final Climber climber = new Climber();
+  public static final Shooter shooter = new Shooter();
+
+  public static final PidTuner pidTuner = new PidTuner(
+      DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE,
+      DRIVER_STICK.DRIVER_STICK_BUTTON_SIX,
+      DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN,
+      DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT, shooter);
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
@@ -71,11 +79,35 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // JoystickButton button1 = new JoystickButton(DRIVER_PAD, 1);
-    // JoystickButton button2 = new JoystickButton(DRIVER_PAD, 2);
+    configureDriverPadButtons();
+    configureOperatorPadButtons();
+    configureDriverStick();
 
-    // button1.whenPressed(() -> autoChooser.setSelected("hello earth"));
-    // button2.whenPressed(() -> autoChooser.setSelected("hello world"));
+  }
+
+  private void configureDriverStick() {
+  }
+
+  private void configureOperatorPadButtons() {
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new ShooterSetAccelerator(0.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new ShooterSetAccelerator(10.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new ShooterSetAccelerator(20.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new ShooterSetAccelerator(30.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenPressed(new ShooterSetAccelerator(40.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(50.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenPressed(new ShooterSetAccelerator(60.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new ShooterSetAccelerator(70.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new ShooterSetAccelerator(80.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new ShooterSetAccelerator(90.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ELEVEN.whenPressed(new ShooterSetAccelerator(100.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWELVE.whenPressed(new ShooterSetAccelerator(0.0));
+
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ShooterAdjustShooterWheel(100.0));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ShooterAdjustShooterWheel(-100.0));
+
+  }
+
+  private void configureDriverPadButtons() {
   }
 
   /**
