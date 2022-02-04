@@ -22,7 +22,7 @@ public class ShooterAdjustShooterWheel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    var targetRpm = RobotContainer.shooter.getTargetSpeed();
+    var targetRpm = RobotContainer.shooter.getShooterTargetSpeed();
     targetRpm += m_adjustRpm;
     RobotContainer.shooter.setShooterSpeed(targetRpm);
   }
