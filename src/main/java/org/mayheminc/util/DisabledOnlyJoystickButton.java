@@ -12,15 +12,13 @@ public class DisabledOnlyJoystickButton extends Button {
 
     private GenericHID joystick;
     private int buttonNumber;
-    private DriverStation ds;
 
     public DisabledOnlyJoystickButton(GenericHID joystick, int buttonNumber) {
         this.joystick = joystick;
         this.buttonNumber = buttonNumber;
-        ds = DriverStation.getInstance();
     }
 
     public boolean get() {
-        return joystick.getRawButton(buttonNumber) && ds.isDisabled();
+        return joystick.getRawButton(buttonNumber) && DriverStation.isDisabled();
     }
 }

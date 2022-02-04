@@ -7,17 +7,13 @@ package frc.robot;
 import org.mayheminc.util.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.PointToBall;
 import frc.robot.commands.DriveBaseTeleopCommand;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Magazine;
 import frc.robot.utils.SettableSendableChooser;
+import frc.robot.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
