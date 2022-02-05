@@ -28,6 +28,7 @@ public class JoystickPOVButton extends Button {
         desiredPOV = newDesiredPOV;
     }
 
+    @Override
     public boolean get() {
         return (joystick.getPOV() == desiredPOV);
     }

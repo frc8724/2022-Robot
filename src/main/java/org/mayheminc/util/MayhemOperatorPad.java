@@ -35,13 +35,13 @@ public class MayhemOperatorPad {
 
     // Operator Control Buttons
     public final JoystickAxisButton OPERATOR_PAD_LEFT_Y_AXIS_UP = new JoystickAxisButton(OPERATOR_PAD,
-            OPERATOR_PAD_AXIS.OPERATOR_PAD_LEFT_Y_AXIS, JoystickAxisButton.NEGATIVE_ONLY);
+            OPERATOR_PAD_AXIS.OPERATOR_PAD_LEFT_Y_AXIS, JoystickAxisButton.Direction.NEGATIVE_ONLY);
     public final JoystickAxisButton OPERATOR_PAD_LEFT_Y_AXIS_DOWN = new JoystickAxisButton(OPERATOR_PAD,
-            OPERATOR_PAD_AXIS.OPERATOR_PAD_LEFT_Y_AXIS, JoystickAxisButton.POSITIVE_ONLY);
+            OPERATOR_PAD_AXIS.OPERATOR_PAD_LEFT_Y_AXIS, JoystickAxisButton.Direction.POSITIVE_ONLY);
     public final JoystickAxisButton OPERATOR_PAD_RIGHT_Y_AXIS_UP = new JoystickAxisButton(OPERATOR_PAD,
-            OPERATOR_PAD_AXIS.OPERATOR_PAD_RIGHT_Y_AXIS, JoystickAxisButton.NEGATIVE_ONLY);
+            OPERATOR_PAD_AXIS.OPERATOR_PAD_RIGHT_Y_AXIS, JoystickAxisButton.Direction.NEGATIVE_ONLY);
     public final JoystickAxisButton OPERATOR_PAD_RIGHT_Y_AXIS_DOWN = new JoystickAxisButton(OPERATOR_PAD,
-            OPERATOR_PAD_AXIS.OPERATOR_PAD_RIGHT_Y_AXIS, JoystickAxisButton.POSITIVE_ONLY);
+            OPERATOR_PAD_AXIS.OPERATOR_PAD_RIGHT_Y_AXIS, JoystickAxisButton.Direction.POSITIVE_ONLY);
 
     public static final int OPERATOR_PAD_LEFT_X_AXIS = 0;
     public static final int OPERATOR_PAD_LEFT_Y_AXIS = 1;

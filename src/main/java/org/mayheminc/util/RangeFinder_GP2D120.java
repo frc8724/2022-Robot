@@ -12,7 +12,7 @@ public class RangeFinder_GP2D120 {
 	private int m_historyBufferIndex;
 	private double m_filteredVoltage;
 	
-	public RangeFinder_GP2D120(int channel, int index)	{
+	public RangeFinder_GP2D120(int channel)	{
 		m_channel = new AnalogInput(channel);
 		m_filteredVoltage = 0.0;
 	}

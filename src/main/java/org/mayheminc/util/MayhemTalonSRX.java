@@ -57,21 +57,25 @@ public class MayhemTalonSRX extends TalonSRX {
 
 	}
 
+	@Override
 	public ErrorCode config_kP(int slot, double value, int timeout) {
 		p = value;
 		return super.config_kP(slot, value, timeout);
 	}
 
+	@Override
 	public ErrorCode config_kI(int slot, double value, int timeout) {
 		i = value;
 		return super.config_kI(slot, value, timeout);
 	}
 
+	@Override
 	public ErrorCode config_kD(int slot, double value, int timeout) {
 		d = value;
 		return super.config_kD(slot, value, timeout);
 	}
 
+	@Override
 	public ErrorCode config_kF(int slot, double value, int timeout) {
 		f = value;
 		return super.config_kF(slot, value, timeout);

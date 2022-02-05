@@ -32,6 +32,8 @@ class TCPServer extends Thread {
         buffer.offer(S);
     }
 
+    @Override
+    @SuppressWarnings("PMD.UseTryWithResources")
     public void run() {
         ServerSocket welcomeSocket;
         try {

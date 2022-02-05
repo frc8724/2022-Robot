@@ -224,7 +224,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     double m_lastSteering;
 
     public void speedRacerDrive(double throttle, double rawSteeringX, boolean quickTurn) {
-        double leftPower, rightPower;
+        double leftPower;
+        double rightPower;
         double rotation = 0;
         final double QUICK_TURN_GAIN = 0.55; // 2019: .75. 2020: .75 was too fast.
 

@@ -15,11 +15,11 @@ public class ObjectListener extends Thread {
     private DatagramPacket packet;
     private ByteBuffer buffer;
     private int lastFrame = 0;
-    private ArrayList<ObjectLocation> objList;
+    private List<ObjectLocation> objList;
     private Callback callback = null;
 
     public interface Callback {
-        public void objectListenerCallback(int frame, ArrayList<ObjectLocation> objList);
+        public void objectListenerCallback(int frame, List<ObjectLocation> objList);
     }
 
     public ObjectListener() throws SocketException {
@@ -34,7 +34,7 @@ public class ObjectListener extends Thread {
         byte[] byteBuffer = new byte[MAX_BUFFER];
         packet = new DatagramPacket(byteBuffer, byteBuffer.length);
         buffer = ByteBuffer.wrap(byteBuffer);
-        
+
         objList = new ArrayList<ObjectLocation>();
     }
 
@@ -50,6 +50,7 @@ public class ObjectListener extends Thread {
         this.callback = callback;
     }
 
+    @Override
     public void run() {
         String name = super.getName();
         long lastTimestamp = 0;
@@ -83,12 +84,15 @@ public class ObjectListener extends Thread {
 
             // Check for out-of-date data
             if (timestamp <= lastTimestamp) {
-                System.err.println(name + ": timestamp for new frame #" + frame + " (" + timestamp + ") is not newer than that for previous frame #" + lastFrame + " (" + lastTimestamp + "); rejecting out-of-date data");
+                System.err.println(name + ": timestamp for new frame #" + frame + " (" + timestamp
+                        + ") is not newer than that for previous frame #" + lastFrame + " (" + lastTimestamp
+                        + "); rejecting out-of-date data");
                 lastTimestamp = timestamp;
                 continue;
             }
             if (frame <= lastFrame) {
-                System.err.println(name + ": frame #" + frame + " is earlier than existing frame #" + lastFrame + "; did object detection service restart?");
+                System.err.println(name + ": frame #" + frame + " is earlier than existing frame #" + lastFrame
+                        + "; did object detection service restart?");
             }
 
             // Get list of all objects involved
@@ -124,9 +128,10 @@ public class ObjectListener extends Thread {
     public static void main(String[] args) {
         ObjectListener listener;
         Callback callback = new ObjectListener.Callback() {
-            public void objectListenerCallback(int frame, ArrayList<ObjectLocation> objList) {
+            @Override
+            public void objectListenerCallback(int frame, List<ObjectLocation> objList) {
                 System.out.println("Received notification about objects in frame #" + frame);
-                for (ObjectLocation loc: objList) {
+                for (ObjectLocation loc : objList) {
                     System.out.println("  " + loc);
                 }
             }

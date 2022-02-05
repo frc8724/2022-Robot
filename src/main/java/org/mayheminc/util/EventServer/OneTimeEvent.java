@@ -3,6 +3,7 @@ package org.mayheminc.util.EventServer;
 public abstract class OneTimeEvent extends Event {
     boolean hasExecuted = false;
 
+    @Override
     public String Execute() {
         if (hasExecuted) {
             return "";

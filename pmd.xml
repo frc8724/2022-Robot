@@ -10,11 +10,11 @@
     </description>
 
 
-    <!-- Detect unused code -->
-    <rule ref="category/java/codestyle.xml/UnnecessaryImport" />
-    <rule ref="category/java/bestpractices.xml/UnusedAssignment" />
-    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable" />
-    <rule ref="category/java/bestpractices.xml/UnusedPrivateField" />
-    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod" />
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="SystemPrintln"/>
+        <exclude name="AvoidPrintStackTrace"/>
+        <exclude name="AvoidReassigningParameters"/>
+    </rule>
+
 
 </ruleset>

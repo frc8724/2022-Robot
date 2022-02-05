@@ -18,6 +18,7 @@ public class DisabledOnlyJoystickButton extends Button {
         this.buttonNumber = buttonNumber;
     }
 
+    @Override
     public boolean get() {
         return joystick.getRawButton(buttonNumber) && DriverStation.isDisabled();
     }
