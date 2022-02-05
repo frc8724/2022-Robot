@@ -13,6 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 public class Intake extends SubsystemBase {
+
+    public enum Position {
+        Up,
+        Down,
+    }
+
     private final Solenoid piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.INTAKE);
     private final VictorSPX rollersTalon = new WPI_VictorSPX(Constants.Talon.INTAKE_ROLLERS);
 

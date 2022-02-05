@@ -178,10 +178,17 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         shooterWheelRight.set(ControlMode.PercentOutput, pos);
     }
 
+    double accelSpeed;
+
     public void setAcceleratorSpeedVBus(double pos) {
+        accelSpeed = pos;
         acceleratorWheelLeft.set(ControlMode.PercentOutput, pos);
         acceleratorWheelRight.set(ControlMode.PercentOutput, pos);
         System.out.println("setShooterSpeedVBus: " + pos);
+    }
+
+    public double getAcceleratorSpeedVBus() {
+        return accelSpeed;
     }
 
     public double getShooterSpeed() {

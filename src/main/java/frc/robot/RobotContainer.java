@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autos.PointToBall;
 import frc.robot.commands.DriveBaseTeleopCommand;
+import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.HoodMove;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
@@ -45,9 +46,9 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
-  // private final Intake intake = new Intake();
-  // private final Magazine magazine = new Magazine();
-  // private final Climber climber = new Climber();
+  // public static final Intake intake = new Intake();
+  // public static final Magazine magazine = new Magazine();
+  // public static final Climber climber = new Climber();
   public static final Shooter shooter = new Shooter();
   public static final Hood hood = new Hood();
 
@@ -115,8 +116,8 @@ public class RobotContainer {
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ShooterAdjustShooterWheel(100.0));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ShooterAdjustShooterWheel(-100.0));
 
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodMove(2000));
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodMove(3000));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodAdjust(-200));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodAdjust(200));
 
   }
 
