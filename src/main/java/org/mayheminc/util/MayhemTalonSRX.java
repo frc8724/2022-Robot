@@ -106,13 +106,13 @@ public class MayhemTalonSRX extends TalonSRX {
 	}
 
 	public void configNominalOutputVoltage(float f, float g) {
-		this.configNominalOutputForward(f / 12.0, 1000);
-		this.configNominalOutputReverse(g / 12.0, 1000);
+		this.configNominalOutputForward(f / 12.0, 0);
+		this.configNominalOutputReverse(g / 12.0, 0);
 	}
 
 	public void configPeakOutputVoltage(double d, double e) {
-		this.configPeakOutputForward(d / 12.0, 1000);
-		this.configPeakOutputReverse(e / 12.0, 1000);
+		this.configPeakOutputForward(d / 12.0, 0);
+		this.configPeakOutputReverse(e / 12.0, 0);
 
 	}
 
@@ -121,7 +121,7 @@ public class MayhemTalonSRX extends TalonSRX {
 	}
 
 	public void setPosition(int zeroPositionCount) {
-		this.setSelectedSensorPosition(zeroPositionCount, 0, 1000);
+		this.setSelectedSensorPosition(zeroPositionCount, 0, 0);
 	}
 
 	// public int getPosition() {

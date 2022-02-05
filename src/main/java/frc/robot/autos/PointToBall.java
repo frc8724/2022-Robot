@@ -23,7 +23,7 @@ public class PointToBall extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.vision.start();
+    // RobotContainer.vision.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +34,7 @@ public class PointToBall extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.vision.stop();
+    // RobotContainer.vision.stop();
   }
 
   // Returns true when the command should end.
