@@ -11,13 +11,11 @@ import frc.robot.subsystems.DriveBaseSubsystem;
 
 public class PointToBall extends CommandBase {
   DriveBaseSubsystem drive;
-  Timer timer;
 
   /** Creates a new PointToBall. */
   public PointToBall(DriveBaseSubsystem drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
-    this.timer = new Timer();
 
     addRequirements(drive);
   }
@@ -42,6 +40,6 @@ public class PointToBall extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return this.timer.get() >= 5;
+    return false;
   }
 }

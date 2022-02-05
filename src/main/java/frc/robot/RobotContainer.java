@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment;
 import org.mayheminc.util.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -22,7 +21,9 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.utils.SettableSendableChooser;
+import frc.robot.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 
