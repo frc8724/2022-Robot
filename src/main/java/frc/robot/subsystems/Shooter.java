@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-// import org.mayheminc.robot2020.RobotContainer;
-
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,7 +18,7 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
 
     private final MayhemTalonSRX acceleratorWheelLeft = new MayhemTalonSRX(Constants.Talon.ACCELERATOR_WHEEL_L,
             CurrentLimit.HIGH_CURRENT);
-    private final MayhemTalonSRX acceleratorWheelRight = new MayhemTalonSRX(Constants.Talon.ACCELERATOR_WHEEL_L,
+    private final MayhemTalonSRX acceleratorWheelRight = new MayhemTalonSRX(Constants.Talon.ACCELERATOR_WHEEL_R,
             CurrentLimit.HIGH_CURRENT);
 
     private final double TALON_TICKS_PER_REV = 2048.0;
@@ -57,14 +55,14 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         configureOneAcceleratorWheel(acceleratorWheelLeft);
         configureOneAcceleratorWheel(acceleratorWheelRight);
 
-        acceleratorWheelLeft.setInverted(true);
-        acceleratorWheelRight.setInverted(false);
+        acceleratorWheelLeft.setInverted(false);
+        acceleratorWheelRight.setInverted(true);
     }
 
     private void configureOneAcceleratorWheel(MayhemTalonSRX acceleratorWheel) {
         acceleratorWheel.setNeutralMode(NeutralMode.Coast);
         acceleratorWheel.configNominalOutputVoltage(+0.0f, -0.0f);
-        acceleratorWheel.configPeakOutputVoltage(+12.0, 0.0);
+        acceleratorWheel.configPeakOutputVoltage(+12.0, -12.0);
         acceleratorWheel.configNeutralDeadband(0.001); // Config neutral deadband to be the smallest possible
     }
 
@@ -113,29 +111,43 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     }
 
     private void UpdateDashboard() {
-        SmartDashboard.putNumber("Shooter Wheel pos", shooterWheelLeft.getSelectedSensorPosition(0));
-        SmartDashboard.putNumber("Shooter Wheel speed", shooterWheelLeft.getSelectedSensorVelocity(0));
+        // SmartDashboard.putNumber("Shooter Wheel pos",
+        // shooterWheelLeft.getSelectedSensorPosition(0));
+        // SmartDashboard.putNumber("Shooter Wheel speed",
+        // shooterWheelLeft.getSelectedSensorVelocity(0));
         SmartDashboard.putNumber("Shooter Wheel RPM",
                 convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0)));
 
         SmartDashboard.putNumber("Shooter Wheel target RPM", m_targetSpeedRPM);
         SmartDashboard.putNumber("Shooter Wheel Error",
                 m_targetSpeedRPM - convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0)));
-        SmartDashboard.putNumber("Shooter Wheel Voltage", shooterWheelLeft.getMotorOutputVoltage());
-        SmartDashboard.putNumber("Shooter Wheel Bus Voltage", shooterWheelLeft.getBusVoltage());
-        SmartDashboard.putNumber("Shooter Wheel Current", shooterWheelLeft.getSupplyCurrent());
+        // SmartDashboard.putNumber("Shooter Wheel Voltage",
+        // shooterWheelLeft.getMotorOutputVoltage());
+        // SmartDashboard.putNumber("Shooter Wheel Bus Voltage",
+        // shooterWheelLeft.getBusVoltage());
+        // SmartDashboard.putNumber("Shooter Wheel Current",
+        // shooterWheelLeft.getSupplyCurrent());
 
-        SmartDashboard.putNumber("Shooter Wheel R-pos", shooterWheelRight.getSelectedSensorPosition(0));
-        SmartDashboard.putNumber("Shooter Wheel R-speed", shooterWheelRight.getSelectedSensorVelocity(0));
-        SmartDashboard.putNumber("Shooter Wheel R-RPM",
-                convertTicksPer100msToRPM(shooterWheelRight.getSelectedSensorVelocity(0)));
+        // SmartDashboard.putNumber("Shooter Wheel R-pos",
+        // shooterWheelRight.getSelectedSensorPosition(0));
+        // SmartDashboard.putNumber("Shooter Wheel R-speed",
+        // shooterWheelRight.getSelectedSensorVelocity(0));
+        // SmartDashboard.putNumber("Shooter Wheel R-RPM",
+        // convertTicksPer100msToRPM(shooterWheelRight.getSelectedSensorVelocity(0)));
 
-        SmartDashboard.putNumber("Shooter Wheel R-target RPM", m_targetSpeedRPM);
-        SmartDashboard.putNumber("Shooter Wheel R-Error",
-                m_targetSpeedRPM - convertTicksPer100msToRPM(shooterWheelRight.getSelectedSensorVelocity(0)));
-        SmartDashboard.putNumber("Shooter Wheel R-Voltage", shooterWheelRight.getMotorOutputVoltage());
-        SmartDashboard.putNumber("Shooter Wheel R-Bus Voltage", shooterWheelRight.getBusVoltage());
-        SmartDashboard.putNumber("Shooter Wheel R-Current", shooterWheelRight.getSupplyCurrent());
+        // SmartDashboard.putNumber("Shooter Wheel R-target RPM", m_targetSpeedRPM);
+        // SmartDashboard.putNumber("Shooter Wheel R-Error",
+        // m_targetSpeedRPM -
+        // convertTicksPer100msToRPM(shooterWheelRight.getSelectedSensorVelocity(0)));
+        // SmartDashboard.putNumber("Shooter Wheel R-Voltage",
+        // shooterWheelRight.getMotorOutputVoltage());
+        // SmartDashboard.putNumber("Shooter Wheel R-Bus Voltage",
+        // shooterWheelRight.getBusVoltage());
+        // SmartDashboard.putNumber("Shooter Wheel R-Current",
+        // shooterWheelRight.getSupplyCurrent());
+
+        SmartDashboard.putNumber("Accel L I", acceleratorWheelLeft.getStatorCurrent());
+        SmartDashboard.putNumber("Accel R I", acceleratorWheelRight.getStatorCurrent());
     }
 
     public void zero() {
@@ -151,8 +163,11 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         if (rpm > MAX_SPEED_RPM) {
             rpm = MAX_SPEED_RPM;
         }
+        if (rpm < 0)
+            rpm = 0;
 
         m_targetSpeedRPM = rpm;
+        System.out.println("setShooterSpeed: " + rpm);
         double ticks = convertRpmToTicksPer100ms(rpm);
         shooterWheelLeft.set(ControlMode.Velocity, ticks);
         shooterWheelRight.set(ControlMode.Velocity, ticks);
@@ -166,17 +181,20 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     public void setAcceleratorSpeedVBus(double pos) {
         acceleratorWheelLeft.set(ControlMode.PercentOutput, pos);
         acceleratorWheelRight.set(ControlMode.PercentOutput, pos);
+        System.out.println("setShooterSpeedVBus: " + pos);
     }
 
-    public double getSpeed() {
+    public double getShooterSpeed() {
         return convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0));
     }
 
-    public double getTargetSpeed() {
+    public double getShooterTargetSpeed() {
+
+        System.out.println("getShooterTargetSpeed: " + m_targetSpeedRPM);
         return m_targetSpeedRPM;
     }
 
-    public double getSpeedVBus() {
+    public double getShooterSpeedVBus() {
         return shooterWheelLeft.getMotorOutputVoltage();
     }
 

@@ -4,29 +4,26 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShooterAdjustShooterWheel extends InstantCommand {
-  double m_adjustRpm;
+public class HoodMove extends InstantCommand {
+  double m_pos;
 
-  public ShooterAdjustShooterWheel(double adjustRpm) {
+  public HoodMove(double pos) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.shooter);
-    m_adjustRpm = adjustRpm;
+    addRequirements(RobotContainer.hood);
+
+    m_pos = pos;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // DriverStation.reportError("Adjust Shooter Wheel", false);
-
-    var targetRpm = RobotContainer.shooter.getShooterTargetSpeed();
-    targetRpm += m_adjustRpm;
-    RobotContainer.shooter.setShooterSpeed(targetRpm);
+    System.out.println("move hood!");
+    RobotContainer.hood.setPosition(m_pos);
   }
 }

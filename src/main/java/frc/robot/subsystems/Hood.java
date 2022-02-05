@@ -1,19 +1,19 @@
-package org.mayheminc.robot2020.subsystems;
-
-import org.mayheminc.robot2020.Constants;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import org.mayheminc.util.MayhemTalonSRX;
 // import org.mayheminc.util.PidTuner;
 import org.mayheminc.util.PidTunerObject;
 import org.mayheminc.util.MayhemTalonSRX.CurrentLimit;
 
 public class Hood extends SubsystemBase implements PidTunerObject {
-    private final MayhemTalonSRX hoodTalon = new MayhemTalonSRX(Constants.Talon.SHOOTER_HOOD, CurrentLimit.LOW_CURRENT);
+    private final MayhemTalonSRX hoodTalon = new MayhemTalonSRX(Constants.Talon.HOOD, CurrentLimit.LOW_CURRENT);
 
     private final static int MIN_POSITION = 0;
     private final static int MAX_POSITION = 8000;
@@ -39,7 +39,7 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     }
 
     private void configureTalon() {
-        hoodTalon.config_kP(0, 10.0, 0);
+        hoodTalon.config_kP(0, 1.0, 0);
         hoodTalon.config_kI(0, 0.0, 0);
         hoodTalon.config_kD(0, 0.0, 0);
         hoodTalon.config_kF(0, 0.0, 0);
@@ -54,9 +54,9 @@ public class Hood extends SubsystemBase implements PidTunerObject {
         hoodTalon.setSensorPhase(false);
 
         hoodTalon.configForwardSoftLimitThreshold(MAX_POSITION);
-        hoodTalon.configForwardSoftLimitEnable(true);
         hoodTalon.configReverseSoftLimitThreshold(MIN_POSITION);
-        hoodTalon.configReverseSoftLimitEnable(true);
+        hoodTalon.configForwardSoftLimitEnable(false);
+        hoodTalon.configReverseSoftLimitEnable(false);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     }
 
     private void UpdateDashboard() {
-        SmartDashboard.putNumber("Shooter Hood Pos", hoodTalon.getPosition());
+        SmartDashboard.putNumber("Shooter Hood Pos", hoodTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Shooter Hood Setpoint", m_desiredPosition);
     }
 
@@ -86,7 +86,7 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     }
 
     public double getPosition() {
-        return hoodTalon.getPosition();
+        return hoodTalon.getSelectedSensorPosition();
     }
 
     public void setVBus(double d) {

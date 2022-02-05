@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
@@ -23,6 +24,7 @@ public class ShooterSetAccelerator extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    DriverStation.reportError("shooter set accelerator", false);
     RobotContainer.shooter.setAcceleratorSpeedVBus(m_setpoint);
   }
 }

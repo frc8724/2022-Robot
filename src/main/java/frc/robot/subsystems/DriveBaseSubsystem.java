@@ -238,7 +238,7 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
             m_iterationsSinceRotationCommanded++;
 
             if ((-0.01 < throttle) && (throttle < 0.01)) {
-                System.out.println("Drive: stay still");
+                // System.out.println("Drive: stay still");
 
                 // no motion commanded, stay still
                 m_iterationsSinceMovementCommanded++;
