@@ -10,6 +10,9 @@ plugins {
 pmd {
     ruleSetFiles = files("pmd.xml")
     ruleSets = []
+
+    ignoreFailures = true
+    consoleOutput = true
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
