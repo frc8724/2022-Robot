@@ -59,7 +59,6 @@ public class JoystickAxisButton extends Button {
 
     public JoystickAxisButton(Joystick stick, int axis, Direction direction) {
         joystick = stick;
-        this.axis = null;
         axisInt = axis;
         this.direction = direction;
     }

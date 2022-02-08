@@ -9,7 +9,7 @@ public abstract class OneTimeEvent extends Event {
             return "";
         }
         String S = this.OneTimeExecute();
-        if (S != "") {
+        if ("".equals(S)) {
             hasExecuted = true;
         }
         return S;

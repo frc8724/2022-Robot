@@ -11,7 +11,7 @@ public class History {
 
     public History() {
         // ensure there is at least one element in the history
-        add(-1.0, 0.0); // make a fictitious element at t=-1 seconds, with heading of 0.0 degrees
+        add(-1.0, 0.0); // make a fictitious element at t=-1 seconds, with heading of 0.0 degrees - NOPMD
     }
 
     public void add(double t, double az) {
