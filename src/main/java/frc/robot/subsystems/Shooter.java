@@ -30,6 +30,7 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     public static final double INITIATION_LINE_SPEED = 4500.0;
     public static final double TRENCH_FRONT_SPEED = 3400.0;
     public static final double MAX_SPEED_RPM = 5000;
+    public static final double SPEED_TOLERANCE = 200;
 
     double m_targetSpeedRPM;
 
@@ -178,10 +179,17 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         shooterWheelRight.set(ControlMode.PercentOutput, pos);
     }
 
+    double accelSpeed;
+
     public void setAcceleratorSpeedVBus(double pos) {
+        accelSpeed = pos;
         acceleratorWheelLeft.set(ControlMode.PercentOutput, pos);
         acceleratorWheelRight.set(ControlMode.PercentOutput, pos);
         System.out.println("setShooterSpeedVBus: " + pos);
+    }
+
+    public double getAcceleratorSpeedVBus() {
+        return accelSpeed;
     }
 
     public double getShooterSpeed() {
@@ -192,6 +200,10 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
 
         System.out.println("getShooterTargetSpeed: " + m_targetSpeedRPM);
         return m_targetSpeedRPM;
+    }
+
+    public boolean isShooterAtSpeed() {
+        return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE;
     }
 
     public double getShooterSpeedVBus() {

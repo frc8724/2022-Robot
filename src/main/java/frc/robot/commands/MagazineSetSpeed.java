@@ -10,19 +10,19 @@ import frc.robot.RobotContainer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class HoodMove extends InstantCommand {
-  double m_pos;
+public class MagazineSetSpeed extends InstantCommand {
+  double m_Speed;
 
-  public HoodMove(double pos) {
+  public MagazineSetSpeed(double d) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.hood);
+    addRequirements(RobotContainer.magazine);
 
-    m_pos = pos;
+    m_Speed = d;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.hood.setPosition(m_pos);
+    RobotContainer.magazine.setSpeed(m_Speed);
   }
 }
