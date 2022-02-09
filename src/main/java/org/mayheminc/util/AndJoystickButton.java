@@ -16,6 +16,7 @@ public class AndJoystickButton extends Button {
         this.buttonNumber2 = buttonNumber2;
     }
 
+    @Override
     public boolean get() {
         return joystick1.getRawButton(buttonNumber1) && joystick2.getRawButton(buttonNumber2);
     }

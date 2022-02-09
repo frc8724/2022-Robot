@@ -1,7 +1,5 @@
 package org.mayheminc.util;
 
-import java.sql.Driver;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.*;
@@ -20,6 +18,7 @@ public class DisabledOnlyJoystickButton extends Button {
         this.buttonNumber = buttonNumber;
     }
 
+    @Override
     public boolean get() {
         return joystick.getRawButton(buttonNumber) && DriverStation.isDisabled();
     }

@@ -1,6 +1,7 @@
 package org.mayheminc.util.EventServer;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Event Server has a TCP Server. Every 100 ms it loops through the events
@@ -8,7 +9,7 @@ import java.util.Vector;
  */
 public class EventServer extends Thread {
 
-    Vector<Event> EventList = new Vector<Event>();
+    List<Event> EventList = new ArrayList<Event>();
     TCPServer tcpServer = new TCPServer();
 
     /**
@@ -22,7 +23,7 @@ public class EventServer extends Thread {
 
     /**
      * output a string to the TCP Server. This can be used by the events to signal
-     * thier events or single events can fire strings directly to the TCP Server
+     * their events or single events can fire strings directly to the TCP Server
      * 
      * @param str
      */
@@ -34,6 +35,7 @@ public class EventServer extends Thread {
      * Run the event server. Run the TCP Server. Loop through the events every
      * 100ms.
      */
+    @Override
     public void run() {
         tcpServer.start();
 

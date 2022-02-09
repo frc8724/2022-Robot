@@ -50,6 +50,7 @@ public class ObjectLocation {
         probability = (float)buffer.getInt() / Integer.MAX_VALUE;
     }
 
+    @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("0.00");
 

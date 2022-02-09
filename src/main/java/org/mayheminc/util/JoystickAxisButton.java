@@ -12,16 +12,18 @@ import edu.wpi.first.wpilibj2.command.button.*;
  * @author Team1519
  */
 public class JoystickAxisButton extends Button {
-    public static final int BOTH_WAYS = 1;
-    public static final int POSITIVE_ONLY = 2;
-    public static final int NEGATIVE_ONLY = 3;
+    enum Direction {
+        BOTH_WAYS,
+        POSITIVE_ONLY,
+        NEGATIVE_ONLY
+    }
 
     private static final double AXIS_THRESHOLD = 0.2;
 
     private Joystick joystick;
     private Joystick.AxisType axis;
     private int axisInt;
-    private int direction;
+    private Direction direction;
 
     private double getAxis(Joystick.AxisType axis) {
         switch (axis) {
@@ -42,26 +44,26 @@ public class JoystickAxisButton extends Button {
     }
 
     public JoystickAxisButton(Joystick stick, Joystick.AxisType axis) {
-        this(stick, axis, BOTH_WAYS);
+        this(stick, axis, Direction.BOTH_WAYS);
     }
 
-    public JoystickAxisButton(Joystick stick, Joystick.AxisType axis, int direction) {
+    public JoystickAxisButton(Joystick stick, Joystick.AxisType axis, Direction direction) {
         joystick = stick;
         this.axis = axis;
         this.direction = direction;
     }
 
     public JoystickAxisButton(Joystick stick, int axis) {
-        this(stick, axis, BOTH_WAYS);
+        this(stick, axis, Direction.BOTH_WAYS);
     }
 
-    public JoystickAxisButton(Joystick stick, int axis, int direction) {
+    public JoystickAxisButton(Joystick stick, int axis, Direction direction) {
         joystick = stick;
-        this.axis = null;
         axisInt = axis;
         this.direction = direction;
     }
 
+    @Override
     public boolean get() {
         switch (direction) {
         case BOTH_WAYS:

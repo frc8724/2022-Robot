@@ -18,16 +18,13 @@ import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Loader;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.utils.SettableSendableChooser;
-import frc.robot.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 
@@ -45,6 +42,7 @@ public class RobotContainer {
   public static final MayhemDriverStick DRIVER_STICK = new MayhemDriverStick();
   public static final MayhemDriverPad DRIVER_PAD = new MayhemDriverPad();
   public static final MayhemOperatorPad OPERATOR_PAD = new MayhemOperatorPad();
+  @SuppressWarnings("PMD.UnusedPrivateField")
   private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
 
   // The robot's subsystems and commands are defined here...

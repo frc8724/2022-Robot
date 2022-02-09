@@ -49,11 +49,13 @@ public class PidTuner extends InstantCommand implements Subsystem {
 		m_pidObj = obj;
 	}
 
+	@Override
 	public boolean runsWhenDisabled() {
 		return true;
 	}
 
 	// Run the 'instant command'. Determine which command was pressed.
+	@Override
 	public void initialize() {
 		if (m_PidCycle.get()) {
 			RunCycle();
@@ -100,35 +102,37 @@ public class PidTuner extends InstantCommand implements Subsystem {
 	}
 
 	// based on the cycle, get the P, I, or D.
+	@SuppressWarnings("PMD.SwitchStmtsShouldHaveDefault")
 	double getValue() {
 		switch (m_cycle) {
-		case 0:
-			return m_pidObj.getP();
-		case 1:
-			return m_pidObj.getI();
-		case 2:
-			return m_pidObj.getD();
-		case 3:
-			return m_pidObj.getF();
+			case 0:
+				return m_pidObj.getP();
+			case 1:
+				return m_pidObj.getI();
+			case 2:
+				return m_pidObj.getD();
+			case 3:
+				return m_pidObj.getF();
 		}
 		return 0.0;
 	}
 
 	// based on the cycle, set the P, I, or D or F.
+	@SuppressWarnings("PMD.SwitchStmtsShouldHaveDefault")
 	void setValue(final double d) {
 		switch (m_cycle) {
-		case 0:
-			m_pidObj.setP(d);
-			break;
-		case 1:
-			m_pidObj.setI(d);
-			break;
-		case 2:
-			m_pidObj.setD(d);
-			break;
-		case 3:
-			m_pidObj.setF(d);
-			break;
+			case 0:
+				m_pidObj.setP(d);
+				break;
+			case 1:
+				m_pidObj.setI(d);
+				break;
+			case 2:
+				m_pidObj.setD(d);
+				break;
+			case 3:
+				m_pidObj.setF(d);
+				break;
 		}
 	}
 

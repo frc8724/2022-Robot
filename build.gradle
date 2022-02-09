@@ -4,6 +4,15 @@ plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2022.1.1"
     // id "org.jetbrains.kotlin.jvm" version "1.6.10"
+    id "pmd"
+}
+
+pmd {
+    ruleSetFiles = files("pmd.xml")
+    ruleSets = []
+
+    ignoreFailures = true
+    consoleOutput = true
 }
 
 sourceCompatibility = JavaVersion.VERSION_11

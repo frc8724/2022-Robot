@@ -63,9 +63,9 @@ public class MayhemDriverPad {
         public final Button DRIVER_PAD_LEFT_UPPER_TRIGGER_BUTTON = new EnabledOnlyJoystickButton(DRIVER_PAD,
                         GAMEPAD_BUTTION.GAMEPAD_F310_LEFT_BUTTON);
         public final JoystickAxisButton DRIVER_PAD_LEFT_LOWER_TRIGGER_BUTTON = new JoystickAxisButton(DRIVER_PAD,
-                        GAMEPAD_AXIS.GAMEPAD_F310_LEFT_TRIGGER, JoystickAxisButton.POSITIVE_ONLY);
+                        GAMEPAD_AXIS.GAMEPAD_F310_LEFT_TRIGGER, JoystickAxisButton.Direction.POSITIVE_ONLY);
         public final JoystickAxisButton DRIVER_PAD_RIGHT_LOWER_TRIGGER_BUTTON = new JoystickAxisButton(DRIVER_PAD,
-                        GAMEPAD_AXIS.GAMEPAD_F310_RIGHT_TRIGGER, JoystickAxisButton.POSITIVE_ONLY);
+                        GAMEPAD_AXIS.GAMEPAD_F310_RIGHT_TRIGGER, JoystickAxisButton.Direction.POSITIVE_ONLY);
 
         public final Button DRIVER_PAD_BACK_BUTTON = new JoystickButton(DRIVER_PAD,
                         GAMEPAD_BUTTION.GAMEPAD_F310_BACK_BUTTON);
