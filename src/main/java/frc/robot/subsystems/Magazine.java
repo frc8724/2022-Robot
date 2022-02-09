@@ -12,9 +12,6 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 public class Magazine extends SubsystemBase {
     private final VictorSPX motorControl = new WPI_VictorSPX(Constants.Talon.INTAKE_ROLLERS);
 
-    private final double IN_SPEED = 0.6;
-    private final double OUT_SPEED = -0.5;
-
     public Magazine() {
         motorControl.setNeutralMode(NeutralMode.Coast);
         motorControl.configNominalOutputForward(+0.0f);
@@ -23,11 +20,13 @@ public class Magazine extends SubsystemBase {
         motorControl.configPeakOutputReverse(-12.0);
     }
 
-    public void moveBallsToShooter() {
-        motorControl.set(VictorSPXControlMode.PercentOutput, IN_SPEED);
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
     }
 
-    public void moveBallsToIntake() {
-        motorControl.set(VictorSPXControlMode.PercentOutput, OUT_SPEED);
+    public void setSpeed(double d) {
+        motorControl.set(VictorSPXControlMode.PercentOutput, d);
     }
+
 }

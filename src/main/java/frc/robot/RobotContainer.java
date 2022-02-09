@@ -15,11 +15,14 @@ import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.HoodMove;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
+import frc.robot.commands.SystemIntakeBalls;
+import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Loader;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -46,11 +49,12 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
-  // public static final Intake intake = new Intake();
-  // public static final Magazine magazine = new Magazine();
-  // public static final Climber climber = new Climber();
+  public static final Intake intake = new Intake();
+  public static final Magazine magazine = new Magazine();
+  public static final Loader loader = new Loader();
   public static final Shooter shooter = new Shooter();
   public static final Hood hood = new Hood();
+  // public static final Climber climber = new Climber();
 
   public static final PidTuner pidTuner = new PidTuner(
       DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE,
@@ -106,12 +110,8 @@ public class RobotContainer {
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new ShooterSetAccelerator(0.30));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenPressed(new ShooterSetAccelerator(0.40));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(0.50));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenPressed(new ShooterSetAccelerator(0.60));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new ShooterSetAccelerator(0.70));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new ShooterSetAccelerator(0.80));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new ShooterSetAccelerator(0.90));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ELEVEN.whenPressed(new ShooterSetAccelerator(1.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWELVE.whenPressed(new ShooterSetAccelerator(0.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ShooterAdjustShooterWheel(100.0));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ShooterAdjustShooterWheel(-100.0));
