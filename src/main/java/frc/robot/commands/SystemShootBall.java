@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
@@ -17,7 +16,7 @@ public class SystemShootBall extends SequentialCommandGroup {
   /** Creates a new SystemShootBall. */
   public SystemShootBall() {
 
-    // start the shooter and accellerator wheel and wait at least 1 second.
+    // start the shooter and accelerator wheel and wait at least 1 second.
     addCommands(
         new ParallelCommandGroup(new ShooterSetSpeed(1000), new ShooterAdjustAccel(0.5), new WaitCommand(1.0)));
 

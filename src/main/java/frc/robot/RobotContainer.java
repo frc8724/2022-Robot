@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autos.PointToBall;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
-import frc.robot.commands.HoodMove;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.commands.SystemIntakeBalls;
