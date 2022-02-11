@@ -13,6 +13,10 @@ import frc.robot.autos.PointToBall;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.HoodMove;
+import frc.robot.commands.IntakeMoveTo;
+import frc.robot.commands.IntakeSetRollers;
+import frc.robot.commands.LoaderSetSpeed;
+import frc.robot.commands.MagazineSetSpeed;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.commands.SystemIntakeBalls;
@@ -102,9 +106,9 @@ public class RobotContainer {
   private void configureOperatorPadButtons() {
     System.out.println("Operator Pad Buttons.");
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new ShooterSetAccelerator(0.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new ShooterSetAccelerator(0.10));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new ShooterSetAccelerator(0.20));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakeSetRollers());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new LoaderSetSpeed(0.20, false));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new MagazineSetSpeed(0.20, false));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new ShooterSetAccelerator(0.30));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenPressed(new ShooterSetAccelerator(0.40));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(0.50));

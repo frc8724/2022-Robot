@@ -4,24 +4,42 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class LoaderSetSpeed extends InstantCommand {
+public class LoaderSetSpeed extends CommandBase {
   double m_speed;
+  boolean m_instant;
 
   public LoaderSetSpeed(double d) {
+    this(d, true);
+  }
+
+  public LoaderSetSpeed(double d, boolean instant) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.loader);
     m_speed = d;
+    m_instant = instant;
+  }
+
+  @Override
+  public boolean isFinished() {
+    return !m_instant;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     RobotContainer.loader.setSpeed(m_speed);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    if (interrupted) {
+      RobotContainer.loader.setSpeed(0.0);
+    }
   }
 }
