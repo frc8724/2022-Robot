@@ -30,7 +30,7 @@ public class MagazineSetSpeed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.magazine.setSpeed(m_Speed);
+    RobotContainer.magazine.setSpeed(-m_Speed);
   }
 
   @Override

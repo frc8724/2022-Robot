@@ -6,13 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeRollers;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeMoveTo extends InstantCommand {
-  public IntakeMoveTo(Intake.Position pos) {
+  public IntakeMoveTo() {
     // Use addRequirements() here to declare subsystem dependencies.
     // addRequirements(RobotContainer.intake);
   }

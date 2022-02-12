@@ -35,7 +35,7 @@ public class SystemShootBall extends SequentialCommandGroup {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooter.setShooterSpeed(0.0);
-    RobotContainer.shooter.setAcceleratorSpeedVBus(0.0);
+    RobotContainer.accelerator.setAcceleratorSpeedVBus(0.0);
     RobotContainer.loader.setSpeed(0.0);
     RobotContainer.magazine.setSpeed(0.0);
   }

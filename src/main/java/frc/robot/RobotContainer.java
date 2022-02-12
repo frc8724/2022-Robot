@@ -14,6 +14,7 @@ import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.HoodMove;
 import frc.robot.commands.IntakeMoveTo;
+import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.LoaderSetSpeed;
 import frc.robot.commands.MagazineSetSpeed;
@@ -24,10 +25,12 @@ import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakePistons;
+import frc.robot.subsystems.IntakeRollers;
 import frc.robot.subsystems.Loader;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.utils.SettableSendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -51,10 +54,12 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
-  public static final Intake intake = new Intake();
+  public static final IntakeRollers intakeRollers = new IntakeRollers();
+  public static final IntakePistons intakePistons = new IntakePistons();
   public static final Magazine magazine = new Magazine();
   public static final Loader loader = new Loader();
   public static final Shooter shooter = new Shooter();
+  public static final ShooterAccelerator accelerator = new ShooterAccelerator();
   public static final Hood hood = new Hood();
   // public static final Climber climber = new Climber();
 
@@ -106,11 +111,11 @@ public class RobotContainer {
   private void configureOperatorPadButtons() {
     System.out.println("Operator Pad Buttons.");
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakeSetRollers());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new LoaderSetSpeed(0.20, false));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new MagazineSetSpeed(0.20, false));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new ShooterSetAccelerator(0.30));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenPressed(new ShooterSetAccelerator(0.40));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenHeld(new LoaderSetSpeed(0.20, false));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new MagazineSetSpeed(0.50, false));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(0.50));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
