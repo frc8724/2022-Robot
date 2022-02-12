@@ -21,5 +21,6 @@
         <exclude name="BeanMembersShouldSerialize" />
     </rule>
 
+    <rule ref="category/java/codestyle.xml/UnnecessaryImport" />
 
 </ruleset>
