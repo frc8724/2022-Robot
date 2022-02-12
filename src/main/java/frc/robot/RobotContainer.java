@@ -112,7 +112,7 @@ public class RobotContainer {
     System.out.println("Operator Pad Buttons.");
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenHeld(new LoaderSetSpeed(0.20, false));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenHeld(new LoaderSetSpeed(0.50, false));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new MagazineSetSpeed(0.50, false));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());

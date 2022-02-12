@@ -21,7 +21,7 @@ public class SystemIntakeBalls extends CommandBase {
   public void initialize() {
     RobotContainer.intakeRollers.suckIn();
     RobotContainer.intakePistons.Down();
-    RobotContainer.magazine.setSpeed(0.3);
+    RobotContainer.magazine.setSpeed(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

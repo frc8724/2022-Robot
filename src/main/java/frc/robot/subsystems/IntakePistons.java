@@ -12,8 +12,8 @@ import frc.robot.Constants;
 
 public class IntakePistons extends SubsystemBase {
 
-  public static final boolean INTAKE_DOWN = false;
-  public static final boolean INTAKE_UP = true;
+  public static final boolean INTAKE_DOWN = true;
+  public static final boolean INTAKE_UP = false;
 
   private final Solenoid piston = new Solenoid(PneumaticsModuleType.CTREPCM,
       Constants.Solenoid.INTAKE);

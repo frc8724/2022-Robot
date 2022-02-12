@@ -13,7 +13,7 @@ public class IntakeRollers extends SubsystemBase {
 
     private final VictorSPX rollersTalon = new WPI_VictorSPX(Constants.Talon.INTAKE_ROLLERS);
 
-    private final double ROLLER_INTAKE = 0.7;
+    private final double ROLLER_INTAKE = 0.95;
     private final double ROLLER_STOP = 0.0;
 
     public IntakeRollers() {

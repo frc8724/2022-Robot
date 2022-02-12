@@ -26,7 +26,7 @@ public class Magazine extends SubsystemBase {
     }
 
     public void setSpeed(double d) {
-        motorControl.set(VictorSPXControlMode.PercentOutput, d);
+        motorControl.set(VictorSPXControlMode.PercentOutput, -d);
     }
 
 }
