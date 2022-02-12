@@ -16,6 +16,8 @@ public class LoaderSetInstant extends InstantCommand {
   public LoaderSetInstant(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.loader);
+
+    m_speed = speed;
   }
 
   // Called when the command is initially scheduled.

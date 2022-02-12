@@ -17,16 +17,15 @@ public class SystemShootBall extends SequentialCommandGroup {
   public SystemShootBall() {
 
     // start the shooter and accellerator wheel and wait at least 1 second.
-    // addCommands(
-    // new ParallelCommandGroup(new ShooterSetSpeed(500), new
-    // ShooterSetAccelerator(0.2), new WaitCommand(1.0)));
-    addCommands(new ShooterSetSpeed(500));
-    addCommands(new ShooterSetAccelerator(0.2));
+    addCommands(
+        new ParallelCommandGroup(new ShooterSetSpeed(750), new ShooterSetAccelerator(0.5), new WaitCommand(1.0)));
+    // addCommands(new ShooterSetSpeed(500));
+    // addCommands(new ShooterSetAccelerator(0.2));
 
     // turn on the loader
     addCommands(new LoaderSetInstant(0.5));
 
-    // addCommands(new WaitCommand(0.2));
+    addCommands(new WaitCommand(0.2));
 
     // turn on the magazine
     addCommands(new MagazineSetSpeed(0.5));

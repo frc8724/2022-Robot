@@ -16,6 +16,7 @@ import frc.robot.commands.HoodMove;
 import frc.robot.commands.IntakeMoveTo;
 import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeSetRollers;
+import frc.robot.commands.LoaderSetInstant;
 import frc.robot.commands.LoaderSetSpeed;
 import frc.robot.commands.MagazineSetSpeed;
 import frc.robot.commands.ShooterAdjustShooterWheel;
@@ -112,7 +113,7 @@ public class RobotContainer {
     System.out.println("Operator Pad Buttons.");
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenHeld(new LoaderSetSpeed(0.50, false));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new LoaderSetInstant(0.50));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new MagazineSetSpeed(0.50, false));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());

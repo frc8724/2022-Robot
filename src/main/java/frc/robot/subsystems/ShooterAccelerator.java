@@ -26,12 +26,12 @@ public class ShooterAccelerator extends SubsystemBase {
     configureAcceleratorWheels();
   }
 
-  public void init() {
+  // public void init() {
 
-    configureAcceleratorWheels();
+  // configureAcceleratorWheels();
 
-    setAcceleratorSpeedVBus(0.0);
-  }
+  // setAcceleratorSpeedVBus(0.0);
+  // }
 
   @Override
   public void periodic() {
