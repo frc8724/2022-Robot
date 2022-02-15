@@ -9,6 +9,7 @@ import org.mayheminc.util.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autoroutines.ShootAndMoveForward;
 // import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
@@ -24,6 +25,7 @@ import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.IntakePistons;
@@ -64,7 +66,7 @@ public class RobotContainer {
   public static final Shooter shooter = new Shooter();
   public static final ShooterAccelerator accelerator = new ShooterAccelerator();
   public static final Hood hood = new Hood();
-  // public static final Climber climber = new Climber();
+  public static final Climber climber = new Climber();
 
   public static final PidTuner pidTuner = new PidTuner(
       DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE,
@@ -82,9 +84,9 @@ public class RobotContainer {
   public RobotContainer() {
     System.out.println("RobotContainer const");
 
-
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
+
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
@@ -157,4 +159,5 @@ public class RobotContainer {
   public Command getTeleopCommand() {
     return new DriveBaseTeleopCommand(this.drive, DRIVER_PAD);
   }
+
 }

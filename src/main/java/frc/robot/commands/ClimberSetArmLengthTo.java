@@ -10,22 +10,19 @@ import frc.robot.RobotContainer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SystemZero extends InstantCommand {
-  public SystemZero() {
+public class ClimberSetArmLengthTo extends InstantCommand {
+  double m_pos;
+
+  public ClimberSetArmLengthTo(double d) {
     // Use addRequirements() here to declare subsystem dependencies.
-    // addRequirements(RobotContainer.hood);
-    addRequirements(RobotContainer.hood);
+    addRequirements(RobotContainer.climber);
+
+    m_pos = d;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.hood.zero();
-    RobotContainer.climber.zero();
-  }
-
-  @Override
-  public boolean runsWhenDisabled() {
-    return true;
+    RobotContainer.climber.setArmLengthTo(m_pos);
   }
 }
