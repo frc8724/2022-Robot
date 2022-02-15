@@ -16,7 +16,7 @@ public class ShooterSetAccelerator extends InstantCommand {
 
   public ShooterSetAccelerator(double setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.shooter);
+    addRequirements(RobotContainer.accelerator);
 
     m_setpoint = setpoint;
   }
@@ -25,6 +25,6 @@ public class ShooterSetAccelerator extends InstantCommand {
   @Override
   public void initialize() {
     DriverStation.reportError("shooter set accelerator", false);
-    RobotContainer.shooter.setAcceleratorSpeedVBus(m_setpoint);
+    RobotContainer.accelerator.setAcceleratorSpeedVBus(m_setpoint);
   }
 }

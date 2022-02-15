@@ -30,4 +30,11 @@ public class ShooterSetSpeed extends CommandBase {
   public boolean isFinished() {
     return RobotContainer.shooter.isShooterAtSpeed();
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    if (interrupted) {
+      RobotContainer.shooter.setShooterSpeed(0.0);
+    }
+  }
 }

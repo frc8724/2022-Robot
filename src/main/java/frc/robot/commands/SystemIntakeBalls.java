@@ -11,15 +11,17 @@ public class SystemIntakeBalls extends CommandBase {
   /** Creates a new SystemIntakeBalls. */
   public SystemIntakeBalls() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.intake);
+    addRequirements(RobotContainer.intakeRollers);
+    addRequirements(RobotContainer.intakePistons);
     addRequirements(RobotContainer.magazine);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.intake.putDown();
-    RobotContainer.magazine.setSpeed(0.3);
+    RobotContainer.intakeRollers.suckIn();
+    RobotContainer.intakePistons.Down();
+    RobotContainer.magazine.setSpeed(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,7 +32,8 @@ public class SystemIntakeBalls extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.intake.putUp();
+    RobotContainer.intakeRollers.stop();
+    RobotContainer.intakePistons.Up();
     RobotContainer.magazine.setSpeed(0.0);
   }
 

@@ -15,7 +15,7 @@ public class ShooterAdjustAccel extends InstantCommand {
 
   public ShooterAdjustAccel(double adjust) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.shooter);
+    addRequirements(RobotContainer.accelerator);
 
     m_adjust = adjust;
   }
@@ -23,8 +23,8 @@ public class ShooterAdjustAccel extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    var speed = RobotContainer.shooter.getAcceleratorSpeedVBus();
+    var speed = RobotContainer.accelerator.getAcceleratorSpeedVBus();
     speed += m_adjust;
-    RobotContainer.shooter.setAcceleratorSpeedVBus(speed);
+    RobotContainer.accelerator.setAcceleratorSpeedVBus(speed);
   }
 }
