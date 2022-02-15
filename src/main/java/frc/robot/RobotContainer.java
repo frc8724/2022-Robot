@@ -9,7 +9,6 @@ import org.mayheminc.util.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.ShooterAdjustShooterWheel;
@@ -70,8 +69,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
     System.out.println("RobotContainer const");
-
-    this.autoChooser.setDefaultOption("hello world", new PointToTarget(this.drive));
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
