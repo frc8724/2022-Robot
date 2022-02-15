@@ -16,11 +16,6 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     private final MayhemTalonSRX shooterWheelRight = new MayhemTalonSRX(Constants.Talon.SHOOTER_WHEEL_R,
             CurrentLimit.HIGH_CURRENT);
 
-    private final MayhemTalonSRX acceleratorWheelLeft = new MayhemTalonSRX(Constants.Talon.ACCELERATOR_WHEEL_L,
-            CurrentLimit.HIGH_CURRENT);
-    private final MayhemTalonSRX acceleratorWheelRight = new MayhemTalonSRX(Constants.Talon.ACCELERATOR_WHEEL_R,
-            CurrentLimit.HIGH_CURRENT);
-
     private final double TALON_TICKS_PER_REV = 2048.0;
     private final double SECONDS_PER_MINUTE = 60.0;
     private final double HUNDRED_MS_PER_SECOND = 10.0;
@@ -49,29 +44,11 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
      */
     public Shooter() {
         configureWheelFalcons();
-        configureAcceleratorWheels();
-    }
-
-    private void configureAcceleratorWheels() {
-        configureOneAcceleratorWheel(acceleratorWheelLeft);
-        configureOneAcceleratorWheel(acceleratorWheelRight);
-
-        acceleratorWheelLeft.setInverted(false);
-        acceleratorWheelRight.setInverted(true);
-    }
-
-    private void configureOneAcceleratorWheel(MayhemTalonSRX acceleratorWheel) {
-        acceleratorWheel.setNeutralMode(NeutralMode.Coast);
-        acceleratorWheel.configNominalOutputVoltage(+0.0f, -0.0f);
-        acceleratorWheel.configPeakOutputVoltage(+12.0, -12.0);
-        acceleratorWheel.configNeutralDeadband(0.001); // Config neutral deadband to be the smallest possible
     }
 
     public void init() {
         configureWheelFalcons();
-        configureAcceleratorWheels();
         setShooterSpeedVBus(0.0);
-        setAcceleratorSpeedVBus(0.0);
     }
 
     // configure a pair of shooter wheel falcons
@@ -146,9 +123,6 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         // shooterWheelRight.getBusVoltage());
         // SmartDashboard.putNumber("Shooter Wheel R-Current",
         // shooterWheelRight.getSupplyCurrent());
-
-        SmartDashboard.putNumber("Accel L I", acceleratorWheelLeft.getStatorCurrent());
-        SmartDashboard.putNumber("Accel R I", acceleratorWheelRight.getStatorCurrent());
     }
 
     public void zero() {
@@ -177,19 +151,6 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     public void setShooterSpeedVBus(double pos) {
         shooterWheelLeft.set(ControlMode.PercentOutput, pos);
         shooterWheelRight.set(ControlMode.PercentOutput, pos);
-    }
-
-    double accelSpeed;
-
-    public void setAcceleratorSpeedVBus(double pos) {
-        accelSpeed = pos;
-        acceleratorWheelLeft.set(ControlMode.PercentOutput, pos);
-        acceleratorWheelRight.set(ControlMode.PercentOutput, pos);
-        System.out.println("setShooterSpeedVBus: " + pos);
-    }
-
-    public double getAcceleratorSpeedVBus() {
-        return accelSpeed;
     }
 
     public double getShooterSpeed() {

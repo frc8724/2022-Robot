@@ -43,8 +43,8 @@ public final class Constants {
     }
 
     public final class Solenoid {
-        public static final int INTAKE = 1;
-        public static final int CLIMBER = 2;
+        public static final int INTAKE = 0;
+        public static final int CLIMBER = 1;
     }
 
     public final class PDP {

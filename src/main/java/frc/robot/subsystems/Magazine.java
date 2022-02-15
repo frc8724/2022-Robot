@@ -10,7 +10,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 
 public class Magazine extends SubsystemBase {
-    private final VictorSPX motorControl = new WPI_VictorSPX(Constants.Talon.INTAKE_ROLLERS);
+    private final VictorSPX motorControl = new WPI_VictorSPX(Constants.Talon.MAGAZINE_ROLLERS);
 
     public Magazine() {
         motorControl.setNeutralMode(NeutralMode.Coast);
@@ -26,7 +26,7 @@ public class Magazine extends SubsystemBase {
     }
 
     public void setSpeed(double d) {
-        motorControl.set(VictorSPXControlMode.PercentOutput, d);
+        motorControl.set(VictorSPXControlMode.PercentOutput, -d);
     }
 
 }

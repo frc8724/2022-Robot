@@ -10,36 +10,20 @@ import frc.robot.RobotContainer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class LoaderSetSpeed extends CommandBase {
-  double m_speed;
-  boolean m_instant;
-
-  public LoaderSetSpeed(double d) {
-    this(d, true);
-  }
-
-  public LoaderSetSpeed(double d, boolean instant) {
+public class IntakeSetRollers extends CommandBase {
+  public IntakeSetRollers() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.loader);
-    m_speed = d;
-    m_instant = instant;
-  }
-
-  @Override
-  public boolean isFinished() {
-    return !m_instant;
+    addRequirements(RobotContainer.intakeRollers);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.loader.setSpeed(-m_speed);
+    RobotContainer.intakeRollers.suckIn();
   }
 
   @Override
   public void end(boolean interrupted) {
-    if (!m_instant) {
-      RobotContainer.loader.setSpeed(0.0);
-    }
+    RobotContainer.intakeRollers.stop();
   }
 }

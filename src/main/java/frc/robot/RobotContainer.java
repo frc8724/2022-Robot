@@ -13,6 +13,13 @@ import frc.robot.autoroutines.ShootAndMoveForward;
 // import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
+import frc.robot.commands.HoodMove;
+import frc.robot.commands.IntakeMoveTo;
+import frc.robot.commands.IntakePistonsSet;
+import frc.robot.commands.IntakeSetRollers;
+import frc.robot.commands.LoaderSetInstant;
+import frc.robot.commands.LoaderSetSpeed;
+import frc.robot.commands.MagazineSetSpeed;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.commands.SystemIntakeBalls;
@@ -21,10 +28,12 @@ import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakePistons;
+import frc.robot.subsystems.IntakeRollers;
 import frc.robot.subsystems.Loader;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
 import frc.robot.vision.models.TargetVisionModel;
@@ -49,11 +58,13 @@ public class RobotContainer {
   private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
 
   // The robot's subsystems and commands are defined here...
-  public static final DriveBaseSubsystem drive = new DriveBaseSubsystem();
-  public static final Intake intake = new Intake();
+  private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
+  public static final IntakeRollers intakeRollers = new IntakeRollers();
+  public static final IntakePistons intakePistons = new IntakePistons();
   public static final Magazine magazine = new Magazine();
   public static final Loader loader = new Loader();
   public static final Shooter shooter = new Shooter();
+  public static final ShooterAccelerator accelerator = new ShooterAccelerator();
   public static final Hood hood = new Hood();
   public static final Climber climber = new Climber();
 
@@ -75,7 +86,7 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
-    autoChooser.addOption("Shoot And Move Forward", new ShootAndMoveForward());
+
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
@@ -115,11 +126,11 @@ public class RobotContainer {
   private void configureOperatorPadButtons() {
     System.out.println("Operator Pad Buttons.");
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new ShooterSetAccelerator(0.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new ShooterSetAccelerator(0.10));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new ShooterSetAccelerator(0.20));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new ShooterSetAccelerator(0.30));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenPressed(new ShooterSetAccelerator(0.40));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new LoaderSetInstant(0.50));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new MagazineSetSpeed(0.50, false));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(0.50));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
