@@ -28,7 +28,7 @@ public class SystemShootBall extends SequentialCommandGroup {
     // turn on the magazine
     addCommands(new MagazineSetSpeed(0.5));
 
-    addCommands(new WaitCommand(5.0));
+    addCommands(new WaitCommand(3.0));
 
   }
 
