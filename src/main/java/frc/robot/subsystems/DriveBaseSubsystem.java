@@ -168,6 +168,10 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         return ((double) ((int) (d * 100))) / 100;
     }
 
+    public void stop() {
+        setMotorPower(0.0, 0.0);
+    }
+
     private void setMotorPower(double leftPower, double rightPower) {
         if (rightPower > 1.0)
             rightPower = 1.0;
@@ -376,6 +380,10 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     public void updateHistory() {
         final double now = Timer.getFPGATimestamp();
         headingHistory.add(now, headingCorrection.getHeading());
+    }
+
+    public double getHeading() {
+        return headingCorrection.getHeading();
     }
 
     public double getHeadingForCapturedImage() {

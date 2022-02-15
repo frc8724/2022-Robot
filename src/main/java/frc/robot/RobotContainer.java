@@ -48,7 +48,7 @@ public class RobotContainer {
   private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
 
   // The robot's subsystems and commands are defined here...
-  private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
+  public static final DriveBaseSubsystem drive = new DriveBaseSubsystem();
   public static final Intake intake = new Intake();
   public static final Magazine magazine = new Magazine();
   public static final Loader loader = new Loader();

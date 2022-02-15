@@ -16,6 +16,13 @@ public class SystemClimberAttachToNextRung extends SequentialCommandGroup {
   /** Creates a new SystemClimberAttachToNextRung. */
   public SystemClimberAttachToNextRung() {
 
+    // traverse
+    // arm extend unhook
+    // arm down
+    // arm extend
+    // arm up
+    // arm retract
+
     // hooks to partially out either to unhook a rung or we are on the ground to we
     // can extend a little
     addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
@@ -33,6 +40,12 @@ public class SystemClimberAttachToNextRung extends SequentialCommandGroup {
 
     // pull arms in. This will unhook the weak arms
     addCommands(new ClimberSetArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
+
+    // wait for weak arms to meet up with the strong arms
+    addCommands(new WaitCommand(1.0));
+
+    // pull up to hook the weak arms on the rung
+    addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
 
   }
 
