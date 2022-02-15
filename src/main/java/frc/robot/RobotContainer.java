@@ -58,7 +58,7 @@ public class RobotContainer {
   private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
 
   // The robot's subsystems and commands are defined here...
-  private final DriveBaseSubsystem drive = new DriveBaseSubsystem();
+  public static final DriveBaseSubsystem drive = new DriveBaseSubsystem();
   public static final IntakeRollers intakeRollers = new IntakeRollers();
   public static final IntakePistons intakePistons = new IntakePistons();
   public static final Magazine magazine = new Magazine();
@@ -86,7 +86,6 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
-
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
