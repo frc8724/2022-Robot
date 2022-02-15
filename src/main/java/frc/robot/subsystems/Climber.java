@@ -123,4 +123,9 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         rightTalon.config_kF(0, d, 0);
     }
 
+    public void zero() {
+        leftTalon.setSelectedSensorPosition(0.0);
+        rightTalon.setSelectedSensorPosition(0.0);
+    }
+
 }
