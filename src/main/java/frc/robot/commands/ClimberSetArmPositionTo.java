@@ -16,6 +16,7 @@ public class ClimberSetArmPositionTo extends InstantCommand {
   public ClimberSetArmPositionTo(boolean b) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.climber);
+    m_pos = b;
   }
 
   // Called when the command is initially scheduled.

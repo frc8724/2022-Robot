@@ -38,12 +38,12 @@ public class MayhemTalonSRX extends WPI_TalonSRX {
     }
 
     public void configNominalOutput(double forward, double reverse) {
-        super.configNominalOutputForward(forward, 1000);
-        super.configNominalOutputReverse(reverse, 1000);
+        super.configNominalOutputForward(forward, 0);
+        super.configNominalOutputReverse(reverse, 0);
     }
 
     public void configPeakOutputVoltage(double forward, double reverse) {
-        super.configPeakOutputForward(forward, 1000);
-        super.configPeakOutputReverse(reverse, 1000);
+        super.configPeakOutputForward(forward, 0);
+        super.configPeakOutputReverse(reverse, 0);
     }
 }

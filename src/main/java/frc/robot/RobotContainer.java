@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.ShootAndMoveForward;
+import frc.robot.commands.ClimberSetArmLengthPowerTo;
+import frc.robot.commands.ClimberSetArmLengthTo;
+import frc.robot.commands.ClimberSetArmPositionTo;
 // import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
@@ -76,7 +79,7 @@ public class RobotContainer {
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
-  public static final Vision vision = new Vision();
+  // public static final Vision vision = new Vision();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -92,8 +95,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    vision.init();
-    vision.start(new TargetVisionModel());
+    // vision.init();
+    // vision.start(new TargetVisionModel());
 
     SmartDashboard.putNumber("r1", 0);
     SmartDashboard.putNumber("r2", 0);
@@ -125,21 +128,29 @@ public class RobotContainer {
   private void configureOperatorPadButtons() {
     System.out.println("Operator Pad Buttons.");
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new LoaderSetInstant(0.50));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new MagazineSetSpeed(0.50, false));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(0.50));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new
+    // ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new
+    // ClimberSetArmLengthTo(Climber.ARMS_OUT_POSITION));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
 
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ShooterAdjustShooterWheel(100.0));
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ShooterAdjustShooterWheel(-100.0));
+    // OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new
+    // ClimberSetArmPositionTo(Climber.ARMS_UP));
+    // OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new
+    // ClimberSetArmPositionTo(Climber.ARMS_DOWN));
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodAdjust(-200));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodAdjust(200));
 
+    // OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_UP.whenHeld(new
+    // ClimberSetArmLengthPowerTo(0.3));
+    // OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_DOWN.whenHeld(new
+    // ClimberSetArmLengthPowerTo(-0.3));
   }
 
   private void configureDriverPadButtons() {
