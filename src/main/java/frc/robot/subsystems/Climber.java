@@ -46,7 +46,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
         talon.changeControlMode(ControlMode.Position);
         talon.setNeutralMode(NeutralMode.Coast);
-        talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         talon.configNominalOutputVoltage(+0.0f, -0.0f);
         talon.configPeakOutputVoltage(+12.0, -12.0);

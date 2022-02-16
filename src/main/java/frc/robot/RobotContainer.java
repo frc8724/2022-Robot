@@ -139,22 +139,18 @@ public class RobotContainer {
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
 
-    // OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new
-    // ClimberSetArmPositionTo(Climber.ARMS_UP));
-    // OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new
-    // ClimberSetArmPositionTo(Climber.ARMS_DOWN));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_UP));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodAdjust(-200));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodAdjust(200));
 
-    // OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_UP.whenHeld(new
-    // ClimberSetArmLengthPowerTo(0.3));
-    // OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_DOWN.whenHeld(new
-    // ClimberSetArmLengthPowerTo(-0.3));
+    OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_UP.whenHeld(new ClimberSetArmLengthPowerTo(0.3));
+    OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_DOWN.whenHeld(new ClimberSetArmLengthPowerTo(-0.3));
   }
 
   private void configureDriverPadButtons() {
-    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whenPressed(new PrintCommand("DRIVER PAD RED"));
+    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whileHeld(new SystemShootBall());
   }
 
   /**
@@ -167,7 +163,7 @@ public class RobotContainer {
   }
 
   public Command getTeleopCommand() {
-    return new DriveBaseTeleopCommand(this.drive, DRIVER_PAD);
+    return new DriveBaseTeleopCommand(RobotContainer.drive, DRIVER_PAD);
   }
 
 }
