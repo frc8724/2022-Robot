@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import org.mayheminc.util.History;
-import frc.robot.utils.MayhemTalonSRX;
+import org.mayheminc.util.MayhemTalonSRX;
+import org.mayheminc.util.MayhemTalonFX.CurrentLimit;
+
 import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -22,7 +24,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     HeadingCorrection headingCorrection = new HeadingCorrection();
 
     // Talons
-    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_TOP);
+    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_TOP,
+            CurrentLimit.HIGH_CURRENT);
     private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_BOTTOM);
     private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_TOP);
     private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_BOTTOM);
@@ -81,8 +84,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         talon.configContinuousCurrentLimit(40);
         talon.configPeakCurrentDuration(3000);
 
-        talon.configNominalOutput(0, 0);
-        talon.configPeakOutputVoltage(1, -1);
+        talon.configNominalOutputVoltage(+0.0f, -0.0f);
+        talon.configPeakOutputVoltage(+12.0, -12.0);
 
         // configure current limits
         // enabled = true
