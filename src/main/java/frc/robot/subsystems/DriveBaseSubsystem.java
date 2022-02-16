@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import org.mayheminc.util.History;
 import org.mayheminc.util.MayhemTalonSRX;
-import org.mayheminc.util.MayhemTalonFX.CurrentLimit;
+import org.mayheminc.util.MayhemTalonSRX.CurrentLimit;
 
 import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix.motorcontrol.*;
@@ -26,9 +26,12 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     // Talons
     private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_TOP,
             CurrentLimit.HIGH_CURRENT);
-    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_BOTTOM);
-    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_TOP);
-    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_BOTTOM);
+    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_BOTTOM,
+            CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_TOP,
+            CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_BOTTOM,
+            CurrentLimit.HIGH_CURRENT);
 
     // Driving mode
     private final boolean m_speedRacerDriveMode = true; // set by default
@@ -110,7 +113,7 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
         talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
-        talon.configNominalOutput(0, 0);
+        talon.configNominalOutputVoltage(+0.0f, -0.0f);
         talon.configPeakOutputVoltage(1, -1);
 
         talon.config_kP(slot, wheelP, timeout);
@@ -427,19 +430,19 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     ////////////////////////////////////////////////////
     // PidTunerObject
     public double getP() {
-        return leftFrontTalon.kP;
+        return leftFrontTalon.getP();
     }
 
     public double getI() {
-        return leftFrontTalon.kI;
+        return leftFrontTalon.getI();
     }
 
     public double getD() {
-        return leftFrontTalon.kD;
+        return leftFrontTalon.getD();
     }
 
     public double getF() {
-        return leftFrontTalon.kF;
+        return leftFrontTalon.getF();
 
     }
 
