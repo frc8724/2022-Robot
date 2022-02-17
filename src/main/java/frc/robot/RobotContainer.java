@@ -19,12 +19,15 @@ import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.HoodMove;
 import frc.robot.commands.IntakeMoveTo;
 import frc.robot.commands.IntakePistonsSet;
+import frc.robot.commands.IntakeReverseRollers;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.LoaderSetInstant;
 import frc.robot.commands.LoaderSetSpeed;
 import frc.robot.commands.MagazineSetSpeed;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
+import frc.robot.commands.SystemClimberAttachToNextRung;
+import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
@@ -126,27 +129,31 @@ public class RobotContainer {
   }
 
   private void configureOperatorPadButtons() {
-    System.out.println("Operator Pad Buttons.");
+    // piston down d-pad down and up
+    // climb to first rung. btn 9
+    // climb to next rung. btn 10
 
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new
-    // ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
+    // intake down - btn 2
+    // intake up - btn 4
+    // intake rollers in. btn 6
+    // intake rollers out. btn 8
+
+    // hood adjust btn d-pad left and right
+
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new
-    // ClimberSetArmLengthTo(Climber.ARMS_OUT_POSITION));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
+
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new ClimberSetArmLengthPowerTo(0.3));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new ClimberSetArmLengthPowerTo(-0.3));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());
+
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new SystemClimberInitialClimb());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new SystemClimberAttachToNextRung());
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_UP));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodAdjust(-200));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodAdjust(200));
-
-    OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_UP.whenHeld(new ClimberSetArmLengthPowerTo(0.3));
-    OPERATOR_PAD.OPERATOR_PAD_RIGHT_Y_AXIS_DOWN.whenHeld(new ClimberSetArmLengthPowerTo(-0.3));
   }
 
   private void configureDriverPadButtons() {

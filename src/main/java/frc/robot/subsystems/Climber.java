@@ -23,13 +23,13 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
     public static final boolean ARMS_UP = true;
     public static final boolean ARMS_DOWN = false;
-    public static final double ARMS_OUT_POSITION = 100.0;
-    public static final double ARMS_UNHOOK_POSITION = 75.0;
-    public static final double ARMS_IN_POSITION = 50.0;
+    public static final double ARMS_OUT_POSITION = 200000.0;
+    public static final double ARMS_UNHOOK_POSITION = 100000.0;
+    public static final double ARMS_IN_POSITION = 2000.0;
 
-    private final double MAX_POSITION = 150.0;
-    private final double MIN_POSITION = 25.0;
-    private final double POSIITON_TOLERANCE = 100;
+    private final double MAX_POSITION = ARMS_OUT_POSITION;
+    private final double MIN_POSITION = ARMS_IN_POSITION / 2;
+    private final double POSIITON_TOLERANCE = 1000;
 
     double m_target;
 
@@ -45,9 +45,9 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     private void ConfigureTalon(MayhemTalonSRX talon) {
-        talon.config_kP(0, 10.0, 0);
+        talon.config_kP(0, 0.5, 0);
         talon.config_kI(0, 0.0, 0);
-        talon.config_kD(0, 0.0, 0);
+        talon.config_kD(0, 40.0, 0);
         talon.config_kF(0, 0.0, 0);
 
         talon.changeControlMode(ControlMode.Position);
@@ -57,10 +57,12 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         talon.configNominalOutputVoltage(+0.0f, -0.0f);
         talon.configPeakOutputVoltage(+12.0, -12.0);
 
-        // talon.configForwardSoftLimitThreshold(MAX_POSITION);
-        // talon.configForwardSoftLimitEnable(true);
-        // talon.configReverseSoftLimitThreshold(MIN_POSITION);
-        // talon.configReverseSoftLimitEnable(true);
+        talon.configAllowableClosedloopError(0, POSIITON_TOLERANCE, 0);
+
+        talon.configForwardSoftLimitThreshold(MAX_POSITION);
+        talon.configForwardSoftLimitEnable(true);
+        talon.configReverseSoftLimitThreshold(MIN_POSITION);
+        talon.configReverseSoftLimitEnable(true);
     }
 
     public void setArmPositionTo(boolean b) {

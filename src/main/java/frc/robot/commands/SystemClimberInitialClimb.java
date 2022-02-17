@@ -15,9 +15,6 @@ import frc.robot.subsystems.Climber;
 public class SystemClimberInitialClimb extends SequentialCommandGroup {
   /** Creates a new SystemClimberInitialClimb. */
   public SystemClimberInitialClimb() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-
     // initial climb
     // arm up.
     // arm extend
@@ -29,7 +26,9 @@ public class SystemClimberInitialClimb extends SequentialCommandGroup {
 
     addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
 
-    addCommands(new ParallelRaceGroup(new DriveStraight(-0.2), new WaitCommand(0.5)));
+    addCommands(
+        new ParallelRaceGroup(// new DriveStraight(-0.2),
+            new WaitCommand(5.5)));
 
     addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
 
