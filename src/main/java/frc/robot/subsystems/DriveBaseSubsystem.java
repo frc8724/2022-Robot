@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObject */ {
+public class DriveBaseSubsystem extends SubsystemBase {
     History headingHistory = new History();
 
     PowerDistribution pdp = new PowerDistribution();
