@@ -9,23 +9,13 @@ import org.mayheminc.util.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.commands.ClimberSetArmLengthPowerTo;
-import frc.robot.commands.ClimberSetArmLengthTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
 // import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
-import frc.robot.commands.HoodMove;
-import frc.robot.commands.IntakeMoveTo;
 import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeSetRollers;
-import frc.robot.commands.LoaderSetInstant;
-import frc.robot.commands.LoaderSetSpeed;
-import frc.robot.commands.MagazineSetSpeed;
-import frc.robot.commands.ShooterAdjustShooterWheel;
-import frc.robot.commands.ShooterSetAccelerator;
-import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.Climber;
@@ -38,10 +28,7 @@ import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.utils.SettableSendableChooser;
-import frc.robot.vision.Vision;
-import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

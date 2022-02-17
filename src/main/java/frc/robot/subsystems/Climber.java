@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
 // import org.mayheminc.util.MayhemTalonFX/;
 import org.mayheminc.util.MayhemTalonSRX;
@@ -29,7 +28,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
     private final double MAX_POSITION = 150.0;
     private final double MIN_POSITION = 25.0;
-    private final double POSIITON_TOLERANCE = 100;
+    private final double POSITION_TOLERANCE = 100;
 
     double m_target;
 
@@ -79,8 +78,8 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     public boolean isAtPosition() {
-        boolean left = Math.abs(leftTalon.getSelectedSensorPosition() - m_target) < POSIITON_TOLERANCE;
-        boolean right = Math.abs(rightTalon.getSelectedSensorPosition() - m_target) < POSIITON_TOLERANCE;
+        boolean left = Math.abs(leftTalon.getSelectedSensorPosition() - m_target) < POSITION_TOLERANCE;
+        boolean right = Math.abs(rightTalon.getSelectedSensorPosition() - m_target) < POSITION_TOLERANCE;
         return left && right;
     }
 
