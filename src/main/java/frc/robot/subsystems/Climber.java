@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
-import org.mayheminc.util.MayhemTalonFX;
+// import org.mayheminc.util.MayhemTalonFX/;
 import org.mayheminc.util.MayhemTalonSRX;
 import org.mayheminc.util.PidTunerObject;
 import org.mayheminc.util.MayhemTalonSRX.CurrentLimit;
@@ -18,8 +18,8 @@ import frc.robot.Constants;
 
 public class Climber extends SubsystemBase implements PidTunerObject {
     private final Solenoid strongArmPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.CLIMBER);
-    private final MayhemTalonFX leftTalon = new MayhemTalonFX(Constants.Talon.CLIMBER_L, CurrentLimit.HIGH_CURRENT);
-    private final MayhemTalonFX rightTalon = new MayhemTalonFX(Constants.Talon.CLIMBER_R, CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX leftTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_L, CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX rightTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_R, CurrentLimit.HIGH_CURRENT);
 
     public static final boolean ARMS_UP = true;
     public static final boolean ARMS_DOWN = false;
@@ -36,9 +36,15 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     public Climber() {
         ConfigureTalon(leftTalon);
         ConfigureTalon(rightTalon);
+
+        leftTalon.setInverted(true);
+        rightTalon.setInverted(false);
+
+        leftTalon.setSensorPhase(false);
+        rightTalon.setSensorPhase(false);
     }
 
-    private void ConfigureTalon(MayhemTalonFX talon) {
+    private void ConfigureTalon(MayhemTalonSRX talon) {
         talon.config_kP(0, 10.0, 0);
         talon.config_kI(0, 0.0, 0);
         talon.config_kD(0, 0.0, 0);
@@ -50,13 +56,11 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
         talon.configNominalOutputVoltage(+0.0f, -0.0f);
         talon.configPeakOutputVoltage(+12.0, -12.0);
-        talon.setInverted(false);
-        talon.setSensorPhase(false);
 
-        talon.configForwardSoftLimitThreshold(MAX_POSITION);
-        talon.configForwardSoftLimitEnable(true);
-        talon.configReverseSoftLimitThreshold(MIN_POSITION);
-        talon.configReverseSoftLimitEnable(true);
+        // talon.configForwardSoftLimitThreshold(MAX_POSITION);
+        // talon.configForwardSoftLimitEnable(true);
+        // talon.configReverseSoftLimitThreshold(MIN_POSITION);
+        // talon.configReverseSoftLimitEnable(true);
     }
 
     public void setArmPositionTo(boolean b) {
@@ -71,7 +75,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
     public void setArmLengthPowerTo(double d) {
         leftTalon.set(ControlMode.PercentOutput, d);
-        rightTalon.set(ControlMode.PercentOutput, -d);
+        rightTalon.set(ControlMode.PercentOutput, d);
     }
 
     public boolean isAtPosition() {
@@ -81,20 +85,22 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     public void stop() {
-        setArmLengthTo(leftTalon.getSelectedSensorPosition());
+        // setArmLengthTo(leftTalon.getSelectedSensorPosition());
+        leftTalon.set(ControlMode.PercentOutput, 0.0);
+        rightTalon.set(ControlMode.PercentOutput, 0.0);
     }
 
     @Override
     public void periodic() {
-        updateSmaartDashboard();
+        updateSmartDashboard();
     }
 
     int count;
 
-    private void updateSmaartDashboard() {
+    private void updateSmartDashboard() {
         SmartDashboard.putNumber("Climber Left Pos", leftTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Climber Right Pos", rightTalon.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Climber count", count++);
+        // SmartDashboard.putNumber("Climber count", count++);
     }
 
     @Override

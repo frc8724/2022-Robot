@@ -136,8 +136,8 @@ public class RobotContainer {
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new ClimberSetArmLengthPowerTo(0.3));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new ClimberSetArmLengthPowerTo(-0.3));
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_UP));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
