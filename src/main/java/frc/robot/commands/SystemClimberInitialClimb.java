@@ -27,8 +27,8 @@ public class SystemClimberInitialClimb extends SequentialCommandGroup {
     addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
 
     addCommands(
-        new ParallelRaceGroup(// new DriveStraight(-0.2),
-            new WaitCommand(5.5)));
+        new ParallelRaceGroup(new DriveStraight(-0.2),
+            new WaitCommand(0.75)));
 
     addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
 

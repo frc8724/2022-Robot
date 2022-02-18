@@ -6,9 +6,12 @@ package frc.robot;
 
 import org.mayheminc.util.*;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autoroutines.ShootAndMoveForward;
+import frc.robot.autoroutines.ShootLong;
 import frc.robot.commands.ClimberSetArmLengthPowerTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
 // import frc.robot.autos.PointToTarget;
@@ -37,6 +40,8 @@ import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.utils.SettableSendableChooser;
+import frc.robot.vision.Vision;
+import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -75,7 +80,7 @@ public class RobotContainer {
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
-  // public static final Vision vision = new Vision();
+  public static final Vision vision = new Vision();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -85,14 +90,20 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
+    this.autoChooser.setDefaultOption("Shoot and Move Forward", new ShootLong());
+    this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
     // Configure the button bindings
     configureButtonBindings();
 
-    // vision.init();
-    // vision.start(new TargetVisionModel());
+    vision.init();
+    vision.start(new TargetVisionModel());
+
+    var camera = CameraServer.startAutomaticCapture(1);
+    camera.setResolution(640, 480);
+    camera.setFPS(10);
 
     SmartDashboard.putNumber("r1", 0);
     SmartDashboard.putNumber("r2", 0);

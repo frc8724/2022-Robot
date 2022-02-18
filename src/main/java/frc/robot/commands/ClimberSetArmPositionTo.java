@@ -23,5 +23,6 @@ public class ClimberSetArmPositionTo extends InstantCommand {
   @Override
   public void initialize() {
     RobotContainer.climber.setArmPositionTo(m_pos);
+    RobotContainer.climber.stop();
   }
 }

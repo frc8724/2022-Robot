@@ -85,15 +85,16 @@ public class Vision {
 
                 var contours = new ArrayList<MatOfPoint>();
 
-                Imgproc.findContours(output, contours, null, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+                // Imgproc.findContours(output, contours, null, Imgproc.RETR_TREE,
+                // Imgproc.CHAIN_APPROX_SIMPLE);
 
                 this.things.clear();
 
-                for (MatOfPoint contour : contours) {
-                    var rect = Imgproc.boundingRect(contour);
+                // for (MatOfPoint contour : contours) {
+                // var rect = Imgproc.boundingRect(contour);
 
-                    this.things.add(new Thing(getCenterOfRect(rect), rect));
-                }
+                // this.things.add(new Thing(getCenterOfRect(rect), rect));
+                // }
 
                 // Imgproc.drawContours(source, contours, 0, new Scalar(255, 0, 0));
 

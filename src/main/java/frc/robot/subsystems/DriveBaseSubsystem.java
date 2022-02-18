@@ -114,7 +114,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
         talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
         talon.configNominalOutputVoltage(+0.0f, -0.0f);
-        talon.configPeakOutputVoltage(1, -1);
+        talon.configPeakOutputVoltage(12, -12);
 
         talon.config_kP(slot, wheelP, timeout);
         talon.config_kI(slot, wheelI, timeout);

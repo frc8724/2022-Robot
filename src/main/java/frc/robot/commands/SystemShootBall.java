@@ -5,8 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,15 +16,19 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class SystemShootBall extends SequentialCommandGroup {
   /** Creates a new SystemShootBall. */
   public SystemShootBall() {
-
+    double longShot = 1850;
     // start the shooter and accelerator wheel and wait at least 1 second.
     addCommands(
-        new ParallelCommandGroup(new ShooterSetSpeed(1000), new ShooterSetAccelerator(0.5), new WaitCommand(1.5)));
+        new ParallelCommandGroup(new ShooterSetSpeed(900), new ShooterSetAccelerator(0.5), new WaitCommand(1.5)));
 
-    addCommands(new SystemFireWhenReady(1000));
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(900), new WaitCommand(5.0)));
   }
 
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.shooter.setShooterSpeed(0.0);
+    RobotContainer.accelerator.setAcceleratorSpeedVBus(0.0);
+    RobotContainer.loader.setSpeed(0.0);
+    RobotContainer.magazine.setSpeed(0.0);
   }
 }

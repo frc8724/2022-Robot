@@ -24,6 +24,7 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     public final static double CLOSE_SHOOTING_POSITION = 1000;
     public final static double INITIATION_LINE_POSITION = 5000;
     public final static double TRENCH_MID_POSITION = 8000;
+    public final static double LONGEST_SHOT = 9500;
 
     private double m_desiredPosition = 0.0;
 

@@ -22,13 +22,13 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
     public static final boolean ARMS_UP = true;
     public static final boolean ARMS_DOWN = false;
-    public static final double ARMS_OUT_POSITION = 200000.0;
+    public static final double ARMS_OUT_POSITION = 300000.0;
     public static final double ARMS_UNHOOK_POSITION = 100000.0;
-    public static final double ARMS_IN_POSITION = 2000.0;
+    public static final double ARMS_IN_POSITION = -20000.0;
 
-    private final double MAX_POSITION = ARMS_OUT_POSITION;
-    private final double MIN_POSITION = ARMS_IN_POSITION / 2;
-    private final double POSIITON_TOLERANCE = 1000;
+    private final double MAX_POSITION = 330000.0;
+    private final double MIN_POSITION = -30000.0;
+    private final double POSIITON_TOLERANCE = 100;
 
     double m_target;
 
@@ -44,8 +44,8 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     private void ConfigureTalon(MayhemTalonSRX talon) {
-        talon.config_kP(0, 0.5, 0);
-        talon.config_kI(0, 0.0, 0);
+        talon.config_kP(0, 2.0, 0);
+        talon.config_kI(0, 0.01, 0);
         talon.config_kD(0, 40.0, 0);
         talon.config_kF(0, 0.0, 0);
 
@@ -62,6 +62,8 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         talon.configForwardSoftLimitEnable(true);
         talon.configReverseSoftLimitThreshold(MIN_POSITION);
         talon.configReverseSoftLimitEnable(true);
+
+        talon.configMaxIntegralAccumulator(0, 10000);
     }
 
     public void setArmPositionTo(boolean b) {
@@ -101,7 +103,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     private void updateSmartDashboard() {
         SmartDashboard.putNumber("Climber Left Pos", leftTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Climber Right Pos", rightTalon.getSelectedSensorPosition());
-        // SmartDashboard.putNumber("Climber count", count++);
+        SmartDashboard.putNumber("Climber Target", m_target);
     }
 
     @Override
@@ -151,6 +153,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     public void zero() {
         leftTalon.setSelectedSensorPosition(0.0);
         rightTalon.setSelectedSensorPosition(0.0);
+        setArmLengthTo(0.0);
     }
 
 }
