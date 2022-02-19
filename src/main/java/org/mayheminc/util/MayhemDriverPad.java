@@ -81,9 +81,9 @@ public class MayhemDriverPad {
         }
 
         private static final double THROTTLE_DEAD_ZONE_PERCENT = 0.05;
-        private static final double MIN_THROTTLE_FOR_MOVEMENT = 0.02;  // what is the min throttle for Movement
-        private static final double NORMAL_MAX_THROTTLE = 1.00;      // maximum speed is normally 100%
-        private static final double SLOW_MODE_MAX_THROTTLE = 0.30;   // maximum throttle in "slow mode" is 30%
+        private static final double MIN_THROTTLE_FOR_MOVEMENT = 0.02; // what is the min throttle for Movement
+        private static final double NORMAL_MAX_THROTTLE = 0.75; // maximum speed is normally 100%
+        private static final double SLOW_MODE_MAX_THROTTLE = 0.30; // maximum throttle in "slow mode" is 30%
 
         public double driveThrottle() {
                 // the driveThrottle is the "Y" axis of the Driver Gamepad.
@@ -94,12 +94,14 @@ public class MayhemDriverPad {
                 double maxPercentThrottle = NORMAL_MAX_THROTTLE;
 
                 if (DRIVER_PAD_RIGHT_LOWER_TRIGGER_BUTTON.get()) {
-                        // check for "slow mode" and if so, constrain maxPercentThrottle to "SLOW_MODE_MAX_PERCENT"
+                        // check for "slow mode" and if so, constrain maxPercentThrottle to
+                        // "SLOW_MODE_MAX_PERCENT"
                         maxPercentThrottle = SLOW_MODE_MAX_THROTTLE;
-                } 
+                }
 
                 // compute a scaled throttle magnitude, which will always be positive
-                double throttleMag = MIN_THROTTLE_FOR_MOVEMENT + (maxPercentThrottle - MIN_THROTTLE_FOR_MOVEMENT) * throttleAbs * throttleAbs;
+                double throttleMag = MIN_THROTTLE_FOR_MOVEMENT
+                                + (maxPercentThrottle - MIN_THROTTLE_FOR_MOVEMENT) * throttleAbs * throttleAbs;
 
                 if (Math.abs(throttleVal) < THROTTLE_DEAD_ZONE_PERCENT) {
                         // check for throttle being in "dead zone" and if so, set throttle to zero
@@ -107,9 +109,9 @@ public class MayhemDriverPad {
                 } else {
                         // make sure to preserve sign of throttle
                         if (throttleVal >= 0.0) {
-                          throttleVal = throttleMag;
+                                throttleVal = throttleMag;
                         } else {
-                          throttleVal = -throttleMag;
+                                throttleVal = -throttleMag;
                         }
                 }
 
@@ -119,7 +121,7 @@ public class MayhemDriverPad {
         private static final double STEERING_DEAD_ZONE_PERCENT = 0.05;
         private static final double MIN_STEERING_FOR_MOVEMENT = 0.02;
         private static final double NORMAL_MAX_STEERING = 1.00;
-        private static final double SLOW_MODE_MAX_STEERING = 0.80;   // maximum steering in "slow mode" is 50%
+        private static final double SLOW_MODE_MAX_STEERING = 0.80; // maximum steering in "slow mode" is 50%
 
         public double steeringX() {
                 // SteeringX is the "X" axis of the right stick on the Driver Gamepad.
@@ -128,12 +130,14 @@ public class MayhemDriverPad {
                 double maxPercentSteering = NORMAL_MAX_STEERING;
 
                 if (DRIVER_PAD_RIGHT_LOWER_TRIGGER_BUTTON.get()) {
-                        // check for "slow mode" and if so, constrain maxPercentSteering to "SLOW_MODE_MAX_PERCENT"
+                        // check for "slow mode" and if so, constrain maxPercentSteering to
+                        // "SLOW_MODE_MAX_PERCENT"
                         maxPercentSteering = SLOW_MODE_MAX_STEERING;
-                } 
+                }
 
                 // compute a scaled steering magnitude, which will always be positive
-                double steeringMag = MIN_STEERING_FOR_MOVEMENT + (maxPercentSteering - MIN_STEERING_FOR_MOVEMENT) * steeringAbs;
+                double steeringMag = MIN_STEERING_FOR_MOVEMENT
+                                + (maxPercentSteering - MIN_STEERING_FOR_MOVEMENT) * steeringAbs;
 
                 if (Math.abs(steeringVal) < STEERING_DEAD_ZONE_PERCENT) {
                         // check for steering being in "dead zone" and if so, set steering to zero

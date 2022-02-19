@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.ShootAndMoveForward;
-import frc.robot.autoroutines.ShootLong;
+// import frc.robot.autoroutines.ShootLong;
 import frc.robot.commands.ClimberSetArmLengthPowerTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
 // import frc.robot.autos.PointToTarget;
@@ -29,6 +29,7 @@ import frc.robot.commands.SystemClimberAttachToNextRung;
 import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
+import frc.robot.commands.SystemWarmUpShooter;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -90,7 +91,7 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
-    this.autoChooser.setDefaultOption("Shoot and Move Forward", new ShootLong());
+    this.autoChooser.setDefaultOption("Shoot and Move Forward", new ShootAndMoveForward());
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
@@ -144,6 +145,8 @@ public class RobotContainer {
 
     // hood adjust btn d-pad left and right
 
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new SystemWarmUpShooter());
+
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
 
@@ -161,7 +164,10 @@ public class RobotContainer {
   }
 
   private void configureDriverPadButtons() {
-    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whileHeld(new SystemShootBall());
+    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whileHeld(new SystemShootBall(SystemShootBall.LongShot, Hood.LONGEST_SHOT));
+
+    DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
+        .whileHeld(new SystemShootBall(SystemShootBall.ShortShot, Hood.CLOSE_POSITION));
   }
 
   /**

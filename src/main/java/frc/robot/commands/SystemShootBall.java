@@ -9,19 +9,26 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Hood;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SystemShootBall extends SequentialCommandGroup {
-  /** Creates a new SystemShootBall. */
-  public SystemShootBall() {
-    double longShot = 1850;
-    // start the shooter and accelerator wheel and wait at least 1 second.
-    addCommands(
-        new ParallelCommandGroup(new ShooterSetSpeed(900), new ShooterSetAccelerator(0.5), new WaitCommand(1.5)));
+  static public final double LongShot = 1850;
+  static public final double ShortShot = 900;
 
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(900), new WaitCommand(5.0)));
+  /** Creates a new SystemShootBall. */
+  public SystemShootBall(double speed, double hood) {
+    // double longShot = 1850;
+    // double shortShot = 900;
+    // start the shooter and accelerator wheel and wait at least 1 second.
+    addCommands(new HoodMove(hood));
+
+    addCommands(
+        new ParallelCommandGroup(new ShooterSetSpeed(speed), new ShooterSetAccelerator(0.5), new WaitCommand(1.5)));
+
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(speed), new WaitCommand(4.0)));
   }
 
   @Override

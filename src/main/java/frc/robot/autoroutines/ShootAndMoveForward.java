@@ -23,10 +23,10 @@ public class ShootAndMoveForward extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new SystemZero());
 
-    addCommands(new HoodMove(Hood.CLOSE_SHOOTING_POSITION));
+    // addCommands(new HoodMove(Hood.AUTO_START_POSITION));
 
-    addCommands(new SystemShootBall());
+    addCommands(new SystemShootBall(SystemShootBall.ShortShot, Hood.AUTO_START_POSITION));
 
-    addCommands(new ParallelRaceGroup(new DriveStraight(0.2), new WaitCommand(2.0)));
+    addCommands(new ParallelRaceGroup(new DriveStraight(0.2), new WaitCommand(3.0)));
   }
 }

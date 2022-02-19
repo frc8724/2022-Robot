@@ -35,7 +35,7 @@ public class SystemFireWhenReady extends CommandBase {
   public void execute() {
     boolean atSpeed = RobotContainer.shooter.isShooterAtSpeed();
     if (atSpeed) {
-      RobotContainer.loader.setSpeed(0.5);
+      RobotContainer.loader.setSpeed(0.75);
       RobotContainer.magazine.setSpeed(0.5);
     } else {
       RobotContainer.loader.setSpeed(0.0);

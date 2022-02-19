@@ -12,18 +12,24 @@ public class IntakeReverseRollers extends CommandBase {
   public IntakeReverseRollers() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.intakeRollers);
+    addRequirements(RobotContainer.magazine);
+    addRequirements(RobotContainer.loader);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     RobotContainer.intakeRollers.spitOut();
+    RobotContainer.magazine.setSpeed(-0.3);
+    RobotContainer.loader.setSpeed(-0.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.intakeRollers.stop();
+    RobotContainer.magazine.setSpeed(0.0);
+    RobotContainer.loader.setSpeed(0.0);
 
   }
 

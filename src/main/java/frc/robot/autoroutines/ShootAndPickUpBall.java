@@ -5,12 +5,13 @@
 package frc.robot.autoroutines;
 
 import frc.robot.commands.IntakePistonsSet;
+import frc.robot.subsystems.IntakePistons;
 
 /** Add your docs here. */
 public class ShootAndPickUpBall extends ShootAndMoveForward {
 
     public ShootAndPickUpBall() {
         super();
-        // addCommands(new Intake);
+        // addCommands(new IntakePistons(IntakePistons.INTAKE_DOWN));
     }
 }

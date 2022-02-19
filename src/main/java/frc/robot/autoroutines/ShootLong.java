@@ -20,8 +20,8 @@ public class ShootLong extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new SystemZero());
 
-    addCommands(new HoodMove(Hood.LONGEST_SHOT));
+    // addCommands(new HoodMove(Hood.LONGEST_SHOT));
 
-    addCommands(new SystemShootBall());
+    // addCommands(new SystemShootBall(SystemShootBall.LongShot, Ho));
   }
 }
