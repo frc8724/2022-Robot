@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import org.mayheminc.util.History;
-import frc.robot.utils.MayhemTalonSRX;
+import org.mayheminc.util.MayhemTalonSRX;
+import org.mayheminc.util.MayhemTalonSRX.CurrentLimit;
+
 import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -10,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObject */ {
+public class DriveBaseSubsystem extends SubsystemBase {
     History headingHistory = new History();
 
     PowerDistribution pdp = new PowerDistribution();
@@ -22,10 +24,14 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     HeadingCorrection headingCorrection = new HeadingCorrection();
 
     // Talons
-    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_TOP);
-    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_BOTTOM);
-    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_TOP);
-    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_BOTTOM);
+    private final MayhemTalonSRX leftFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_TOP,
+            CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX leftRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_LEFT_BOTTOM,
+            CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX rightFrontTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_TOP,
+            CurrentLimit.HIGH_CURRENT);
+    private final MayhemTalonSRX rightRearTalon = new MayhemTalonSRX(Constants.Talon.DRIVE_RIGHT_BOTTOM,
+            CurrentLimit.HIGH_CURRENT);
 
     // Driving mode
     private final boolean m_speedRacerDriveMode = true; // set by default
@@ -81,8 +87,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
         talon.configContinuousCurrentLimit(40);
         talon.configPeakCurrentDuration(3000);
 
-        talon.configNominalOutput(0, 0);
-        talon.configPeakOutputVoltage(1, -1);
+        talon.configNominalOutputVoltage(+0.0f, -0.0f);
+        talon.configPeakOutputVoltage(+12.0, -12.0);
 
         // configure current limits
         // enabled = true
@@ -107,8 +113,8 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
 
         talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
-        talon.configNominalOutput(0, 0);
-        talon.configPeakOutputVoltage(1, -1);
+        talon.configNominalOutputVoltage(+0.0f, -0.0f);
+        talon.configPeakOutputVoltage(12, -12);
 
         talon.config_kP(slot, wheelP, timeout);
         talon.config_kI(slot, wheelI, timeout);
@@ -424,19 +430,19 @@ public class DriveBaseSubsystem extends SubsystemBase /* implements PidTunerObje
     ////////////////////////////////////////////////////
     // PidTunerObject
     public double getP() {
-        return leftFrontTalon.kP;
+        return leftFrontTalon.getP();
     }
 
     public double getI() {
-        return leftFrontTalon.kI;
+        return leftFrontTalon.getI();
     }
 
     public double getD() {
-        return leftFrontTalon.kD;
+        return leftFrontTalon.getD();
     }
 
     public double getF() {
-        return leftFrontTalon.kF;
+        return leftFrontTalon.getF();
 
     }
 

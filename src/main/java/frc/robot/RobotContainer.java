@@ -6,24 +6,30 @@ package frc.robot;
 
 import org.mayheminc.util.*;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.ShootAndMoveForward;
+// import frc.robot.autoroutines.ShootLong;
+import frc.robot.commands.ClimberSetArmLengthPowerTo;
+import frc.robot.commands.ClimberSetArmPositionTo;
 // import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
-import frc.robot.commands.HoodMove;
-import frc.robot.commands.IntakeMoveTo;
 import frc.robot.commands.IntakePistonsSet;
+import frc.robot.commands.IntakeReverseRollers;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.LoaderSetInstant;
 import frc.robot.commands.LoaderSetSpeed;
 import frc.robot.commands.MagazineSetSpeed;
 import frc.robot.commands.ShooterAdjustShooterWheel;
 import frc.robot.commands.ShooterSetAccelerator;
+import frc.robot.commands.SystemClimberAttachToNextRung;
+import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
+import frc.robot.commands.SystemWarmUpShooter;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -38,7 +44,6 @@ import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
 import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -86,6 +91,8 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
+    this.autoChooser.setDefaultOption("Shoot and Move Forward", new ShootAndMoveForward());
+    this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
@@ -94,6 +101,10 @@ public class RobotContainer {
 
     vision.init();
     vision.start(new TargetVisionModel());
+
+    var camera = CameraServer.startAutomaticCapture(1);
+    camera.setResolution(640, 480);
+    camera.setFPS(10);
 
     SmartDashboard.putNumber("r1", 0);
     SmartDashboard.putNumber("r2", 0);
@@ -123,27 +134,40 @@ public class RobotContainer {
   }
 
   private void configureOperatorPadButtons() {
-    System.out.println("Operator Pad Buttons.");
+    // piston down d-pad down and up
+    // climb to first rung. btn 9
+    // climb to next rung. btn 10
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new LoaderSetInstant(0.50));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenHeld(new MagazineSetSpeed(0.50, false));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE.whenHeld(new IntakeSetRollers());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenPressed(new ShooterSetAccelerator(0.50));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN.whenHeld(new SystemIntakeBalls());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenPressed(new SystemShootBall());
+    // intake down - btn 2
+    // intake up - btn 4
+    // intake rollers in. btn 6
+    // intake rollers out. btn 8
 
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ShooterAdjustShooterWheel(100.0));
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ShooterAdjustShooterWheel(-100.0));
+    // hood adjust btn d-pad left and right
+
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new SystemWarmUpShooter());
+
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
+
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());
+
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new SystemClimberInitialClimb());
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new SystemClimberAttachToNextRung());
+
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_UP));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodAdjust(-200));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodAdjust(200));
-
   }
 
   private void configureDriverPadButtons() {
-    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whenPressed(new PrintCommand("DRIVER PAD RED"));
+    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whileHeld(new SystemShootBall(SystemShootBall.LongShot, Hood.LONGEST_SHOT));
+
+    DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
+        .whileHeld(new SystemShootBall(SystemShootBall.ShortShot, Hood.CLOSE_POSITION));
   }
 
   /**
@@ -156,7 +180,7 @@ public class RobotContainer {
   }
 
   public Command getTeleopCommand() {
-    return new DriveBaseTeleopCommand(this.drive, DRIVER_PAD);
+    return new DriveBaseTeleopCommand(RobotContainer.drive, DRIVER_PAD);
   }
 
 }

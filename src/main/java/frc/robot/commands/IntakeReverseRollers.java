@@ -5,29 +5,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeSetRollers extends CommandBase {
-  public IntakeSetRollers() {
+public class IntakeReverseRollers extends CommandBase {
+  /** Creates a new IntakeReverseRollers. */
+  public IntakeReverseRollers() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.intakeRollers);
     addRequirements(RobotContainer.magazine);
+    addRequirements(RobotContainer.loader);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.intakeRollers.suckIn();
-    RobotContainer.magazine.setSpeed(0.5);
+    RobotContainer.intakeRollers.spitOut();
+    RobotContainer.magazine.setSpeed(-0.3);
+    RobotContainer.loader.setSpeed(-0.3);
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.intakeRollers.stop();
     RobotContainer.magazine.setSpeed(0.0);
+    RobotContainer.loader.setSpeed(0.0);
+
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }
