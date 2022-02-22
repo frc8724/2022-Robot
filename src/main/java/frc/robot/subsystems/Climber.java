@@ -22,7 +22,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
     public static final boolean ARMS_UP = true;
     public static final boolean ARMS_DOWN = false;
-    public static final double ARMS_OUT_POSITION = 300000.0;
+    public static final double ARMS_OUT_POSITION = 330000.0;// 300000
     public static final double ARMS_UNHOOK_POSITION = 100000.0;
     public static final double ARMS_IN_POSITION = -20000.0;
 

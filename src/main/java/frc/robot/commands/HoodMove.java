@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
@@ -11,9 +13,9 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class HoodMove extends InstantCommand {
-  double m_pos;
+  Supplier<Double> m_pos;
 
-  public HoodMove(double pos) {
+  public HoodMove(Supplier<Double> pos) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.hood);
 
@@ -23,6 +25,6 @@ public class HoodMove extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.hood.setPosition(m_pos);
+    RobotContainer.hood.setPosition(m_pos.get());
   }
 }

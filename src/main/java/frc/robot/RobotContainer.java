@@ -11,23 +11,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.ShootAndMoveForward;
-// import frc.robot.autoroutines.ShootLong;
-import frc.robot.commands.ClimberSetArmLengthPowerTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
-// import frc.robot.autos.PointToTarget;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeReverseRollers;
 import frc.robot.commands.IntakeSetRollers;
-import frc.robot.commands.LoaderSetInstant;
-import frc.robot.commands.LoaderSetSpeed;
-import frc.robot.commands.MagazineSetSpeed;
-import frc.robot.commands.ShooterAdjustShooterWheel;
-import frc.robot.commands.ShooterSetAccelerator;
 import frc.robot.commands.SystemClimberAttachToNextRung;
 import frc.robot.commands.SystemClimberInitialClimb;
-import frc.robot.commands.SystemIntakeBalls;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemWarmUpShooter;
 import frc.robot.commands.SystemZero;
@@ -131,6 +122,12 @@ public class RobotContainer {
 
   private void configureDriverStick() {
     DRIVER_STICK.DRIVER_STICK_BUTTON_ONE_DISABLED.whenPressed(new SystemZero());
+
+    DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR.whenPressed(() -> RobotContainer.hood.adjustClosePosition((+500.0)));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE.whenPressed(() -> RobotContainer.hood.adjustClosePosition((-500.0)));
+
+    DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> SystemShootBall.adjustShortShot(+50.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> SystemShootBall.adjustShortShot(-50.0));
   }
 
   private void configureOperatorPadButtons() {
@@ -164,10 +161,12 @@ public class RobotContainer {
   }
 
   private void configureDriverPadButtons() {
-    DRIVER_PAD.DRIVER_PAD_RED_BUTTON.whileHeld(new SystemShootBall(SystemShootBall.LongShot, Hood.LONGEST_SHOT));
+    DRIVER_PAD.DRIVER_PAD_RED_BUTTON
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.LongShot, () -> Hood.LONGEST_SHOT));
 
     DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
-        .whileHeld(new SystemShootBall(SystemShootBall.ShortShot, Hood.CLOSE_POSITION));
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getClosePosition()));
+
   }
 
   /**

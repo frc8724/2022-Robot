@@ -4,22 +4,36 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Hood;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SystemShootBall extends SequentialCommandGroup {
-  static public final double LongShot = 1850;
-  static public final double ShortShot = 900;
+  static public final double LongShot = 1750;
+  static private final double ShortShot = 1150;
+
+  static double shortShot = ShortShot;
+
+  public static double getShortShot() {
+    return shortShot;
+  }
+
+  // public static void setShortShot(double d) {
+  // shortShot = d;
+  // }
+  public static void adjustShortShot(double d) {
+    shortShot += d;
+  }
 
   /** Creates a new SystemShootBall. */
-  public SystemShootBall(double speed, double hood) {
+  public SystemShootBall(Supplier<Double> speed, Supplier<Double> hood) {
     // double longShot = 1850;
     // double shortShot = 900;
     // start the shooter and accelerator wheel and wait at least 1 second.
