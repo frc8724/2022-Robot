@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     public static final double INITIATION_LINE_SPEED = 4500.0;
     public static final double TRENCH_FRONT_SPEED = 3400.0;
     public static final double MAX_SPEED_RPM = 5000;
-    public static final double SPEED_TOLERANCE = 200;
+    public static final double SPEED_TOLERANCE = 50;
 
     double m_targetSpeedRPM;
 
@@ -75,9 +75,9 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         // P of "3.0" means that full power applied with error of 341 native units =
         // 100rpm
         // (above also means that 50% power boost applied with error of 50rpm)
-        shooterWheelFalcon.config_kP(0, 0.1, 0); // previously used 3.0
+        shooterWheelFalcon.config_kP(0, 5.3, 0); // previously used 3.0
         shooterWheelFalcon.config_kI(0, 0.0, 0);
-        shooterWheelFalcon.config_kD(0, 0.0, 0); // CTRE recommends starting at 10x P-gain
+        shooterWheelFalcon.config_kD(0, 0.3, 0); // CTRE recommends starting at 10x P-gain
         shooterWheelFalcon.config_kF(0, 0.046, 0); // 1023.0 / convertRpmToTicksPer100ms(5760), 0);
         shooterWheelFalcon.configAllowableClosedloopError(0, 0, 0); // no "neutral" zone around target
     }
@@ -99,30 +99,6 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         SmartDashboard.putNumber("Shooter Wheel target RPM", m_targetSpeedRPM);
         SmartDashboard.putNumber("Shooter Wheel Error",
                 m_targetSpeedRPM - convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0)));
-        // SmartDashboard.putNumber("Shooter Wheel Voltage",
-        // shooterWheelLeft.getMotorOutputVoltage());
-        // SmartDashboard.putNumber("Shooter Wheel Bus Voltage",
-        // shooterWheelLeft.getBusVoltage());
-        // SmartDashboard.putNumber("Shooter Wheel Current",
-        // shooterWheelLeft.getSupplyCurrent());
-
-        // SmartDashboard.putNumber("Shooter Wheel R-pos",
-        // shooterWheelRight.getSelectedSensorPosition(0));
-        // SmartDashboard.putNumber("Shooter Wheel R-speed",
-        // shooterWheelRight.getSelectedSensorVelocity(0));
-        // SmartDashboard.putNumber("Shooter Wheel R-RPM",
-        // convertTicksPer100msToRPM(shooterWheelRight.getSelectedSensorVelocity(0)));
-
-        // SmartDashboard.putNumber("Shooter Wheel R-target RPM", m_targetSpeedRPM);
-        // SmartDashboard.putNumber("Shooter Wheel R-Error",
-        // m_targetSpeedRPM -
-        // convertTicksPer100msToRPM(shooterWheelRight.getSelectedSensorVelocity(0)));
-        // SmartDashboard.putNumber("Shooter Wheel R-Voltage",
-        // shooterWheelRight.getMotorOutputVoltage());
-        // SmartDashboard.putNumber("Shooter Wheel R-Bus Voltage",
-        // shooterWheelRight.getBusVoltage());
-        // SmartDashboard.putNumber("Shooter Wheel R-Current",
-        // shooterWheelRight.getSupplyCurrent());
     }
 
     public void zero() {

@@ -18,18 +18,25 @@ import frc.robot.RobotContainer;
 public class SystemShootBall extends SequentialCommandGroup {
   static public final double LongShot = 1750;
   static private final double ShortShot = 1150;
+  static private final double LowGoalShot = 550;
 
   static double shortShot = ShortShot;
+  static double lowGoalShot = LowGoalShot;
 
   public static double getShortShot() {
     return shortShot;
   }
 
-  // public static void setShortShot(double d) {
-  // shortShot = d;
-  // }
   public static void adjustShortShot(double d) {
     shortShot += d;
+  }
+
+  public static double getLowGoalShot() {
+    return lowGoalShot;
+  }
+
+  public static void adjustLowGoalShot(double d) {
+    lowGoalShot += d;
   }
 
   /** Creates a new SystemShootBall. */
@@ -37,10 +44,11 @@ public class SystemShootBall extends SequentialCommandGroup {
     // double longShot = 1850;
     // double shortShot = 900;
     // start the shooter and accelerator wheel and wait at least 1 second.
-    addCommands(new HoodMove(hood));
+
+    // addCommands(new HoodMove(hood));
 
     addCommands(
-        new ParallelCommandGroup(new ShooterSetSpeed(speed), new ShooterSetAccelerator(0.5), new WaitCommand(1.5)));
+        new ParallelCommandGroup(new ShooterSetSpeed(speed), new ShooterSetAccelerator(0.4), new WaitCommand(1.0)));
 
     addCommands(new ParallelRaceGroup(new SystemFireWhenReady(speed), new WaitCommand(4.0)));
   }

@@ -26,8 +26,8 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     public static final double ARMS_UNHOOK_POSITION = 100000.0;
     public static final double ARMS_IN_POSITION = -20000.0;
 
-    private final double MAX_POSITION = 330000.0;
-    private final double MIN_POSITION = -30000.0;
+    private final double MAX_POSITION = 3300000.0; // this is WAY TOO BIG
+    private final double MIN_POSITION = -300000.0; // this is way too small
     private final double POSIITON_TOLERANCE = 100;
 
     double m_target;

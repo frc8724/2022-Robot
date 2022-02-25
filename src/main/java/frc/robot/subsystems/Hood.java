@@ -34,11 +34,11 @@ public class Hood extends SubsystemBase implements PidTunerObject {
 
     private double closePosition = CLOSE_POSITION;
 
-    public double getClosePosition() {
-        return closePosition;
+    public double getHoodClosePosition() {
+        return 5000;// closePosition;
     }
 
-    public void adjustClosePosition(double d) {
+    public void adjustHoodClosePosition(double d) {
         closePosition += d;
     }
 

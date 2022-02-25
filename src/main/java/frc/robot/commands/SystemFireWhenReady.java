@@ -21,6 +21,7 @@ public class SystemFireWhenReady extends CommandBase {
     addRequirements(RobotContainer.shooter);
     addRequirements(RobotContainer.loader);
     addRequirements(RobotContainer.magazine);
+    addRequirements(RobotContainer.accelerator);
 
     m_shooterSpeed = d;
   }
@@ -29,7 +30,7 @@ public class SystemFireWhenReady extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.shooter.setShooterSpeed(m_shooterSpeed.get());
-    RobotContainer.accelerator.setAcceleratorSpeedVBus(0.5);
+    RobotContainer.accelerator.setAcceleratorSpeedVBus(0.4);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

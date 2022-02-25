@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.ShootAndMoveForward;
+import frc.robot.autoroutines.ThreeBallPath;
+import frc.robot.autoroutines.TwoBallPath;
 import frc.robot.commands.ClimberSetArmPositionTo;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.HoodAdjust;
@@ -82,7 +84,10 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
-    this.autoChooser.setDefaultOption("Shoot and Move Forward", new ShootAndMoveForward());
+    this.autoChooser.setDefaultOption("3 Ball Auto", new ThreeBallPath());
+
+    this.autoChooser.addOption("2 Ball Auto", new TwoBallPath());
+
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
@@ -123,11 +128,14 @@ public class RobotContainer {
   private void configureDriverStick() {
     DRIVER_STICK.DRIVER_STICK_BUTTON_ONE_DISABLED.whenPressed(new SystemZero());
 
-    DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR.whenPressed(() -> RobotContainer.hood.adjustClosePosition((+500.0)));
-    DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE.whenPressed(() -> RobotContainer.hood.adjustClosePosition((-500.0)));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((+500.0)));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((-500.0)));
 
     DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> SystemShootBall.adjustShortShot(+50.0));
     DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> SystemShootBall.adjustShortShot(-50.0));
+
+    DRIVER_STICK.DRIVER_STICK_BUTTON_NINE.whenPressed(() -> SystemShootBall.adjustLowGoalShot(+50.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT.whenPressed(() -> SystemShootBall.adjustLowGoalShot(-50.0));
   }
 
   private void configureOperatorPadButtons() {
@@ -164,8 +172,13 @@ public class RobotContainer {
     DRIVER_PAD.DRIVER_PAD_RED_BUTTON
         .whileHeld(new SystemShootBall(() -> SystemShootBall.LongShot, () -> Hood.LONGEST_SHOT));
 
+    DRIVER_PAD.DRIVER_PAD_GREEN_BUTTON
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+
     DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getClosePosition()));
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getHoodClosePosition()));
+
+    // DRIVER_PAD.DRIVER_PAD_YELLOW_BUTTON.whenPressed( new Hoo
 
   }
 
@@ -179,7 +192,7 @@ public class RobotContainer {
   }
 
   public Command getTeleopCommand() {
-    return new DriveBaseTeleopCommand(RobotContainer.drive, DRIVER_PAD);
+    return new DriveBaseTeleopCommand(RobotContainer.drive, RobotContainer.climber, DRIVER_PAD, OPERATOR_PAD);
   }
 
 }
