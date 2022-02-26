@@ -19,14 +19,8 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     private final static int MAX_POSITION = 8000;
     private final static double POSITION_TOLERANCE = 100.0;
 
-    // public final static double STARTING_POSITION = 0;
-    // public final static double TARGET_ZONE_POSITION = 5000;
-    // public final static double CLOSE_SHOOTING_POSITION = 1000;
-    // public final static double INITIATION_LINE_POSITION = 5000;
-    // public final static double TRENCH_MID_POSITION = 8000;
-
     public final static double AUTO_START_POSITION = 4000;
-    public final static double CLOSE_POSITION = 3000;
+    private final static double CLOSE_POSITION = 3000;
     public final static double LONGEST_SHOT = 9500;
 
     private double m_desiredPosition = 0.0;
@@ -36,6 +30,16 @@ public class Hood extends SubsystemBase implements PidTunerObject {
      */
     public Hood() {
         configureTalon();
+    }
+
+    private double closePosition = CLOSE_POSITION;
+
+    public double getHoodClosePosition() {
+        return 5000;// closePosition;
+    }
+
+    public void adjustHoodClosePosition(double d) {
+        closePosition += d;
     }
 
     public void init() {

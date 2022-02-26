@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -12,13 +14,14 @@ import frc.robot.RobotContainer;
  */
 public class SystemFireWhenReady extends CommandBase {
   /** Creates a new SystemFireWhenReady. */
-  double m_shooterSpeed;
+  Supplier<Double> m_shooterSpeed;
 
-  public SystemFireWhenReady(double d) {
+  public SystemFireWhenReady(Supplier<Double> d) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
     addRequirements(RobotContainer.loader);
     addRequirements(RobotContainer.magazine);
+    addRequirements(RobotContainer.accelerator);
 
     m_shooterSpeed = d;
   }
@@ -26,8 +29,8 @@ public class SystemFireWhenReady extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.shooter.setShooterSpeed(m_shooterSpeed);
-    RobotContainer.accelerator.setAcceleratorSpeedVBus(0.5);
+    RobotContainer.shooter.setShooterSpeed(m_shooterSpeed.get());
+    RobotContainer.accelerator.setAcceleratorSpeedVBus(0.4);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

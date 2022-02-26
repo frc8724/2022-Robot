@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -11,9 +13,9 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShooterSetSpeed extends CommandBase {
-  double m_speed;
+  Supplier<Double> m_speed;
 
-  public ShooterSetSpeed(double d) {
+  public ShooterSetSpeed(Supplier<Double> d) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
 
@@ -23,7 +25,7 @@ public class ShooterSetSpeed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.shooter.setShooterSpeed(m_speed);
+    RobotContainer.shooter.setShooterSpeed(m_speed.get());
   }
 
   @Override

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveStraight;
-import frc.robot.commands.HoodMove;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.Hood;
@@ -25,7 +24,7 @@ public class ShootAndMoveForward extends SequentialCommandGroup {
 
     // addCommands(new HoodMove(Hood.AUTO_START_POSITION));
 
-    addCommands(new SystemShootBall(SystemShootBall.ShortShot, Hood.AUTO_START_POSITION));
+    addCommands(new SystemShootBall(SystemShootBall::getShortShot, () -> Hood.AUTO_START_POSITION));
 
     addCommands(new ParallelRaceGroup(new DriveStraight(0.2), new WaitCommand(3.0)));
   }
