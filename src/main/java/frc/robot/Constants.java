@@ -45,6 +45,7 @@ public final class Constants {
     public final class Solenoid {
         public static final int INTAKE = 0;
         public static final int CLIMBER = 1;
+        public static final int CAMERA_LIGHTS = 2;
     }
 
     public final class PDP {

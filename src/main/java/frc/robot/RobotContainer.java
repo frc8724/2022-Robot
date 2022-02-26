@@ -25,6 +25,7 @@ import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemWarmUpShooter;
 import frc.robot.commands.SystemZero;
+import frc.robot.subsystems.CameraLights;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
@@ -66,6 +67,7 @@ public class RobotContainer {
   public static final ShooterAccelerator accelerator = new ShooterAccelerator();
   public static final Hood hood = new Hood();
   public static final Climber climber = new Climber();
+  public static final CameraLights cameraLights = new CameraLights();
 
   public static final PidTuner pidTuner = new PidTuner(
       DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE,
