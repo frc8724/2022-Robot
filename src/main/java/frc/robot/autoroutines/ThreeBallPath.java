@@ -15,31 +15,21 @@ import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ThreeBallPath extends TwoBallPath {
   /** Creates a new ThreeBallPath. */
-  public ThreeBallPath() {
-    super();
+  public ThreeBallPath(boolean shootball) {
+    super(false);
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     // turn to line up to the ball.
-    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 70.0, +90));
+    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 90.0, +90));
 
     // run down field to gather ball and get 1/2 way to next one.
-    addCommands(new DriveStraightOnHeading(0.4, DistanceUnits.INCHES, 150.0, -30));
+    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 80.0, -40));
 
-    // angle toward ball against terminal
-    addCommands(new DriveStraightOnHeading(0.4, DistanceUnits.INCHES, 90.0, -10));
-    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 10.0, 0.0));
-    // curve in to get ball at terminal
-    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 20.0, -60));
-
-    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 10.0, 0.0));
-    addCommands(new DriveStraightOnHeading(-0.4, DistanceUnits.INCHES, 10.0, 0.0));
-    addCommands(new DriveStraightOnHeading(-0.6, DistanceUnits.INCHES, 10.0, 0.0));
-    addCommands(new DriveStraightOnHeading(-0.8, DistanceUnits.INCHES, 140.0, 0.0));
-    addCommands(new DriveStraightOnHeading(-0.6, DistanceUnits.INCHES, 10.0, 0.0));
-    addCommands(new DriveStraightOnHeading(-0.4, DistanceUnits.INCHES, 10.0, 0.0));
-    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 10.0, 0.0));
-
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new WaitCommand(2.0)));
+    // fire
+    if (shootball) {
+      addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 40.0, -65));
+      addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new WaitCommand(3.0)));
+    }
   }
 }

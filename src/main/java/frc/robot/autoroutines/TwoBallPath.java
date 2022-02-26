@@ -17,8 +17,13 @@ import frc.robot.subsystems.IntakePistons;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TwoBallPath extends SequentialCommandGroup {
-  /** Creates a new TwoBallPath. */
-  public TwoBallPath() {
+  /**
+   * Creates a new TwoBallPath.
+   * Gather a ball.
+   * Go back to starting position
+   * Shoot 2 balls.
+   */
+  public TwoBallPath(boolean driveForward) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -42,5 +47,8 @@ public class TwoBallPath extends SequentialCommandGroup {
     // fire
     addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new WaitCommand(2.0)));
 
+    if (driveForward) {
+      addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 80.0, 20));
+    }
   }
 }

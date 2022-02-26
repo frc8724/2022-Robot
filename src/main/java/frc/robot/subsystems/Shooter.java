@@ -75,10 +75,13 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         // P of "3.0" means that full power applied with error of 341 native units =
         // 100rpm
         // (above also means that 50% power boost applied with error of 50rpm)
-        shooterWheelFalcon.config_kP(0, 5.3, 0); // previously used 3.0
+        // https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
+        shooterWheelFalcon.config_kP(0, 0.3, 0); // if we are 100 rpm off, then apply 10% more output = 10% * 1023 / 100
+                                                 // rpm
         shooterWheelFalcon.config_kI(0, 0.0, 0);
-        shooterWheelFalcon.config_kD(0, 0.3, 0); // CTRE recommends starting at 10x P-gain
-        shooterWheelFalcon.config_kF(0, 0.046, 0); // 1023.0 / convertRpmToTicksPer100ms(5760), 0);
+        shooterWheelFalcon.config_kD(0, 3.0, 0); // CTRE recommends starting at 10x P-gain
+        shooterWheelFalcon.config_kF(0, 1023.0 * 0.2 / convertRpmToTicksPer100ms(1035), 0); // at 0.2 Percent VBus, the
+                                                                                            // shooter is at 1035
         shooterWheelFalcon.configAllowableClosedloopError(0, 0, 0); // no "neutral" zone around target
     }
 
@@ -89,10 +92,6 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     }
 
     private void UpdateDashboard() {
-        // SmartDashboard.putNumber("Shooter Wheel pos",
-        // shooterWheelLeft.getSelectedSensorPosition(0));
-        // SmartDashboard.putNumber("Shooter Wheel speed",
-        // shooterWheelLeft.getSelectedSensorVelocity(0));
         SmartDashboard.putNumber("Shooter Wheel RPM",
                 convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0)));
 

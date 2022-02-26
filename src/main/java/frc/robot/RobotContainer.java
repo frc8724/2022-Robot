@@ -10,6 +10,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autoroutines.FourBallPath;
 import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.ThreeBallPath;
 import frc.robot.autoroutines.TwoBallPath;
@@ -84,9 +85,10 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
-    this.autoChooser.setDefaultOption("3 Ball Auto", new ThreeBallPath());
+    this.autoChooser.setDefaultOption("3 Ball Auto", new ThreeBallPath(true));
 
-    this.autoChooser.addOption("2 Ball Auto", new TwoBallPath());
+    this.autoChooser.addOption("2 Ball Auto", new TwoBallPath(true));
+    this.autoChooser.addOption("4 Ball Auto", new FourBallPath());
 
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
@@ -152,8 +154,18 @@ public class RobotContainer {
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new SystemWarmUpShooter());
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new
+    // IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new
+    // IntakePistonsSet(IntakePistons.INTAKE_UP));
+
+    // debug
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(() -> shooter.setShooterSpeed(500.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenReleased(() -> shooter.setShooterSpeedVBus(0.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(() -> shooter.setShooterSpeed(1000.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenReleased(() -> shooter.setShooterSpeedVBus(0.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(() -> shooter.setShooterSpeed(1500.0));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenReleased(() -> shooter.setShooterSpeedVBus(0.0));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());
@@ -173,6 +185,9 @@ public class RobotContainer {
         .whileHeld(new SystemShootBall(() -> SystemShootBall.LongShot, () -> Hood.LONGEST_SHOT));
 
     DRIVER_PAD.DRIVER_PAD_GREEN_BUTTON
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+
+    DRIVER_PAD.DRIVER_PAD_LEFT_LOWER_TRIGGER_BUTTON
         .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
 
     DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
