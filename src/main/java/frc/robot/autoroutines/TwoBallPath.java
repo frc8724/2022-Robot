@@ -4,6 +4,7 @@
 
 package frc.robot.autoroutines;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -30,6 +31,7 @@ public class TwoBallPath extends SequentialCommandGroup {
     addCommands(new SystemZero());
 
     addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+
     // addCommands(new WaitCommand(1.0));
 
     addCommands(new HoodMove(() -> {
@@ -37,15 +39,16 @@ public class TwoBallPath extends SequentialCommandGroup {
     }));
 
     addCommands(new ShooterSetAccelerator(0.5));
-    // addCommands(new IntakeRollerSuckIn());
+    addCommands(new IntakeRollerSuckIn());
     addCommands(new MagazinePullInBalls());
 
-    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 64.0, -60));
+    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 64.0, -60.0));
+    addCommands(new InstantCommand(() -> RobotContainer.cameraLights.on()));
 
-    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 70.0, +80));
+    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 90.0, +45.0));
 
     // fire
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new WaitCommand(2.0)));
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new WaitCommand(3.0)));
 
     if (driveForward) {
       addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 80.0, 20));

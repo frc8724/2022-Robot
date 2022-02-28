@@ -4,6 +4,7 @@ import org.mayheminc.util.MayhemDriverPad;
 import org.mayheminc.util.MayhemOperatorPad;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
 
@@ -28,6 +29,7 @@ public class DriveBaseTeleopCommand extends CommandBase {
     @Override
     public void initialize() {
         this.drive.init();
+        RobotContainer.cameraLights.on();
     }
 
     @Override

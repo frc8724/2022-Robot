@@ -87,10 +87,11 @@ public class RobotContainer {
 
     // this.autoChooser.setDefaultOption("hello world", new
     // PointToTarget(this.drive));
-    this.autoChooser.setDefaultOption("3 Ball Auto", new ThreeBallPath(true));
+    this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
+    this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
 
-    this.autoChooser.addOption("2 Ball Auto", new TwoBallPath(true));
-    this.autoChooser.addOption("4 Ball Auto", new FourBallPath());
+    // this.autoChooser.addOption("2 Ball Auto", new TwoBallPath(true));
+    // this.autoChooser.addOption("4 Ball Auto", new FourBallPath());
 
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
@@ -156,18 +157,22 @@ public class RobotContainer {
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new SystemWarmUpShooter());
 
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new
-    // IntakePistonsSet(IntakePistons.INTAKE_DOWN));
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new
-    // IntakePistonsSet(IntakePistons.INTAKE_UP));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
 
     // debug
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(() -> shooter.setShooterSpeed(500.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenReleased(() -> shooter.setShooterSpeedVBus(0.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(() -> shooter.setShooterSpeed(1000.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenReleased(() -> shooter.setShooterSpeedVBus(0.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(() -> shooter.setShooterSpeed(1500.0));
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenReleased(() -> shooter.setShooterSpeedVBus(0.0));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(() ->
+    // shooter.setShooterSpeed(500.0));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenReleased(() ->
+    // shooter.setShooterSpeedVBus(0.0));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(() ->
+    // shooter.setShooterSpeed(1000.0));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenReleased(() ->
+    // shooter.setShooterSpeedVBus(0.0));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(() ->
+    // shooter.setShooterSpeed(1500.0));
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenReleased(() ->
+    // shooter.setShooterSpeedVBus(0.0));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());

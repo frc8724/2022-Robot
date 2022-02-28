@@ -79,7 +79,8 @@ public class Vision {
                     continue;
                 }
 
-                Mat output = new Mat();
+                // Mat output = new Mat();
+                Mat output = ProcessImage(source);
 
                 Core.inRange(source, this.model.getLowerBound(), this.model.getUpperBound(), output);
 
@@ -101,6 +102,23 @@ public class Vision {
                 outputStream.putFrame(output);
             }
         }).start();
+    }
+
+    private Mat ProcessImage(Mat source) {
+        // blur
+        // BGR to HSV
+        // In Range
+        // Dialte to fill in holes.
+        // Erode back down to normal.
+
+        // find contours
+        // loop through contours
+        // get bounding rect of contour
+        // if quality of rect is good (aspect ratio, area, etc.)
+        // Draw rect on image
+        // draw crosshairs on image
+        // return image
+        return null;
     }
 
     public void start(VisionModel model) {

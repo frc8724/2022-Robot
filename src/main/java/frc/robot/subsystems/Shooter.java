@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import javax.lang.model.util.ElementScanner6;
+
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -76,10 +78,10 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         // 100rpm
         // (above also means that 50% power boost applied with error of 50rpm)
         // https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
-        shooterWheelFalcon.config_kP(0, 0.3, 0); // if we are 100 rpm off, then apply 10% more output = 10% * 1023 / 100
+        shooterWheelFalcon.config_kP(0, 2.0, 0); // if we are 100 rpm off, then apply 10% more output = 10% * 1023 / 100
                                                  // rpm
         shooterWheelFalcon.config_kI(0, 0.0, 0);
-        shooterWheelFalcon.config_kD(0, 3.0, 0); // CTRE recommends starting at 10x P-gain
+        shooterWheelFalcon.config_kD(0, 10.0, 0); // CTRE recommends starting at 10x P-gain
         shooterWheelFalcon.config_kF(0, 1023.0 * 0.2 / convertRpmToTicksPer100ms(1035), 0); // at 0.2 Percent VBus, the
                                                                                             // shooter is at 1035
         shooterWheelFalcon.configAllowableClosedloopError(0, 0, 0); // no "neutral" zone around target
@@ -139,7 +141,12 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     }
 
     public boolean isShooterAtSpeed() {
-        return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE;
+        // the shooter has trouble locking into a low speed. Double the tolerance
+        if (m_targetSpeedRPM < 600) {
+            return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE * 2;
+        } else {
+            return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE;
+        }
     }
 
     public double getShooterSpeedVBus() {
