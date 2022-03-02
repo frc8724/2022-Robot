@@ -16,7 +16,7 @@ public class HeadingCorrection {
     // NavX parameters
     // private double m_desiredHeading = 0.0;
     private boolean m_useHeadingCorrection = true;
-    private static final double HEADING_PID_P = 0.001; // was 0.007 at GSD; was 0.030 in 2019 for HIGH_GEAR
+    private static final double HEADING_PID_P = 0.007; // was 0.007 at GSD; was 0.030 in 2019 for HIGH_GEAR
     private static final double HEADING_PID_I = 0.000; // was 0.000 at GSD; was 0.000 in 2019
     private static final double HEADING_PID_D = 0.000; // was 0.080 at GSD; was 0.04 in 2019
     private static final double kToleranceDegreesPIDControl = 0.2;

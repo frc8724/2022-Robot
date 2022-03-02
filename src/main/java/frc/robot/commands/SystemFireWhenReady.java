@@ -15,8 +15,13 @@ import frc.robot.RobotContainer;
 public class SystemFireWhenReady extends CommandBase {
   /** Creates a new SystemFireWhenReady. */
   Supplier<Double> m_shooterSpeed;
+  boolean m_quickFire;
 
   public SystemFireWhenReady(Supplier<Double> d) {
+    this(d, false);
+  }
+
+  public SystemFireWhenReady(Supplier<Double> d, boolean quickFire) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
     addRequirements(RobotContainer.loader);
@@ -24,6 +29,7 @@ public class SystemFireWhenReady extends CommandBase {
     addRequirements(RobotContainer.accelerator);
 
     m_shooterSpeed = d;
+    m_quickFire = quickFire;
   }
 
   // Called when the command is initially scheduled.
@@ -37,7 +43,7 @@ public class SystemFireWhenReady extends CommandBase {
   @Override
   public void execute() {
     boolean atSpeed = RobotContainer.shooter.isShooterAtSpeed();
-    if (atSpeed) {
+    if (atSpeed || m_quickFire) {
       RobotContainer.loader.setSpeed(0.75);
       RobotContainer.magazine.setSpeed(0.5);
     } else {

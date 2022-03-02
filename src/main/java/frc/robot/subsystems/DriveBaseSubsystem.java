@@ -100,7 +100,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
     public void init() {
         // reset the NavX
-        headingCorrection.zeroHeadingGyro(0.0);
+        headingCorrection.zeroHeadingGyro(111.0); // we line up against the wall which is 111 from 0.
     }
 
     private void configureDriveTalon(final MayhemTalonSRX talon) {

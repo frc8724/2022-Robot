@@ -10,12 +10,16 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autoroutines.DriveForwardShoot2;
 import frc.robot.autoroutines.FourBallPath;
+import frc.robot.autoroutines.LeftSide3Balls;
 import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.ThreeBallPath;
 import frc.robot.autoroutines.TwoBallPath;
 import frc.robot.commands.ClimberSetArmPositionTo;
 import frc.robot.commands.DriveBaseTeleopCommand;
+import frc.robot.commands.DriveStraight;
+import frc.robot.commands.DriveStraightOnHeading;
 import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeReverseRollers;
@@ -25,6 +29,7 @@ import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemWarmUpShooter;
 import frc.robot.commands.SystemZero;
+import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 import frc.robot.subsystems.CameraLights;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -90,8 +95,8 @@ public class RobotContainer {
     this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
     this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
 
-    // this.autoChooser.addOption("2 Ball Auto", new TwoBallPath(true));
-    // this.autoChooser.addOption("4 Ball Auto", new FourBallPath());
+    this.autoChooser.addOption("Drive Forward Shoot 2", new DriveForwardShoot2());
+    this.autoChooser.addOption("Left Side 3 balls.", new LeftSide3Balls());
 
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
@@ -133,14 +138,15 @@ public class RobotContainer {
   private void configureDriverStick() {
     DRIVER_STICK.DRIVER_STICK_BUTTON_ONE_DISABLED.whenPressed(new SystemZero());
 
-    DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((+500.0)));
-    DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((-500.0)));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_ELEVEN.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((+500.0)));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_TEN.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((-500.0)));
 
     DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> SystemShootBall.adjustShortShot(+50.0));
     DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> SystemShootBall.adjustShortShot(-50.0));
 
     DRIVER_STICK.DRIVER_STICK_BUTTON_NINE.whenPressed(() -> SystemShootBall.adjustLowGoalShot(+50.0));
     DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT.whenPressed(() -> SystemShootBall.adjustLowGoalShot(-50.0));
+
   }
 
   private void configureOperatorPadButtons() {
@@ -174,6 +180,12 @@ public class RobotContainer {
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenReleased(() ->
     // shooter.setShooterSpeedVBus(0.0));
 
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE
+        .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getHoodClosePosition()));
+
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());
 
@@ -201,6 +213,7 @@ public class RobotContainer {
         .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getHoodClosePosition()));
 
     // DRIVER_PAD.DRIVER_PAD_YELLOW_BUTTON.whenPressed( new Hoo
+    DRIVER_PAD.DRIVER_PAD_BLUE_BUTTON.whenPressed(new DriveStraightOnHeading(0.2, 12.0));
 
   }
 
