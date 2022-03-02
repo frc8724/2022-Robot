@@ -22,6 +22,7 @@ public class SystemZero extends InstantCommand {
   public void initialize() {
     RobotContainer.hood.zero();
     RobotContainer.climber.zero();
+    RobotContainer.drive.init();
   }
 
   @Override

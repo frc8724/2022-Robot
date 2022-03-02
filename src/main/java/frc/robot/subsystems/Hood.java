@@ -20,7 +20,7 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     private final static double POSITION_TOLERANCE = 100.0;
 
     public final static double AUTO_START_POSITION = 4000;
-    private final static double CLOSE_POSITION = 3000;
+    private final static double CLOSE_POSITION = 4500;
     public final static double LONGEST_SHOT = 9500;
 
     private double m_desiredPosition = 0.0;
@@ -35,7 +35,7 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     private double closePosition = CLOSE_POSITION;
 
     public double getHoodClosePosition() {
-        return 5000;// closePosition;
+        return closePosition;
     }
 
     public void adjustHoodClosePosition(double d) {
