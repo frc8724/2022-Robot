@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class MayhemDriverPad {
 
-        public final class GAMEPAD_BUTTION {
+        public final class GAMEPAD_BUTTON {
                 public static final int GAMEPAD_F310_A_BUTTON = 1;
                 public static final int GAMEPAD_F310_B_BUTTON = 2;
                 public static final int GAMEPAD_F310_X_BUTTON = 3;
@@ -33,26 +33,26 @@ public class MayhemDriverPad {
         public final Button DRIVER_PAD_BUTTON_FIVE = new JoystickButton(DRIVER_PAD, 5); // Left Top Trigger;
         public final Button DRIVER_PAD_BUTTON_SIX = new JoystickButton(DRIVER_PAD, 6); // Right Top Trigger;
         public final Button DRIVER_PAD_LEFT_STICK_BUTTON = new JoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_LEFT_STICK_BUTTON); // Left;
+                        GAMEPAD_BUTTON.GAMEPAD_F310_LEFT_STICK_BUTTON); // Left;
         public final Button DRIVER_PAD_RIGHT_STICK_BUTTON = new JoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_RIGHT_STICK_BUTTON); // Right;
+                        GAMEPAD_BUTTON.GAMEPAD_F310_RIGHT_STICK_BUTTON); // Right;
 
         public final JoystickPOVButton DRIVER_PAD_D_PAD_UP = new JoystickPOVButton(DRIVER_PAD, 0);
         public final JoystickPOVButton DRIVER_PAD_D_PAD_RIGHT = new JoystickPOVButton(DRIVER_PAD, 90);
         public final JoystickPOVButton DRIVER_PAD_D_PAD_DOWN = new JoystickPOVButton(DRIVER_PAD, 180);
         public final JoystickPOVButton DRIVER_PAD_D_PAD_LEFT = new JoystickPOVButton(DRIVER_PAD, 270);
         public final Button CLIMB_L3_BUTTON_PAIR = new AndJoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_Y_BUTTON, DRIVER_PAD, GAMEPAD_BUTTION.GAMEPAD_F310_LEFT_BUTTON); // Y=Yellow,
-                                                                                                                      // plus
-                                                                                                                      // left
-                                                                                                                      // top
-                                                                                                                      // trigger
+                        GAMEPAD_BUTTON.GAMEPAD_F310_Y_BUTTON, DRIVER_PAD, GAMEPAD_BUTTON.GAMEPAD_F310_LEFT_BUTTON); // Y=Yellow,
+                                                                                                                    // plus
+                                                                                                                    // left
+                                                                                                                    // top
+                                                                                                                    // trigger
         public final Button CLIMB_L2_BUTTON_PAIR = new AndJoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_A_BUTTON, DRIVER_PAD, GAMEPAD_BUTTION.GAMEPAD_F310_LEFT_BUTTON);// A=Green,
-                                                                                                                     // plus
-                                                                                                                     // left
-                                                                                                                     // top
-                                                                                                                     // trigger
+                        GAMEPAD_BUTTON.GAMEPAD_F310_A_BUTTON, DRIVER_PAD, GAMEPAD_BUTTON.GAMEPAD_F310_LEFT_BUTTON);// A=Green,
+                                                                                                                   // plus
+                                                                                                                   // left
+                                                                                                                   // top
+                                                                                                                   // trigger
 
         // Driver Control Modes
         public final Button TOGGLE_CLOSED_LOOP_MODE_BUTTON = new DisabledOnlyJoystickButton(DRIVER_PAD, 7);
@@ -61,16 +61,16 @@ public class MayhemDriverPad {
         // NOTE: DRIVER_PAD_RIGHT_UPPER_TRIGGER_BUTTON is "QUICKTURN" in Drive.java - DO
         // NOT USE HERE!!!
         public final Button DRIVER_PAD_LEFT_UPPER_TRIGGER_BUTTON = new EnabledOnlyJoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_LEFT_BUTTON);
+                        GAMEPAD_BUTTON.GAMEPAD_F310_LEFT_BUTTON);
         public final JoystickAxisButton DRIVER_PAD_LEFT_LOWER_TRIGGER_BUTTON = new JoystickAxisButton(DRIVER_PAD,
                         GAMEPAD_AXIS.GAMEPAD_F310_LEFT_TRIGGER, JoystickAxisButton.Direction.POSITIVE_ONLY);
         public final JoystickAxisButton DRIVER_PAD_RIGHT_LOWER_TRIGGER_BUTTON = new JoystickAxisButton(DRIVER_PAD,
                         GAMEPAD_AXIS.GAMEPAD_F310_RIGHT_TRIGGER, JoystickAxisButton.Direction.POSITIVE_ONLY);
 
         public final Button DRIVER_PAD_BACK_BUTTON = new JoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_BACK_BUTTON);
+                        GAMEPAD_BUTTON.GAMEPAD_F310_BACK_BUTTON);
         public final Button DRIVER_PAD_START_BUTTON = new JoystickButton(DRIVER_PAD,
-                        GAMEPAD_BUTTION.GAMEPAD_F310_START_BUTTON);
+                        GAMEPAD_BUTTON.GAMEPAD_F310_START_BUTTON);
 
         public final Button DRIVER_PAD_GREEN_BUTTON = new JoystickButton(DRIVER_PAD, 1);;
         public final Button DRIVER_PAD_RED_BUTTON = new JoystickButton(DRIVER_PAD, 2); // RED 'B" button
@@ -82,7 +82,7 @@ public class MayhemDriverPad {
 
         private static final double THROTTLE_DEAD_ZONE_PERCENT = 0.05;
         private static final double MIN_THROTTLE_FOR_MOVEMENT = 0.02; // what is the min throttle for Movement
-        private static final double NORMAL_MAX_THROTTLE = 0.75; // maximum speed is normally 100%
+        private static final double NORMAL_MAX_THROTTLE = 0.85; // maximum speed is normally 100%
         private static final double SLOW_MODE_MAX_THROTTLE = 0.30; // maximum throttle in "slow mode" is 30%
 
         public double driveThrottle() {
@@ -155,6 +155,6 @@ public class MayhemDriverPad {
         }
 
         public boolean quickTurn() {
-                return (DRIVER_PAD.getRawButton(GAMEPAD_BUTTION.GAMEPAD_F310_RIGHT_BUTTON));
+                return (DRIVER_PAD.getRawButton(GAMEPAD_BUTTON.GAMEPAD_F310_RIGHT_BUTTON));
         }
 }

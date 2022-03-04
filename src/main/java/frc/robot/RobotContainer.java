@@ -88,10 +88,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    System.out.println("RobotContainer const");
-
-    // this.autoChooser.setDefaultOption("hello world", new
-    // PointToTarget(this.drive));
     this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
     this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
 
