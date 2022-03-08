@@ -137,11 +137,11 @@ public class RobotContainer {
     DRIVER_STICK.DRIVER_STICK_BUTTON_ELEVEN.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((+500.0)));
     DRIVER_STICK.DRIVER_STICK_BUTTON_TEN.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((-500.0)));
 
-    DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> SystemShootBall.adjustShortShot(+50.0));
-    DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> SystemShootBall.adjustShortShot(-50.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> SystemShootBall.adjustShortShot(+25.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> SystemShootBall.adjustShortShot(-25.0));
 
-    DRIVER_STICK.DRIVER_STICK_BUTTON_NINE.whenPressed(() -> SystemShootBall.adjustLowGoalShot(+50.0));
-    DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT.whenPressed(() -> SystemShootBall.adjustLowGoalShot(-50.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_NINE.whenPressed(() -> SystemShootBall.adjustLowGoalShot(+25.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT.whenPressed(() -> SystemShootBall.adjustLowGoalShot(-25.0));
 
   }
 
@@ -185,8 +185,10 @@ public class RobotContainer {
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new SystemClimberInitialClimb());
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new SystemClimberAttachToNextRung());
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new
+    // SystemClimberInitialClimb());
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new
+    // SystemClimberAttachToNextRung());
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_UP));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));

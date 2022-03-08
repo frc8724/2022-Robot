@@ -51,7 +51,7 @@ public class TwoBallPath extends SequentialCommandGroup {
     // fire
     addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 1000.0), new WaitCommand(3.0)));
     // was 165
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 140.0, 165));
+    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 140.0, 170));
 
   }
 }

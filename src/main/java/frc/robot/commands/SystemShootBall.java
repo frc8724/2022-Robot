@@ -17,8 +17,8 @@ import frc.robot.RobotContainer;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SystemShootBall extends SequentialCommandGroup {
   static public final double LongShot = 1750;
-  static private final double ShortShot = 1000;
-  static private final double LowGoalShot = 500;
+  static private final double ShortShot = 975;
+  static private final double LowGoalShot = 400;
 
   static double shortShot = ShortShot;
   static double lowGoalShot = LowGoalShot;
