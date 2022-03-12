@@ -60,10 +60,11 @@ public final class Constants {
     }
 
     public final class DigitalInput {
-        public static final int LEFT_CLIMBER_TOP_LIMIT = 0;
-        public static final int RIGHT_CLIMBER_TOP_LIMIT = 1;
-        public static final int LEFT_CLIMBER_BOTTOM_LIMIT = 2;
-        public static final int RIGHT_CLIMBER_BOTTOM_LIMIT = 3;
+        public static final int RIGHT_CLIMBER_BOTTOM_LIMIT = 1;
+        public static final int RIGHT_CLIMBER_TOP_LIMIT = 0;
+
+        public static final int LEFT_CLIMBER_TOP_LIMIT = 2;
+        public static final int LEFT_CLIMBER_BOTTOM_LIMIT = 3;
     }
 
     public final class Lights {
