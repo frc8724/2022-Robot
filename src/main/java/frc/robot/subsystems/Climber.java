@@ -81,27 +81,18 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     // }
 
     public void setArmLengthPowerTo(double d) {
-        rightTalon.set(ControlMode.PercentOutput, d);
-
         // Up
         if (d > 0) {
             ApplyTopPowerToTalon(leftTalon, leftLimit, d);
-
-        } else { // down
-            ApplyBottomPowerToTalon(leftTalon, leftLimit, d);
-        }
-
-        // Up
-        if (d > 0) {
             ApplyTopPowerToTalon(rightTalon, rightLimit, d);
 
         } else { // down
+            ApplyBottomPowerToTalon(leftTalon, leftLimit, d);
             ApplyBottomPowerToTalon(rightTalon, rightLimit, d);
         }
     }
 
     private void ApplyTopPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
-
         // if we are close to the top and the limit is pressed, stop
         if (talon.getSelectedSensorPosition() > MAX_POSITION / 2 &&
                 limit.get()) {
@@ -114,7 +105,6 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     private void ApplyBottomPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
-
         // if we are close to the bottom and the limit is pressed, stop
         if (talon.getSelectedSensorPosition() < MAX_POSITION / 2 &&
                 limit.get()) {
