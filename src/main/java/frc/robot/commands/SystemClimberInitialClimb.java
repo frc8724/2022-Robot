@@ -21,16 +21,16 @@ public class SystemClimberInitialClimb extends SequentialCommandGroup {
     // backup
     // arm retract
 
-    addCommands(new ClimberSetArmPositionTo(Climber.ARMS_UP));
-    addCommands(new WaitCommand(0.5));
+    // addCommands(new ClimberSetArmPositionTo(Climber.ARMS_UP));
+    // addCommands(new WaitCommand(0.5));
 
-    addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
+    // addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
 
-    addCommands(
-        new ParallelRaceGroup(new DriveStraight(-0.2),
-            new WaitCommand(0.75)));
+    // addCommands(
+    // new ParallelRaceGroup(new DriveStraight(-0.2),
+    // new WaitCommand(0.75)));
 
-    addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
+    // addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
 
   }
 }

@@ -58,4 +58,9 @@ public final class Constants {
     public final class Control {
         public static final int DRIVER_STICK_PORT = 0;
     }
+
+    public final class DigitalInput {
+        public static final int LEFT_CLIMBER_LIMIT = 0;
+        public static final int RIGHT_CLIMBER_LIMIT = 1;
+    }
 }

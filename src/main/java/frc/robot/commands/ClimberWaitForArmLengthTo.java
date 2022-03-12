@@ -18,26 +18,26 @@ public class ClimberWaitForArmLengthTo extends CommandBase {
     m_pos = d;
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    RobotContainer.climber.setArmLengthTo(m_pos);
-  }
+  // // Called when the command is initially scheduled.
+  // @Override
+  // public void initialize() {
+  // RobotContainer.climber.setArmLengthTo(m_pos);
+  // }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    // do nothing
-  }
+  // // Called every time the scheduler runs while the command is scheduled.
+  // @Override
+  // public void execute() {
+  // // do nothing
+  // }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+  // // Called once the command ends or is interrupted.
+  // @Override
+  // public void end(boolean interrupted) {
+  // }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return RobotContainer.climber.isAtPosition();
-  }
+  // // Returns true when the command should end.
+  // @Override
+  // public boolean isFinished() {
+  // return RobotContainer.climber.isAtPosition();
+  // }
 }
