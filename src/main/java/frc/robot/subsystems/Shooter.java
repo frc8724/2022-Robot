@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     public static final double INITIATION_LINE_SPEED = 4500.0;
     public static final double TRENCH_FRONT_SPEED = 3400.0;
     public static final double MAX_SPEED_RPM = 5000;
-    public static final double SPEED_TOLERANCE = 30;
+    public static final double SPEED_TOLERANCE = 20;
 
     double m_targetSpeedRPM;
 
@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         shooterWheelFalcon.config_kP(0, 2.0, 0); // if we are 100 rpm off, then apply 10% more output = 10% * 1023 / 100
                                                  // rpm
         shooterWheelFalcon.config_kI(0, 0.0, 0);
-        shooterWheelFalcon.config_kD(0, 10.0, 0); // CTRE recommends starting at 10x P-gain
+        shooterWheelFalcon.config_kD(0, 40.0, 0); // CTRE recommends starting at 10x P-gain
         shooterWheelFalcon.config_kF(0, 1023.0 * 0.2 / convertRpmToTicksPer100ms(1035), 0); // at 0.2 Percent VBus, the
                                                                                             // shooter is at 1035
         shooterWheelFalcon.configAllowableClosedloopError(0, 0, 0); // no "neutral" zone around target
