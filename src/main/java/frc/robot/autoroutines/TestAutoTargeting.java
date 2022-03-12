@@ -6,6 +6,7 @@ package frc.robot.autoroutines;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.SystemZero;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,6 +17,7 @@ public class TestAutoTargeting extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    addCommands(new DriveToTarget(0.2, 200));
+    addCommands(new SystemZero());
+    addCommands(new DriveToTarget(0.15, 2000));
   }
 }

@@ -112,6 +112,7 @@ public class Vision {
             }
 
             if (largestContour == null || rect.area() > largestContour.area()) {
+                // System.out.println("I'm here (2)");
                 largestContour = rect;
             }
 
@@ -119,6 +120,7 @@ public class Vision {
         }
 
         if (largestContour != null) {
+            // System.out.println("I'm here!");
             var center = getCenterOfRect(largestContour);
 
             this.target = new Point((double) center.x / (double) source.width(),
