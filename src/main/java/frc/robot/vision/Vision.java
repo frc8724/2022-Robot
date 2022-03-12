@@ -8,12 +8,14 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Vision {
     class Thing {
@@ -36,28 +38,19 @@ public class Vision {
 
     private List<Thing> things = new ArrayList<>();
 
-    public Vision() {
-    }
-
     public Vision(int cameraIndex) {
         this.cameraIndex = cameraIndex;
     }
 
     public void init() {
         new Thread(() -> {
-            UsbCamera camera;
+            UsbCamera camera = CameraServer.startAutomaticCapture(this.cameraIndex);
 
-            if (this.cameraIndex != null) {
-                camera = CameraServer.startAutomaticCapture(this.cameraIndex);
-            } else {
-                camera = CameraServer.startAutomaticCapture();
-            }
-
-            camera.setResolution(640, 480);
+            camera.setResolution(320, 240);
             camera.setFPS(10);
 
-            CvSink cvSink = CameraServer.getVideo();
-            CvSource outputStream = CameraServer.putVideo("Output", 640, 480);
+            CvSink cvSink = CameraServer.getVideo(camera);
+            CvSource outputStream = CameraServer.putVideo("Output " + this.cameraIndex, 640, 480);
 
             Mat source = new Mat();
 
@@ -79,46 +72,82 @@ public class Vision {
                     continue;
                 }
 
-                // Mat output = new Mat();
-                Mat output = ProcessImage(source);
-
-                Core.inRange(source, this.model.getLowerBound(), this.model.getUpperBound(), output);
-
-                var contours = new ArrayList<MatOfPoint>();
-
-                // Imgproc.findContours(output, contours, null, Imgproc.RETR_TREE,
-                // Imgproc.CHAIN_APPROX_SIMPLE);
-
-                this.things.clear();
-
-                // for (MatOfPoint contour : contours) {
-                // var rect = Imgproc.boundingRect(contour);
-
-                // this.things.add(new Thing(getCenterOfRect(rect), rect));
-                // }
-
-                // Imgproc.drawContours(source, contours, 0, new Scalar(255, 0, 0));
+                Mat output = processImage(source);
 
                 outputStream.putFrame(output);
             }
         }).start();
     }
 
-    private Mat ProcessImage(Mat source) {
+    private Mat processImage(Mat source) {
         // blur
+        Imgproc.medianBlur(source, source, 7);
         // BGR to HSV
+        Mat hsv = new Mat();
+        Imgproc.cvtColor(source, hsv, Imgproc.COLOR_BGR2HSV);
         // In Range
-        // Dialte to fill in holes.
+        Mat inRange = new Mat();
+        Core.inRange(hsv, this.model.getLowerBound(), this.model.getUpperBound(), inRange);
+        // Dilate to fill in holes.
+        var kernel = new Mat();
+        Imgproc.dilate(inRange, inRange, kernel);
         // Erode back down to normal.
+        Imgproc.erode(inRange, inRange, kernel);
 
         // find contours
+        var contours = new ArrayList<MatOfPoint>();
+        Imgproc.findContours(inRange, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        System.out.println("Hey look, we have " + contours.size() + " contours");
         // loop through contours
+        for (MatOfPoint contour : contours) {
+            var rect = Imgproc.boundingRect(contour);
+
+            var area = rect.area();
+            var minArea = this.model.minArea();
+            var maxArea = this.model.maxArea();
+
+            if (minArea != null && area < minArea) {
+                // System.out.println("invalid min area. area is " + area + " and min area is "
+                // + minArea);
+                // continue;
+            }
+
+            if (maxArea != null && area > maxArea) {
+                System.out.println("invalid max area");
+                continue;
+            }
+
+            if (!this.model.isRatioCorrect(rect.width / rect.height)) {
+                System.out.println("invalid ratio");
+                continue;
+            }
+
+            if (!this.model.isPositionCorrect((double) rect.x / (double) source.width(), (double) rect.y /
+                    (double) source.height())) {
+                System.out.println("invalid position");
+                continue;
+            }
+
+            Imgproc.rectangle(source, rect.tl(), rect.br(), new Scalar(0, 0, 255), 2);
+        }
+
         // get bounding rect of contour
         // if quality of rect is good (aspect ratio, area, etc.)
         // Draw rect on image
         // draw crosshairs on image
+        // Imgproc.line(source, new Point(source.width() / 2, 0), new
+        // Point(source.width() / 2, source.height()),
+        // new Scalar(255, 0, 0), 3);
+        // Imgproc.line(source, new Point(0, source.height() / 2), new
+        // Point(source.width(), source.height() / 2),
+        // new Scalar(255, 0, 0), 3);
         // return image
-        return null;
+
+        if (SmartDashboard.getBoolean("Vision Debug", false)) {
+            return inRange;
+        } else {
+            return source;
+        }
     }
 
     public void start(VisionModel model) {

@@ -7,6 +7,7 @@ package frc.robot;
 import org.mayheminc.util.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CameraServerJNI;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,6 +45,7 @@ import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.subsystems.Targeting;
 import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
+import frc.robot.vision.models.BlueBallVisionModel;
 import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -87,7 +89,7 @@ public class RobotContainer {
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
-  public static final Vision vision = new Vision();
+  public static final Vision vision = new Vision(1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -109,18 +111,18 @@ public class RobotContainer {
     configureButtonBindings();
 
     vision.init();
-    vision.start(new TargetVisionModel());
+    vision.start(new BlueBallVisionModel());
 
-    var camera = CameraServer.startAutomaticCapture(1);
-    camera.setResolution(640, 480);
-    camera.setFPS(10);
+    // CameraServer.startAutomaticCapture(1);
 
-    SmartDashboard.putNumber("r1", 0);
-    SmartDashboard.putNumber("r2", 0);
-    SmartDashboard.putNumber("g1", 0);
-    SmartDashboard.putNumber("g2", 0);
-    SmartDashboard.putNumber("b1", 0);
-    SmartDashboard.putNumber("b2", 0);
+    SmartDashboard.putNumber("h1", 0);
+    SmartDashboard.putNumber("h2", 0);
+    SmartDashboard.putNumber("s1", 0);
+    SmartDashboard.putNumber("s2", 0);
+    SmartDashboard.putNumber("v1", 0);
+    SmartDashboard.putNumber("v2", 0);
+
+    SmartDashboard.putBoolean("Vision Debug", false);
   }
 
   /**
