@@ -13,6 +13,7 @@ import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
 import frc.robot.autoroutines.LeftSide3Balls;
 import frc.robot.autoroutines.ShootAndMoveForward;
+import frc.robot.autoroutines.TestAutoTargeting;
 import frc.robot.autoroutines.ThreeBallPath;
 import frc.robot.autoroutines.TwoBallPath;
 import frc.robot.commands.ClimberSetArmPositionTo;
@@ -87,7 +88,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
+    this.autoChooser.setDefaultOption("Test Auto Target", new TestAutoTargeting());
+    // this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
     this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
 
     this.autoChooser.addOption("Drive Forward Shoot 2", new DriveForwardShoot2());
