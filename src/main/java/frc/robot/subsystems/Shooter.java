@@ -139,12 +139,20 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     }
 
     public boolean isShooterAtSpeed() {
+        if (m_targetSpeedRPM < 100)
+            return false;
+
         // the shooter has trouble locking into a low speed. Double the tolerance
         if (m_targetSpeedRPM < 600) {
             return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE * 2;
         } else {
             return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE;
         }
+    }
+
+    public boolean isShooterWarmingUp() {
+        // the shooter has trouble locking into a low speed. Double the tolerance
+        return (m_targetSpeedRPM > 200);
     }
 
     public double getShooterSpeedVBus() {

@@ -38,6 +38,7 @@ import frc.robot.subsystems.IntakePistons;
 import frc.robot.subsystems.IntakeRollers;
 import frc.robot.subsystems.Loader;
 import frc.robot.subsystems.Magazine;
+import frc.robot.subsystems.RobotLights;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.utils.SettableSendableChooser;
@@ -74,7 +75,7 @@ public class RobotContainer {
   public static final Hood hood = new Hood();
   public static final Climber climber = new Climber();
   public static final CameraLights cameraLights = new CameraLights();
-  public static final LEDLights ledLights = new LEDLights();
+  public static final RobotLights robotLights = new RobotLights();
 
   public static final PidTuner pidTuner = new PidTuner(
       DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE,
