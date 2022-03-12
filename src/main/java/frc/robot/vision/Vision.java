@@ -134,6 +134,19 @@ public class Vision {
         return this.things;
     }
 
+    /**
+     * Return 0.0 to 1.0 to give proportion of vision width to target.
+     * 0.0 is far left edge.
+     * 0.5 is center
+     * 1.0 is far right edge
+     * -1.0 for no target
+     * 
+     * @return
+     */
+    public double getXLocationOfTarget() {
+        return 0.6; // a little off center
+    }
+
     public Thing getLargestThing() {
         Thing largestThing = null;
 
