@@ -73,6 +73,7 @@ public class RobotContainer {
   public static final Hood hood = new Hood();
   public static final Climber climber = new Climber();
   public static final CameraLights cameraLights = new CameraLights();
+  public static final LEDLights ledLights = new LEDLights();
 
   public static final PidTuner pidTuner = new PidTuner(
       DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE,

@@ -63,4 +63,8 @@ public final class Constants {
         public static final int LEFT_CLIMBER_LIMIT = 0;
         public static final int RIGHT_CLIMBER_LIMIT = 1;
     }
+
+    public final class Lights {
+        public static final int LIGHTS_PORT = 0;
+    }
 }
