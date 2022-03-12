@@ -21,8 +21,11 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     private final MayhemTalonSRX leftTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_L, CurrentLimit.HIGH_CURRENT);
     private final MayhemTalonSRX rightTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_R, CurrentLimit.HIGH_CURRENT);
 
-    private final DigitalInput leftLimit = new DigitalInput(Constants.DigitalInput.LEFT_CLIMBER_LIMIT);
-    private final DigitalInput rightLimit = new DigitalInput(Constants.DigitalInput.RIGHT_CLIMBER_LIMIT);
+    private final DigitalInput leftTopLimit = new DigitalInput(Constants.DigitalInput.LEFT_CLIMBER_TOP_LIMIT);
+    private final DigitalInput rightTopLimit = new DigitalInput(Constants.DigitalInput.RIGHT_CLIMBER_TOP_LIMIT);
+
+    private final DigitalInput leftBottomLimit = new DigitalInput(Constants.DigitalInput.LEFT_CLIMBER_BOTTOM_LIMIT);
+    private final DigitalInput rightBottomLimit = new DigitalInput(Constants.DigitalInput.RIGHT_CLIMBER_BOTTOM_LIMIT);
 
     public static final boolean ARMS_UP = true;
     public static final boolean ARMS_DOWN = false;
@@ -54,7 +57,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         talon.config_kF(0, 0.0, 0);
 
         talon.changeControlMode(ControlMode.Position);
-        talon.setNeutralMode(NeutralMode.Brake);
+        talon.setNeutralMode(NeutralMode.Coast);
         talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         talon.configNominalOutputVoltage(+0.0f, -0.0f);
@@ -83,35 +86,18 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     public void setArmLengthPowerTo(double d) {
         // Up
         if (d > 0) {
-            ApplyTopPowerToTalon(leftTalon, leftLimit, d);
-            ApplyTopPowerToTalon(rightTalon, rightLimit, d);
-
+            applyPowerToTalon(leftTalon, leftTopLimit, d);
+            applyPowerToTalon(rightTalon, rightTopLimit, d);
         } else { // down
-            ApplyBottomPowerToTalon(leftTalon, leftLimit, d);
-            ApplyBottomPowerToTalon(rightTalon, rightLimit, d);
+            applyPowerToTalon(leftTalon, leftBottomLimit, d);
+            applyPowerToTalon(rightTalon, rightBottomLimit, d);
         }
     }
 
-    private void ApplyTopPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
-        // if we are close to the top and the limit is pressed, stop
-        if (talon.getSelectedSensorPosition() > MAX_POSITION / 2 &&
-                limit.get()) {
-            // turn off
+    private void applyPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
+        if (limit.get()) {
             talon.set(ControlMode.PercentOutput, 0);
         } else {
-            // apply power
-            talon.set(ControlMode.PercentOutput, d);
-        }
-    }
-
-    private void ApplyBottomPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
-        // if we are close to the bottom and the limit is pressed, stop
-        if (talon.getSelectedSensorPosition() < MAX_POSITION / 2 &&
-                limit.get()) {
-            // turn off
-            talon.set(ControlMode.PercentOutput, 0);
-        } else {
-            // apply power
             talon.set(ControlMode.PercentOutput, d);
         }
     }
@@ -138,8 +124,11 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         SmartDashboard.putNumber("Climber Left Pos", leftTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Climber Right Pos", rightTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Climber Target", m_target);
-        SmartDashboard.putBoolean("Climber Limit Left", leftLimit.get());
-        SmartDashboard.putBoolean("Climber Limit Right", rightLimit.get());
+
+        SmartDashboard.putBoolean("Climber Limit Left Top", leftTopLimit.get());
+        SmartDashboard.putBoolean("Climber Limit Right Top", rightTopLimit.get());
+        SmartDashboard.putBoolean("Climber Limit Left Bottom", leftBottomLimit.get());
+        SmartDashboard.putBoolean("Climber Limit Right Bottom", rightBottomLimit.get());
     }
 
     @Override
