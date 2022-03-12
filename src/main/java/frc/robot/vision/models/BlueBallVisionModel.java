@@ -28,11 +28,6 @@ public class BlueBallVisionModel implements VisionModel {
     }
 
     @Override
-    public Double minArea() {
-        return 70.0;
-    }
-
-    @Override
     public boolean isPositionCorrect(double x, double y) {
         if (y < 0.5) {
             System.out.println("bad position is " + y);

@@ -18,25 +18,13 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Vision {
-    class Thing {
-        public Point center;
-        public Rect boundingRect;
-        public int area;
-
-        public Thing(Point center, Rect boundingRect) {
-            this.center = center;
-            this.boundingRect = boundingRect;
-            this.area = boundingRect.width * boundingRect.height;
-        }
-    }
-
     private Integer cameraIndex;
 
     public boolean isRunning = false;
 
     public VisionModel model;
 
-    private List<Thing> things = new ArrayList<>();
+    private Point target;
 
     public Vision(int cameraIndex) {
         this.cameraIndex = cameraIndex;
@@ -94,10 +82,11 @@ public class Vision {
         // Erode back down to normal.
         Imgproc.erode(inRange, inRange, kernel);
 
+        Rect largestContour = null;
+
         // find contours
         var contours = new ArrayList<MatOfPoint>();
         Imgproc.findContours(inRange, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-        System.out.println("Hey look, we have " + contours.size() + " contours");
         // loop through contours
         for (MatOfPoint contour : contours) {
             var rect = Imgproc.boundingRect(contour);
@@ -107,41 +96,32 @@ public class Vision {
             var maxArea = this.model.maxArea();
 
             if (minArea != null && area < minArea) {
-                // System.out.println("invalid min area. area is " + area + " and min area is "
-                // + minArea);
-                // continue;
+                continue;
             }
 
             if (maxArea != null && area > maxArea) {
-                System.out.println("invalid max area");
                 continue;
             }
 
             if (!this.model.isRatioCorrect(rect.width / rect.height)) {
-                System.out.println("invalid ratio");
                 continue;
             }
 
             if (!this.model.isPositionCorrect((double) rect.x / (double) source.width(), (double) rect.y /
                     (double) source.height())) {
-                System.out.println("invalid position");
                 continue;
+            }
+
+            if (largestContour == null || rect.area() > largestContour.area()) {
+                largestContour = rect;
             }
 
             Imgproc.rectangle(source, rect.tl(), rect.br(), new Scalar(0, 0, 255), 2);
         }
 
-        // get bounding rect of contour
-        // if quality of rect is good (aspect ratio, area, etc.)
-        // Draw rect on image
-        // draw crosshairs on image
-        // Imgproc.line(source, new Point(source.width() / 2, 0), new
-        // Point(source.width() / 2, source.height()),
-        // new Scalar(255, 0, 0), 3);
-        // Imgproc.line(source, new Point(0, source.height() / 2), new
-        // Point(source.width(), source.height() / 2),
-        // new Scalar(255, 0, 0), 3);
-        // return image
+        if (largestContour != null) {
+            this.target = getCenterOfRect(largestContour);
+        }
 
         if (SmartDashboard.getBoolean("Vision Debug", false)) {
             return inRange;
@@ -159,10 +139,6 @@ public class Vision {
         this.isRunning = false;
     }
 
-    public List<Thing> getThings() {
-        return this.things;
-    }
-
     /**
      * Return 0.0 to 1.0 to give proportion of vision width to target.
      * 0.0 is far left edge.
@@ -172,20 +148,8 @@ public class Vision {
      * 
      * @return
      */
-    public double getXLocationOfTarget() {
-        return 0.6; // a little off center
-    }
-
-    public Thing getLargestThing() {
-        Thing largestThing = null;
-
-        for (Thing thing : things) {
-            if (largestThing != null && thing.area > largestThing.area) {
-                largestThing = thing;
-            }
-        }
-
-        return largestThing;
+    public Point getLargestTarget() {
+        return target;
     }
 
     public void setModel(VisionModel model) {
