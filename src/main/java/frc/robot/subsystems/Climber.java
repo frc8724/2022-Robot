@@ -138,6 +138,8 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         SmartDashboard.putNumber("Climber Left Pos", leftTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Climber Right Pos", rightTalon.getSelectedSensorPosition());
         SmartDashboard.putNumber("Climber Target", m_target);
+        SmartDashboard.putBoolean("Climber Limit Left", leftLimit.get());
+        SmartDashboard.putBoolean("Climber Limit Right", rightLimit.get());
     }
 
     @Override
