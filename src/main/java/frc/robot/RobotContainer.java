@@ -10,6 +10,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
 import frc.robot.autoroutines.FourBallPath;
 import frc.robot.autoroutines.LeftSide3Balls;
@@ -96,6 +97,8 @@ public class RobotContainer {
     this.autoChooser.addOption("Left Side 3 balls.", new LeftSide3Balls());
 
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
+
+    this.autoChooser.addOption("Do nothing!", new DoNothing());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
