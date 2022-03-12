@@ -47,10 +47,7 @@ public class SystemShootBall extends SequentialCommandGroup {
 
     addCommands(new HoodMove(hood));
 
-    addCommands(
-        new ParallelCommandGroup(new ShooterSetSpeed(speed), new ShooterSetAccelerator(0.4), new WaitCommand(1.0)));
-
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(speed), new WaitCommand(4.0)));
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(speed)));
   }
 
   @Override

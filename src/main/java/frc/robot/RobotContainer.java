@@ -27,7 +27,6 @@ import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.SystemClimberAttachToNextRung;
 import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemShootBall;
-import frc.robot.commands.SystemWarmUpShooter;
 import frc.robot.commands.SystemZero;
 import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 import frc.robot.subsystems.CameraLights;
@@ -44,6 +43,7 @@ import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
 import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -157,7 +157,23 @@ public class RobotContainer {
 
     // hood adjust btn d-pad left and right
 
-    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new SystemWarmUpShooter());
+    // Low goal
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new InstantCommand(() -> {
+      shooter.setShooterSpeed(SystemShootBall.getLowGoalShot());
+      accelerator.setAcceleratorSpeedVBus(0.4);
+    }, shooter, accelerator));
+
+    // High goal
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new InstantCommand(() -> {
+      shooter.setShooterSpeed(SystemShootBall.getLowGoalShot());
+      accelerator.setAcceleratorSpeedVBus(0.4);
+    }, shooter, accelerator));
+
+    // Stop the shooter
+    OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new InstantCommand(() -> {
+      shooter.setShooterSpeed(0);
+      accelerator.setAcceleratorSpeedVBus(0);
+    }, shooter, accelerator));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
