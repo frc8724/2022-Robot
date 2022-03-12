@@ -119,7 +119,14 @@ public class Vision {
         }
 
         if (largestContour != null) {
-            this.target = getCenterOfRect(largestContour);
+            var center = getCenterOfRect(largestContour);
+
+            this.target = new Point((double) center.x / (double) source.width(),
+                    (double) center.y / (double) source.height());
+
+            SmartDashboard.putNumber("Vision X", this.target.x);
+            SmartDashboard.putNumber("Vision Y", this.target.y);
+
         }
 
         if (SmartDashboard.getBoolean("Vision Debug", false)) {
