@@ -23,29 +23,30 @@ public class SystemClimberAttachToNextRung extends SequentialCommandGroup {
     // arm up
     // arm retract
 
-    // hooks to partially out either to unhook a rung or we are on the ground to we
-    // can extend a little
-    addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
+    // // hooks to partially out either to unhook a rung or we are on the ground to
+    // we
+    // // can extend a little
+    // addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
 
-    // put arms down
-    addCommands(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
-    addCommands(new WaitCommand(0.5));
+    // // put arms down
+    // addCommands(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
+    // addCommands(new WaitCommand(0.5));
 
-    // extend arms out
-    addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
+    // // extend arms out
+    // addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
 
-    // put arms up
-    addCommands(new ClimberSetArmPositionTo(Climber.ARMS_UP));
-    addCommands(new WaitCommand(0.5));
+    // // put arms up
+    // addCommands(new ClimberSetArmPositionTo(Climber.ARMS_UP));
+    // addCommands(new WaitCommand(0.5));
 
-    // pull arms in. This will unhook the weak arms
-    addCommands(new ClimberSetArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
+    // // pull arms in. This will unhook the weak arms
+    // addCommands(new ClimberSetArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
 
-    // wait for weak arms to meet up with the strong arms
-    addCommands(new WaitCommand(1.0));
+    // // wait for weak arms to meet up with the strong arms
+    // addCommands(new WaitCommand(1.0));
 
-    // pull up to hook the weak arms on the rung
-    addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
+    // // pull up to hook the weak arms on the rung
+    // addCommands(new ClimberSetArmLengthTo(Climber.ARMS_IN_POSITION));
 
   }
 

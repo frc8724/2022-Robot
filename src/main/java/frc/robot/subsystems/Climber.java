@@ -9,6 +9,7 @@ import org.mayheminc.util.MayhemTalonSRX;
 import org.mayheminc.util.PidTunerObject;
 import org.mayheminc.util.MayhemTalonSRX.CurrentLimit;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,9 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     private final Solenoid strongArmPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.CLIMBER);
     private final MayhemTalonSRX leftTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_L, CurrentLimit.HIGH_CURRENT);
     private final MayhemTalonSRX rightTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_R, CurrentLimit.HIGH_CURRENT);
+
+    private final DigitalInput leftLimit = new DigitalInput(Constants.DigitalInput.LEFT_CLIMBER_LIMIT);
+    private final DigitalInput rightLimit = new DigitalInput(Constants.DigitalInput.RIGHT_CLIMBER_LIMIT);
 
     public static final boolean ARMS_UP = true;
     public static final boolean ARMS_DOWN = false;
@@ -70,15 +74,56 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         strongArmPiston.set(b);
     }
 
-    public void setArmLengthTo(double d) {
-        m_target = d;
-        leftTalon.set(ControlMode.Position, m_target);
-        rightTalon.set(ControlMode.Position, m_target);
-    }
+    // public void setArmLengthTo(double d) {
+    // m_target = d;
+    // leftTalon.set(ControlMode.Position, m_target);
+    // rightTalon.set(ControlMode.Position, m_target);
+    // }
 
     public void setArmLengthPowerTo(double d) {
-        leftTalon.set(ControlMode.PercentOutput, d);
         rightTalon.set(ControlMode.PercentOutput, d);
+
+        // Up
+        if (d > 0) {
+            ApplyTopPowerToTalon(leftTalon, leftLimit, d);
+
+        } else { // down
+            ApplyBottomPowerToTalon(leftTalon, leftLimit, d);
+        }
+
+        // Up
+        if (d > 0) {
+            ApplyTopPowerToTalon(rightTalon, rightLimit, d);
+
+        } else { // down
+            ApplyBottomPowerToTalon(rightTalon, rightLimit, d);
+        }
+    }
+
+    private void ApplyTopPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
+
+        // if we are close to the top and the limit is pressed, stop
+        if (talon.getSelectedSensorPosition() > MAX_POSITION / 2 &&
+                limit.get()) {
+            // turn off
+            talon.set(ControlMode.PercentOutput, 0);
+        } else {
+            // apply power
+            talon.set(ControlMode.PercentOutput, d);
+        }
+    }
+
+    private void ApplyBottomPowerToTalon(MayhemTalonSRX talon, DigitalInput limit, double d) {
+
+        // if we are close to the bottom and the limit is pressed, stop
+        if (talon.getSelectedSensorPosition() < MAX_POSITION / 2 &&
+                limit.get()) {
+            // turn off
+            talon.set(ControlMode.PercentOutput, 0);
+        } else {
+            // apply power
+            talon.set(ControlMode.PercentOutput, d);
+        }
     }
 
     public boolean isAtPosition() {
@@ -88,7 +133,6 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     public void stop() {
-        // setArmLengthTo(leftTalon.getSelectedSensorPosition());
         leftTalon.set(ControlMode.PercentOutput, 0.0);
         rightTalon.set(ControlMode.PercentOutput, 0.0);
     }
@@ -153,7 +197,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     public void zero() {
         leftTalon.setSelectedSensorPosition(0.0);
         rightTalon.setSelectedSensorPosition(0.0);
-        setArmLengthTo(0.0);
+        // setArmLengthTo(0.0);
     }
 
 }
