@@ -4,9 +4,6 @@
 
 package frc.robot.autoroutines;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.*;
 import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 
@@ -14,38 +11,38 @@ import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class FourBallPath extends ThreeBallPath {
-  /** Creates a new FourBallPath. */
-  public FourBallPath() {
-    super(false);
-    // angle toward ball against terminal
-    addCommands(new DriveStraightOnHeading(0.4, DistanceUnits.INCHES, 20.0,
-        -20));
-    addCommands(new DriveStraightOnHeading(0.6, DistanceUnits.INCHES, 100.0,
-        0));
-    addCommands(new DriveStraightOnHeading(0.4, DistanceUnits.INCHES, 10.0,
-        0));
-    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 20.0,
-        0.0));
-    // curve in to get ball at terminal
-    addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 30.0,
-        -60));
+    /** Creates a new FourBallPath. */
+    public FourBallPath() {
+        super(false);
+        // angle toward ball against terminal
+        addCommands(new DriveStraightOnHeading(0.4, DistanceUnits.INCHES, 20.0,
+                -20));
+        addCommands(new DriveStraightOnHeading(0.6, DistanceUnits.INCHES, 100.0,
+                0));
+        addCommands(new DriveStraightOnHeading(0.4, DistanceUnits.INCHES, 10.0,
+                0));
+        addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 20.0,
+                0.0));
+        // curve in to get ball at terminal
+        addCommands(new DriveStraightOnHeading(0.2, DistanceUnits.INCHES, 30.0,
+                -60));
 
-    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 10.0,
-        0.0));
-    addCommands(new DriveStraightOnHeading(-0.4, DistanceUnits.INCHES, 10.0,
-        0.0));
-    addCommands(new DriveStraightOnHeading(-0.6, DistanceUnits.INCHES, 10.0,
-        0.0));
-    addCommands(new DriveStraightOnHeading(-0.8, DistanceUnits.INCHES, 140.0,
-        0.0));
-    addCommands(new DriveStraightOnHeading(-0.6, DistanceUnits.INCHES, 10.0,
-        0.0));
-    addCommands(new DriveStraightOnHeading(-0.4, DistanceUnits.INCHES, 10.0,
-        0.0));
-    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 10.0,
-        0.0));
+        addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 10.0,
+                0.0));
+        addCommands(new DriveStraightOnHeading(-0.4, DistanceUnits.INCHES, 10.0,
+                0.0));
+        addCommands(new DriveStraightOnHeading(-0.6, DistanceUnits.INCHES, 10.0,
+                0.0));
+        addCommands(new DriveStraightOnHeading(-0.8, DistanceUnits.INCHES, 140.0,
+                0.0));
+        addCommands(new DriveStraightOnHeading(-0.6, DistanceUnits.INCHES, 10.0,
+                0.0));
+        addCommands(new DriveStraightOnHeading(-0.4, DistanceUnits.INCHES, 10.0,
+                0.0));
+        addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 10.0,
+                0.0));
 
-    // addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new
-    // WaitCommand(2.0)));
-  }
+        // addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 800.0), new
+        // WaitCommand(2.0)));
+    }
 }

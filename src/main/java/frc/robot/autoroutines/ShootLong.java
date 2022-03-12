@@ -5,10 +5,7 @@
 package frc.robot.autoroutines;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.HoodMove;
-import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
-import frc.robot.subsystems.Hood;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

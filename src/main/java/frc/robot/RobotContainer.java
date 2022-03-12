@@ -6,31 +6,24 @@ package frc.robot;
 
 import org.mayheminc.util.*;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CameraServerJNI;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
-import frc.robot.autoroutines.FourBallPath;
 import frc.robot.autoroutines.LeftSide3Balls;
 import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.ThreeBallPath;
 import frc.robot.autoroutines.TwoBallPath;
 import frc.robot.commands.ClimberSetArmPositionTo;
 import frc.robot.commands.DriveBaseTeleopCommand;
-import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveStraightOnHeading;
 import frc.robot.commands.HoodAdjust;
 import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeReverseRollers;
 import frc.robot.commands.IntakeSetRollers;
-import frc.robot.commands.SystemClimberAttachToNextRung;
-import frc.robot.commands.SystemClimberInitialClimb;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
-import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 import frc.robot.subsystems.CameraLights;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -46,7 +39,6 @@ import frc.robot.subsystems.Targeting;
 import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
 import frc.robot.vision.models.BlueBallVisionModel;
-import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -65,7 +57,7 @@ public class RobotContainer {
   public static final MayhemDriverPad DRIVER_PAD = new MayhemDriverPad();
   public static final MayhemOperatorPad OPERATOR_PAD = new MayhemOperatorPad();
   @SuppressWarnings("PMD.UnusedPrivateField")
-  private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
+  // private final MayhemOperatorStick OPERATOR_STICK = new MayhemOperatorStick();
 
   // The robot's subsystems and commands are defined here...
   public static final DriveBaseSubsystem drive = new DriveBaseSubsystem();

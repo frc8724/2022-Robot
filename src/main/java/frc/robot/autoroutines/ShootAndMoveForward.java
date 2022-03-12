@@ -11,7 +11,6 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
-import frc.robot.subsystems.Hood;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

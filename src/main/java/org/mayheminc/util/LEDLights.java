@@ -73,7 +73,7 @@ public class LEDLights {
             return m_pwmVal;
         }
 
-        private String getName() {
+        public String getName() {
             return m_patternName;
         }
     }

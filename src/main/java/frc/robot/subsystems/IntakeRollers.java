@@ -5,10 +5,8 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.ctre.phoenix.motorcontrol.can.*;
 
 import org.mayheminc.util.MayhemTalonSRX;
 import org.mayheminc.util.MayhemTalonSRX.CurrentLimit;

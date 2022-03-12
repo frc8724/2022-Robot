@@ -2,7 +2,6 @@ package frc.robot.vision.models;
 
 import org.opencv.core.Scalar;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.vision.VisionModel;
 
 public class TargetVisionModel implements VisionModel {
