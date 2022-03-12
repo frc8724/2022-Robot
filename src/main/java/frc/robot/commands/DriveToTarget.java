@@ -25,9 +25,11 @@ public class DriveToTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // get the heading to the target and set the desired heading
     var heading = RobotContainer.targeting.getHeadingToTarget();
     RobotContainer.drive.setDesiredHeading(heading);
 
+    // drive to the target
     RobotContainer.drive.speedRacerDrive(m_targetPower, 0, false);
   }
 
