@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.*;
 import frc.robot.subsystems.IntakePistons;
+import frc.robot.subsystems.Shooter;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -39,7 +40,7 @@ public class DriveForwardShoot2 extends SequentialCommandGroup {
     addCommands(new DriveStraightOnHeading(-0.3, 90.0, 111.0));
 
     // fire
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 1000.0), new WaitCommand(3.0)));
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> Shooter.getShortShot()), new WaitCommand(3.0)));
 
     if (driveStraightAtEnd) {
       addCommands(new DriveStraightOnHeading(0.3, 90.0, 111.0));

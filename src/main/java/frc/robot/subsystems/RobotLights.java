@@ -26,21 +26,21 @@ public class RobotLights extends SubsystemBase {
     if (isBrownOut()) {
       DriverStation.reportError("Brown out", false);
     } else if (isShooterAtSpeed()) {
-      DriverStation.reportError("Shooter Ready", false);
+      // DriverStation.reportError("Shooter Ready", false);
 
     } else if (isShooterWarmingUp()) {
-      DriverStation.reportError("Shooter Warming", false);
+      // DriverStation.reportError("Shooter Warming", false);
 
     } else if (isInAuto()) {
-      DriverStation.reportError("Auto Enabled", false);
+      // DriverStation.reportError("Auto Enabled", false);
 
     } else if (isInTeleOp()) {
-      DriverStation.reportError("TeleOp Enabled", false);
+      // DriverStation.reportError("TeleOp Enabled", false);
 
     } else {
       isDefault();
-      DriverStation.reportError("Default", false);
-
+      // DriverStation.reportError("Default", false);
+      // System.out.println("Lights: Default");
     }
   }
 

@@ -12,6 +12,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.*;
 import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
 import frc.robot.subsystems.IntakePistons;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -49,7 +50,7 @@ public class TwoBallPath extends SequentialCommandGroup {
     addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 40.0, 120.0));
 
     // fire
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 1000.0), new WaitCommand(3.0)));
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> Shooter.getShortShot()), new WaitCommand(3.0)));
     // was 165
     addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 140.0, 170));
 

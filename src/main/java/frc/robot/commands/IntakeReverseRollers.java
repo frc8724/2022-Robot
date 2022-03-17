@@ -20,8 +20,8 @@ public class IntakeReverseRollers extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.intakeRollers.spitOut();
-    RobotContainer.magazine.setSpeed(-0.3);
-    RobotContainer.loader.setSpeed(-0.3);
+    RobotContainer.magazine.setSpeed(-0.5);
+    RobotContainer.loader.setSpeed(-0.5);
   }
 
   // Called once the command ends or is interrupted.

@@ -16,7 +16,10 @@ import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.TestAutoTargeting;
 import frc.robot.autoroutines.ThreeBallPath;
 import frc.robot.autoroutines.TwoBallPath;
+import frc.robot.commands.ClimberSetArmLengthTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
+import frc.robot.commands.ClimberSetVelocity;
+import frc.robot.commands.ClimberWaitForArmLengthTo;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.DriveStraightOnHeading;
 import frc.robot.commands.HoodAdjust;
@@ -137,14 +140,24 @@ public class RobotContainer {
   private void configureDriverStick() {
     DRIVER_STICK.DRIVER_STICK_BUTTON_ONE_DISABLED.whenPressed(new SystemZero());
 
+    DRIVER_STICK.DRIVER_STICK_BUTTON_TWO
+        .whenPressed(new ClimberSetArmLengthTo(Climber.MIN_POSITION + Climber.CLOSE_TO_LIMIT));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_THREE
+        .whenPressed(new ClimberWaitForArmLengthTo(Climber.MAX_POSITION - Climber.CLOSE_TO_LIMIT));
+
+    // DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR.whenPressed(new
+    // ClimberSetArmLengthTo(Climber.TEST_3));
+    // DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE.whenPressed(new
+    // ClimberSetArmLengthTo(Climber.TEST_4));
+
     DRIVER_STICK.DRIVER_STICK_BUTTON_ELEVEN.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((+500.0)));
     DRIVER_STICK.DRIVER_STICK_BUTTON_TEN.whenPressed(() -> RobotContainer.hood.adjustHoodClosePosition((-500.0)));
 
-    DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> SystemShootBall.adjustShortShot(+25.0));
-    DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> SystemShootBall.adjustShortShot(-25.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_SIX.whenPressed(() -> Shooter.adjustShortShot(+25.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_SEVEN.whenPressed(() -> Shooter.adjustShortShot(-25.0));
 
-    DRIVER_STICK.DRIVER_STICK_BUTTON_NINE.whenPressed(() -> SystemShootBall.adjustLowGoalShot(+25.0));
-    DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT.whenPressed(() -> SystemShootBall.adjustLowGoalShot(-25.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_NINE.whenPressed(() -> Shooter.adjustLowGoalShot(+25.0));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_EIGHT.whenPressed(() -> Shooter.adjustLowGoalShot(-25.0));
 
   }
 
@@ -162,24 +175,27 @@ public class RobotContainer {
 
     // Low goal
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_ONE.whenPressed(new InstantCommand(() -> {
-      shooter.setShooterSpeed(SystemShootBall.getLowGoalShot());
+      shooter.setShooterSpeed(Shooter.getLowGoalShot());
       accelerator.setAcceleratorSpeedVBus(0.4);
     }, shooter, accelerator));
 
     // High goal
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new InstantCommand(() -> {
-      shooter.setShooterSpeed(SystemShootBall.getLowGoalShot());
+      shooter.setShooterSpeed(Shooter.getLowGoalShot());
       accelerator.setAcceleratorSpeedVBus(0.4);
     }, shooter, accelerator));
 
     // Stop the shooter
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new InstantCommand(() -> {
-      shooter.setShooterSpeed(0);
+      shooter.setShooterSpeedVBus(0);
       accelerator.setAcceleratorSpeedVBus(0);
     }, shooter, accelerator));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
+
+    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_UP.whileHeld(new ClimberSetVelocity(400));
+    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_DOWN.whileHeld(new ClimberSetVelocity(-400));
 
     // debug
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(() ->
@@ -196,16 +212,17 @@ public class RobotContainer {
     // shooter.setShooterSpeedVBus(0.0));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SEVEN
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition()));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FIVE
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getShortShot(), () -> hood.getHoodClosePosition()));
 
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_SIX.whenHeld(new IntakeSetRollers());
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_EIGHT.whenHeld(new IntakeReverseRollers());
 
-    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE.whenPressed(new
-    // SystemClimberInitialClimb());
+    // OPERATOR_PAD.OPERATOR_PAD_BUTTON_NINE
+    // .whenPressed(new ClimberWaitForArmLengthTo(Climber.MIN_POSITION +
+    // Climber.CLOSE_TO_LIMIT));
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new
     // SystemClimberAttachToNextRung());
 
@@ -218,16 +235,16 @@ public class RobotContainer {
 
   private void configureDriverPadButtons() {
     DRIVER_PAD.DRIVER_PAD_RED_BUTTON
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.LongShot, () -> Hood.LONGEST_SHOT));
+        .whileHeld(new SystemShootBall(() -> Shooter.LongShot, () -> Hood.LONGEST_SHOT));
 
     DRIVER_PAD.DRIVER_PAD_GREEN_BUTTON
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition()));
 
     DRIVER_PAD.DRIVER_PAD_LEFT_LOWER_TRIGGER_BUTTON
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition()));
 
     DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
-        .whileHeld(new SystemShootBall(() -> SystemShootBall.getShortShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getShortShot(), () -> hood.getHoodClosePosition()));
 
     // DRIVER_PAD.DRIVER_PAD_YELLOW_BUTTON.whenPressed( new Hoo
     DRIVER_PAD.DRIVER_PAD_BLUE_BUTTON.whenPressed(new DriveStraightOnHeading(0.2, 12.0));

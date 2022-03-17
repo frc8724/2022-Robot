@@ -25,6 +25,8 @@ public class IntakeRollers extends SubsystemBase {
         rollersTalon.configNominalOutputReverse(0.0);
         rollersTalon.configPeakOutputForward(+12.0);
         rollersTalon.configPeakOutputReverse(-12.0);
+
+        rollersTalon.setInverted(true);
     }
 
     // boolean suckInFlag = false;

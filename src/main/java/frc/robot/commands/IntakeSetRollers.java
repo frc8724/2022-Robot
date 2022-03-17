@@ -21,7 +21,7 @@ public class IntakeSetRollers extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.intakeRollers.suckIn();
-    RobotContainer.magazine.setSpeed(0.5);
+    RobotContainer.magazine.setSpeed(0.75);
   }
 
   @Override

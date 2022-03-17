@@ -20,9 +20,9 @@ public class ClimberSetArmLengthTo extends InstantCommand {
     m_pos = d;
   }
 
-  // // Called when the command is initially scheduled.
-  // @Override
-  // public void initialize() {
-  // RobotContainer.climber.setArmLengthTo(m_pos);
-  // }
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    RobotContainer.climber.setArmLengthTo(m_pos);
+  }
 }

@@ -5,39 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
-public class ClimberWaitForArmLengthTo extends CommandBase {
-  double m_pos;
+public class ClimberSetVelocity extends CommandBase {
+  double m_speed;
 
-  /** Creates a new ClimberWaitForArmLengthTo. */
-  public ClimberWaitForArmLengthTo(double d) {
+  /** Creates a new ClimberSetVelocity. */
+  public ClimberSetVelocity(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.climber);
 
-    m_pos = d;
+    m_speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.climber.setArmLengthTo(m_pos);
+    RobotContainer.climber.setArmExtensionVelocity(m_speed);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    // do nothing
-  }
-
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return RobotContainer.climber.isAtPosition();
+    RobotContainer.climber.setArmExtensionVelocity(0);
   }
 }

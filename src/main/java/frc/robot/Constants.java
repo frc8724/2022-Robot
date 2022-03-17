@@ -70,4 +70,21 @@ public final class Constants {
     public final class Lights {
         public static final int LIGHTS_PORT = 0;
     }
+
+    public final class PdpPorts {
+        public static final int DriveBaseLeft1 = 0;
+        public static final int DriveBaseLeft2 = 1;
+        public static final int ShooterFalconX = 2;
+        public static final int ClimberLeft = 3;
+        public static final int Intake = 5;
+        public static final int UnusedTalon = 6;
+        public static final int Maggie = 7;
+        public static final int Loader = 9;
+        public static final int Shooter775X = 10;
+        public static final int Shooter775Y = 11;
+        public static final int ClimberR = 12;
+        public static final int ShooterRight = 13;
+        public static final int DriveBaseRight1 = 14;
+        public static final int DriveBaseRight2 = 15;
+    }
 }

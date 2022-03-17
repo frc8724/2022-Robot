@@ -10,6 +10,7 @@ import frc.robot.commands.DriveStraightOnHeading;
 import frc.robot.commands.MagazinePullInBalls;
 import frc.robot.commands.SystemFireWhenReady;
 import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -37,7 +38,7 @@ public class ThreeBallPath extends TwoBallPath {
       addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 60.0, 180.0));
       addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 30.0, 130.0));
       addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 20.0, 130.0));
-      addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 1000.0), new WaitCommand(3.0)));
+      addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> Shooter.getShortShot()), new WaitCommand(3.0)));
     }
   }
 }

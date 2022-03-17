@@ -119,8 +119,12 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         m_targetSpeedRPM = rpm;
         System.out.println("setShooterSpeed: " + rpm);
         double ticks = convertRpmToTicksPer100ms(rpm);
-        shooterWheelLeft.set(ControlMode.Velocity, ticks);
-        shooterWheelRight.set(ControlMode.Velocity, ticks);
+        if (rpm > 50) {
+            shooterWheelLeft.set(ControlMode.Velocity, ticks);
+            shooterWheelRight.set(ControlMode.Velocity, ticks);
+        } else {
+            setShooterSpeedVBus(0);
+        }
     }
 
     public void setShooterSpeedVBus(double pos) {
@@ -205,4 +209,26 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         shooterWheelRight.config_kF(0, d, 0);
     }
 
+    static public final double LongShot = 1750;
+    static private final double ShortShot = 700; // 975 at week 1, 700 for practice field
+    static private final double LowGoalShot = 400;
+
+    static double shortShot = ShortShot;
+    static double lowGoalShot = LowGoalShot;
+
+    public static double getShortShot() {
+        return shortShot;
+    }
+
+    public static void adjustShortShot(double d) {
+        shortShot += d;
+    }
+
+    public static double getLowGoalShot() {
+        return lowGoalShot;
+    }
+
+    public static void adjustLowGoalShot(double d) {
+        lowGoalShot += d;
+    }
 }

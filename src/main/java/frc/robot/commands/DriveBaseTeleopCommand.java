@@ -40,7 +40,7 @@ public class DriveBaseTeleopCommand extends CommandBase {
 
         this.drive.speedRacerDrive(throttle, steering, quickTurn);
 
-        double d = -operatorPad.OPERATOR_PAD.getY();
-        this.climber.setArmLengthPowerTo(d);
+        // double d = -operatorPad.OPERATOR_PAD.getY();
+        // this.climber.setArmLengthPowerTo(d);
     }
 }

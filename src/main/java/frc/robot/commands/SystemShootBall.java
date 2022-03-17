@@ -14,28 +14,6 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SystemShootBall extends SequentialCommandGroup {
-  static public final double LongShot = 1750;
-  static private final double ShortShot = 975;
-  static private final double LowGoalShot = 400;
-
-  static double shortShot = ShortShot;
-  static double lowGoalShot = LowGoalShot;
-
-  public static double getShortShot() {
-    return shortShot;
-  }
-
-  public static void adjustShortShot(double d) {
-    shortShot += d;
-  }
-
-  public static double getLowGoalShot() {
-    return lowGoalShot;
-  }
-
-  public static void adjustLowGoalShot(double d) {
-    lowGoalShot += d;
-  }
 
   /** Creates a new SystemShootBall. */
   public SystemShootBall(Supplier<Double> speed, Supplier<Double> hood) {
@@ -50,7 +28,7 @@ public class SystemShootBall extends SequentialCommandGroup {
 
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.shooter.setShooterSpeed(0.0);
+    RobotContainer.shooter.setShooterSpeedVBus(0.0);
     RobotContainer.accelerator.setAcceleratorSpeedVBus(0.0);
     RobotContainer.loader.setSpeed(0.0);
     RobotContainer.magazine.setSpeed(0.0);
