@@ -36,9 +36,9 @@ public class Targeting extends SubsystemBase {
     double targetHeading;
     // if the target is on the right half...
     if (point.x > 0.5) {
-      targetHeading = (point.x - 0.5) * fieldOfViewDegrees / 2;
+      targetHeading = (point.x - 0.5) * fieldOfViewDegrees / 1;
     } else {
-      targetHeading = -point.x * fieldOfViewDegrees / 2;
+      targetHeading = -point.x * fieldOfViewDegrees / 1;
     }
 
     return targetHeading;

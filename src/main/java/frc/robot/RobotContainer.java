@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
+import frc.robot.autoroutines.FiveBallPath;
 import frc.robot.autoroutines.LeftSide3Balls;
 import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.TestAutoTargeting;
@@ -92,6 +93,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     this.autoChooser.setDefaultOption("Test Auto Target", new TestAutoTargeting());
+    this.autoChooser.addOption("5 Ball Auto", new FiveBallPath());
     // this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
     this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
 

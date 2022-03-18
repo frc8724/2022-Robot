@@ -17,18 +17,18 @@ public class SystemFireWhenReady extends CommandBase {
   Supplier<Double> m_shooterSpeed;
   boolean m_quickFire;
 
-  public SystemFireWhenReady(Supplier<Double> d) {
-    this(d, false);
+  public SystemFireWhenReady(Supplier<Double> shooterSpeed) {
+    this(shooterSpeed, false);
   }
 
-  public SystemFireWhenReady(Supplier<Double> d, boolean quickFire) {
+  public SystemFireWhenReady(Supplier<Double> shooterSpeed, boolean quickFire) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
     addRequirements(RobotContainer.loader);
     addRequirements(RobotContainer.magazine);
     addRequirements(RobotContainer.accelerator);
 
-    m_shooterSpeed = d;
+    m_shooterSpeed = shooterSpeed;
     m_quickFire = quickFire;
   }
 
@@ -48,7 +48,7 @@ public class SystemFireWhenReady extends CommandBase {
       RobotContainer.magazine.setSpeed(0.5);
     } else {
       RobotContainer.loader.setSpeed(0.0);
-      RobotContainer.magazine.setSpeed(0.0);
+      RobotContainer.magazine.setSpeed(0.2);
     }
   }
 
