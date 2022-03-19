@@ -35,7 +35,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
 
     public static final double MAX_POSITION = 435000.0;
     public static final double MIN_POSITION = 0.0;
-    public static final double POSIITON_TOLERANCE = 10000;
+    public static final double POSITION_TOLERANCE = 10000;
     public static final double CLOSE_TO_LIMIT = 50000;
 
     public static final double TEST_1 = 100000.0;
@@ -83,7 +83,7 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         talon.configNominalOutputVoltage(+0.0f, -0.0f);
         talon.configPeakOutputVoltage(+12.0, -12.0);
 
-        talon.configAllowableClosedloopError(0, POSIITON_TOLERANCE, 0);
+        talon.configAllowableClosedloopError(0, POSITION_TOLERANCE, 0);
 
         talon.configForwardSoftLimitThreshold(MAX_POSITION);
         // talon.configForwardSoftLimitEnable(true);
@@ -144,8 +144,8 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     }
 
     public boolean isAtPosition() {
-        boolean left = Math.abs(leftTalon.getSelectedSensorPosition() - m_target) < POSIITON_TOLERANCE;
-        boolean right = Math.abs(rightTalon.getSelectedSensorPosition() - m_target) < POSIITON_TOLERANCE;
+        boolean left = Math.abs(leftTalon.getSelectedSensorPosition() - m_target) < POSITION_TOLERANCE;
+        boolean right = Math.abs(rightTalon.getSelectedSensorPosition() - m_target) < POSITION_TOLERANCE;
         return left && right;
     }
 
