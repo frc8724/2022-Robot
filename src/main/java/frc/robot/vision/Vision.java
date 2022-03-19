@@ -94,10 +94,12 @@ public class Vision {
             var minArea = this.model.minArea();
             var maxArea = this.model.maxArea();
 
+            // Check Minimum Area
             if (minArea != null && area < minArea) {
                 continue;
             }
 
+            // check Maximum Area
             if (maxArea != null && area > maxArea) {
                 continue;
             }
@@ -122,6 +124,8 @@ public class Vision {
         if (largestContour != null) {
             // System.out.println("I'm here!");
             var center = getCenterOfRect(largestContour);
+
+            Imgproc.rectangle(source, largestContour.tl(), largestContour.br(), new Scalar(255, 0, 0), 2);
 
             this.target = new Point((double) center.x / (double) source.width(),
                     (double) center.y / (double) source.height());

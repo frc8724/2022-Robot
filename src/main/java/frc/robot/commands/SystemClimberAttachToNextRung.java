@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberPistons;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -28,14 +29,14 @@ public class SystemClimberAttachToNextRung extends SequentialCommandGroup {
     addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_UNHOOK_POSITION));
 
     // put arms down
-    addCommands(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
+    addCommands(new ClimberSetArmPositionTo(ClimberPistons.ARMS_DOWN));
     addCommands(new WaitCommand(0.5));
 
     // extend arms out
     addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));
 
     // put arms up
-    addCommands(new ClimberSetArmPositionTo(Climber.ARMS_UP));
+    addCommands(new ClimberSetArmPositionTo(ClimberPistons.ARMS_UP));
     addCommands(new WaitCommand(0.5));
 
     // pull arms in. This will unhook the weak arms

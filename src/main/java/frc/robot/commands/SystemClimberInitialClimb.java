@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberPistons;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,7 +22,7 @@ public class SystemClimberInitialClimb extends SequentialCommandGroup {
     // backup
     // arm retract
 
-    addCommands(new ClimberSetArmPositionTo(Climber.ARMS_UP));
+    addCommands(new ClimberSetArmPositionTo(ClimberPistons.ARMS_UP));
     addCommands(new WaitCommand(0.5));
 
     addCommands(new ClimberWaitForArmLengthTo(Climber.ARMS_OUT_POSITION));

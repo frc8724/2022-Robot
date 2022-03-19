@@ -20,8 +20,10 @@ public class Hood extends SubsystemBase implements PidTunerObject {
     private final static double POSITION_TOLERANCE = 100.0;
 
     public final static double AUTO_START_POSITION = 4000;
-    private final static double CLOSE_POSITION = 4500;
+    public final static double CLOSE_POSITION = 4500;
     public final static double LONGEST_SHOT = 9500;
+
+    public final static double AUTO_5_BALL_FIRST_SHOT = 5000;
 
     private double m_desiredPosition = 0.0;
 

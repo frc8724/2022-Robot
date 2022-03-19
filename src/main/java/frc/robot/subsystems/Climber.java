@@ -20,7 +20,6 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     private final int PositionControl = 0;
     private final int VelocityControl = 1;
 
-    private final Solenoid strongArmPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.CLIMBER);
     private final MayhemTalonSRX leftTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_L, CurrentLimit.HIGH_CURRENT);
     private final MayhemTalonSRX rightTalon = new MayhemTalonSRX(Constants.Talon.CLIMBER_R, CurrentLimit.HIGH_CURRENT);
 
@@ -30,8 +29,6 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     private final DigitalInput leftBottomLimit = new DigitalInput(Constants.DigitalInput.LEFT_CLIMBER_BOTTOM_LIMIT);
     private final DigitalInput rightBottomLimit = new DigitalInput(Constants.DigitalInput.RIGHT_CLIMBER_BOTTOM_LIMIT);
 
-    public static final boolean ARMS_UP = true;
-    public static final boolean ARMS_DOWN = false;
     public static final double ARMS_OUT_POSITION = 435000.0;
     public static final double ARMS_UNHOOK_POSITION = 100000.0;
     public static final double ARMS_IN_POSITION = 20000.0;
@@ -96,10 +93,6 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         talon.configMaxIntegralAccumulator(0, 10000);
     }
 
-    public void setArmPositionTo(boolean b) {
-        strongArmPiston.set(b);
-    }
-
     public void setArmExtensionVelocity(double speed) {
         m_leftSpeed = m_rightSpeed = speed;
 
@@ -159,6 +152,14 @@ public class Climber extends SubsystemBase implements PidTunerObject {
     public void stop() {
         leftTalon.set(ControlMode.PercentOutput, 0.0);
         rightTalon.set(ControlMode.PercentOutput, 0.0);
+    }
+
+    public boolean isAtTop() {
+        return rightTopLimit.get() && leftTopLimit.get();
+    }
+
+    public boolean isAtBottom() {
+        return rightBottomLimit.get() && leftBottomLimit.get();
     }
 
     @Override

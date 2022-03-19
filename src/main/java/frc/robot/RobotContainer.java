@@ -17,6 +17,8 @@ import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.TestAutoTargeting;
 import frc.robot.autoroutines.ThreeBallPath;
 import frc.robot.autoroutines.TwoBallPath;
+import frc.robot.commands.ClimberExtendFastBottom;
+import frc.robot.commands.ClimberExtendFastTop;
 import frc.robot.commands.ClimberSetArmLengthTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
 import frc.robot.commands.ClimberSetVelocity;
@@ -31,6 +33,7 @@ import frc.robot.commands.SystemShootBall;
 import frc.robot.commands.SystemZero;
 import frc.robot.subsystems.CameraLights;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberPistons;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.IntakePistons;
@@ -74,6 +77,7 @@ public class RobotContainer {
   public static final ShooterAccelerator accelerator = new ShooterAccelerator();
   public static final Hood hood = new Hood();
   public static final Climber climber = new Climber();
+  public static final ClimberPistons climberPistons = new ClimberPistons();
   public static final CameraLights cameraLights = new CameraLights();
   public static final RobotLights robotLights = new RobotLights();
   public static final Targeting targeting = new Targeting();
@@ -114,12 +118,12 @@ public class RobotContainer {
 
     // CameraServer.startAutomaticCapture(1);
 
-    SmartDashboard.putNumber("h1", 0);
-    SmartDashboard.putNumber("h2", 0);
-    SmartDashboard.putNumber("s1", 0);
-    SmartDashboard.putNumber("s2", 0);
-    SmartDashboard.putNumber("v1", 0);
-    SmartDashboard.putNumber("v2", 0);
+    // SmartDashboard.putNumber("h1", 0);
+    // SmartDashboard.putNumber("h2", 0);
+    // SmartDashboard.putNumber("s1", 0);
+    // SmartDashboard.putNumber("s2", 0);
+    // SmartDashboard.putNumber("v1", 0);
+    // SmartDashboard.putNumber("v2", 0);
 
     SmartDashboard.putBoolean("Vision Debug", false);
   }
@@ -143,12 +147,18 @@ public class RobotContainer {
     DRIVER_STICK.DRIVER_STICK_BUTTON_ONE_DISABLED.whenPressed(new SystemZero());
 
     DRIVER_STICK.DRIVER_STICK_BUTTON_TWO
-        .whenPressed(new ClimberSetArmLengthTo(Climber.MIN_POSITION + Climber.CLOSE_TO_LIMIT));
+        .whenPressed(
+            new ClimberExtendFastBottom()
+        // new ClimberSetArmLengthTo(Climber.MIN_POSITION + Climber.CLOSE_TO_LIMIT)
+        );
     DRIVER_STICK.DRIVER_STICK_BUTTON_THREE
-        .whenPressed(new ClimberWaitForArmLengthTo(Climber.MAX_POSITION - Climber.CLOSE_TO_LIMIT));
+        .whenPressed(
+            new ClimberExtendFastTop()
+        // new ClimberWaitForArmLengthTo(Climber.MAX_POSITION - Climber.CLOSE_TO_LIMIT)
+        );
 
-    // DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR.whenPressed(new
-    // ClimberSetArmLengthTo(Climber.TEST_3));
+    DRIVER_STICK.DRIVER_STICK_BUTTON_FOUR
+        .whenPressed(new ClimberSetArmLengthTo(Climber.MAX_POSITION - 1.75 * Climber.CLOSE_TO_LIMIT));
     // DRIVER_STICK.DRIVER_STICK_BUTTON_FIVE.whenPressed(new
     // ClimberSetArmLengthTo(Climber.TEST_4));
 
@@ -196,8 +206,8 @@ public class RobotContainer {
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
 
-    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_UP.whileHeld(new ClimberSetVelocity(400));
-    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_DOWN.whileHeld(new ClimberSetVelocity(-400));
+    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_UP.whileHeld(new ClimberSetVelocity(250));
+    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_DOWN.whileHeld(new ClimberSetVelocity(-250));
 
     // debug
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(() ->
@@ -228,8 +238,8 @@ public class RobotContainer {
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TEN.whenPressed(new
     // SystemClimberAttachToNextRung());
 
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_UP));
-    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(Climber.ARMS_DOWN));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_UP.whenPressed(new ClimberSetArmPositionTo(ClimberPistons.ARMS_UP));
+    OPERATOR_PAD.OPERATOR_PAD_D_PAD_DOWN.whenPressed(new ClimberSetArmPositionTo(ClimberPistons.ARMS_DOWN));
 
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_LEFT.whenPressed(new HoodAdjust(-200));
     OPERATOR_PAD.OPERATOR_PAD_D_PAD_RIGHT.whenPressed(new HoodAdjust(200));
