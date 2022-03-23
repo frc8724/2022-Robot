@@ -17,7 +17,7 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ThreeBallPath extends TwoBallPath {
   /** Creates a new ThreeBallPath. */
-  public ThreeBallPath(boolean shootball) {
+  public ThreeBallPath(boolean shootBall) {
     super(false);
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -34,7 +34,7 @@ public class ThreeBallPath extends TwoBallPath {
     addCommands(new MagazinePullInBalls());
     // fire
 
-    if (shootball) {
+    if (shootBall) {
       addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 60.0, 180.0));
       addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 30.0, 130.0));
       addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 20.0, 130.0));

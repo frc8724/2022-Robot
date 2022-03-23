@@ -42,6 +42,7 @@ public class DriveStraight extends CommandBase {
 	@Override
 	public void initialize() {
 		RobotContainer.drive.saveInitialWheelDistance();
+		// RobotContainer.drive.setDesiredHeading(RobotContainer.drive.getHeading());
 	}
 
 	// Called repeatedly when this Command is scheduled to run

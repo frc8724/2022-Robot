@@ -30,9 +30,13 @@ import frc.robot.subsystems.Shooter;
 public class FiveBallPath extends SequentialCommandGroup {
         public static class ShortTargetAndShootBall extends SequentialCommandGroup {
                 public ShortTargetAndShootBall() {
-                        addCommands(new ParallelCommandGroup(new MagazinePullInBalls(), new IntakeRollerSuckIn()));
-                        addCommands(new SystemShooterWarmUp(1000.0));
-                        addCommands(new HoodMove(() -> 7500.0));
+                        addCommands(new ParallelCommandGroup(
+                                        new MagazinePullInBalls(), //
+                                        new IntakeRollerSuckIn(), //
+                                        new SystemShooterWarmUp(1000.0), //
+                                        new HoodMove(() -> 7500.0), //
+                                        new IntakePistonsSet(IntakePistons.INTAKE_DOWN)//
+                        ));
 
                         addCommands(new WaitCommand(1.0));
 

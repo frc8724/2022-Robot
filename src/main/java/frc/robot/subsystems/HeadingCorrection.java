@@ -82,17 +82,17 @@ public class HeadingCorrection {
         m_HeadingPid.reset();
     }
 
-    // the NavX is installed upsidedown, so it rotates backwards.
+    // the NavX is installed upside-down, so it rotates backwards.
     public double getHeading() {
-        return -Navx.getYaw() + m_headingOffset;
+        return Navx.getYaw() + m_headingOffset;
     }
 
-    // the Navx is installed sidways with reference to the front of the robot.
+    // the Navx is installed sideways with reference to the front of the robot.
     public double getRoll() {
         return Navx.getPitch();
     }
 
-    // the Navx is installed sidways with reference to the front of the robot.
+    // the Navx is installed sideways with reference to the front of the robot.
     public double getPitch() {
         return Navx.getRoll();
     }
