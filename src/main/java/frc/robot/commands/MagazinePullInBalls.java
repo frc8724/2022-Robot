@@ -19,6 +19,6 @@ public class MagazinePullInBalls extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.magazine.setSpeed(0.5);
+    RobotContainer.magazine.setSpeed(0.75);
   }
 }

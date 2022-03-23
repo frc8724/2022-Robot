@@ -33,7 +33,12 @@ public class DriveToTarget extends CommandBase {
   public void execute() {
     // get the heading to the target and set the desired heading
     var targetHeading = RobotContainer.targeting.getHeadingToTarget();
-    var robotHeading = RobotContainer.drive.getHeading();
+    if (Double.isNaN(targetHeading)) {
+      targetHeading = 0;
+    }
+
+    // var robotHeading = RobotContainer.drive.getHeading();
+    var robotHeading = RobotContainer.drive.getHeadingForCapturedImage();
     RobotContainer.drive.setDesiredHeading(robotHeading + targetHeading);
 
     // drive to the target

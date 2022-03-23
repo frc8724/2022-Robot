@@ -17,13 +17,17 @@ public class SystemShootBall extends SequentialCommandGroup {
 
   /** Creates a new SystemShootBall. */
   public SystemShootBall(Supplier<Double> speed, Supplier<Double> hood) {
+    this(speed, hood, false);
+  }
+
+  public SystemShootBall(Supplier<Double> speed, Supplier<Double> hood, boolean quickFire) {
     // double longShot = 1850;
     // double shortShot = 900;
     // start the shooter and accelerator wheel and wait at least 1 second.
 
     addCommands(new HoodMove(hood));
 
-    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(speed)));
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(speed, quickFire)));
   }
 
   @Override

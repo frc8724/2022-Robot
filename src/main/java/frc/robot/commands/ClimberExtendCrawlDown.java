@@ -17,7 +17,7 @@ public class ClimberExtendCrawlDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.climber.setArmExtensionVelocity(-250);
+    RobotContainer.climber.setArmExtensionVelocity(-350);
   }
 
   // Returns true when the command should end.

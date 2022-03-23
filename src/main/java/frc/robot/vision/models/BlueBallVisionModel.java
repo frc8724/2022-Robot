@@ -15,19 +15,19 @@ public class BlueBallVisionModel implements VisionModel {
     double v2;
 
     public BlueBallVisionModel() {
-        // SmartDashboard.putNumber("h1", 70);
-        // SmartDashboard.putNumber("h2", 123);
-        // SmartDashboard.putNumber("s1", 68);
-        // SmartDashboard.putNumber("s2", 161);
-        // SmartDashboard.putNumber("v1", 84);
-        // SmartDashboard.putNumber("v2", 221);
+        SmartDashboard.putNumber("h1", 90);
+        SmartDashboard.putNumber("h2", 118);
+        SmartDashboard.putNumber("s1", 155);
+        SmartDashboard.putNumber("s2", 255);
+        SmartDashboard.putNumber("v1", 88);
+        SmartDashboard.putNumber("v2", 221);
     }
 
     @Override
     public Scalar getLowerBound() {
-        var h1 = SmartDashboard.getNumber("h1", 70);
-        var s1 = SmartDashboard.getNumber("s1", 68);
-        var v1 = SmartDashboard.getNumber("v1", 84);
+        var h1 = SmartDashboard.getNumber("h1", 0);
+        var s1 = SmartDashboard.getNumber("s1", 0);
+        var v1 = SmartDashboard.getNumber("v1", 0);
 
         return new Scalar(h1, s1, v1);
 
@@ -36,9 +36,9 @@ public class BlueBallVisionModel implements VisionModel {
 
     @Override
     public Scalar getUpperBound() {
-        var h2 = SmartDashboard.getNumber("h2", 123);
-        var s2 = SmartDashboard.getNumber("s2", 161);
-        var v2 = SmartDashboard.getNumber("v2", 221);
+        var h2 = SmartDashboard.getNumber("h2", 0);
+        var s2 = SmartDashboard.getNumber("s2", 0);
+        var v2 = SmartDashboard.getNumber("v2", 0);
 
         return new Scalar(h2, s2, v2);
 
@@ -47,11 +47,26 @@ public class BlueBallVisionModel implements VisionModel {
 
     @Override
     public boolean isPositionCorrect(double x, double y) {
-        if (y < 0.5) {
-            // System.out.println("bad position is " + y);
+        if (y < 0.3) {
             return false;
         } else {
             return true;
         }
+    }
+
+    @Override
+    public boolean isRatioCorrect(double ratio) {
+        if (ratio > 1.5)
+            return false;
+
+        if (ratio < 0.75)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public Double minArea() {
+        return 800.0;
     }
 }

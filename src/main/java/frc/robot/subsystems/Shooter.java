@@ -20,14 +20,11 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     private final double SECONDS_PER_MINUTE = 60.0;
     private final double HUNDRED_MS_PER_SECOND = 10.0;
 
-    public static final double IDLE_SPEED = 1000.0;
-    public static final double CLOSE_SHOOTING_SPEED = 4000.0;
-    public static final double INITIATION_LINE_SPEED = 4500.0;
-    public static final double TRENCH_FRONT_SPEED = 3400.0;
+    public static final double CLOSE_SHOT = 1125.0;
     public static final double MAX_SPEED_RPM = 5000;
-    public static final double SPEED_TOLERANCE = 20;
+    public static final double SPEED_TOLERANCE = 250;
 
-    double m_targetSpeedRPM;
+    public double m_targetSpeedRPM;
 
     // Note: for ease of thinking, 1 RPM =~ 3.4 native units for the shooter
     double convertRpmToTicksPer100ms(double rpm) {
@@ -76,28 +73,36 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         // 100rpm
         // (above also means that 50% power boost applied with error of 50rpm)
         // https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
-        shooterWheelFalcon.config_kP(0, 2.0, 0); // if we are 100 rpm off, then apply 10% more output = 10% * 1023 / 100
-                                                 // rpm
+        // shooterWheelFalcon.config_kP(0, 6.0, 0); // if we are 100 rpm off, then apply
+        // 10% more output = 10% * 1023 / 100
+        // rpm
+        shooterWheelFalcon.config_kP(0, 0.1, 0);
         shooterWheelFalcon.config_kI(0, 0.0, 0);
-        shooterWheelFalcon.config_kD(0, 40.0, 0); // CTRE recommends starting at 10x P-gain
-        shooterWheelFalcon.config_kF(0, 1023.0 * 0.2 / convertRpmToTicksPer100ms(1035), 0); // at 0.2 Percent VBus, the
-                                                                                            // shooter is at 1035
+        shooterWheelFalcon.config_kD(0, 10.0, 0); // CTRE recommends starting at 10x P-gain
+        shooterWheelFalcon.config_kF(0, 1023.0 * 0.6 / 13000, 0); // at 0.6 Percent VBus, the
+                                                                  // shooter is at 13000
         shooterWheelFalcon.configAllowableClosedloopError(0, 0, 0); // no "neutral" zone around target
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        UpdateDashboard();
+        updateDashboard();
     }
 
-    private void UpdateDashboard() {
+    private void updateDashboard() {
         SmartDashboard.putNumber("Shooter Wheel RPM",
                 convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0)));
+        SmartDashboard.putNumber("Shooter Wheel ticks",
+                shooterWheelLeft.getSelectedSensorVelocity(0));
 
         SmartDashboard.putNumber("Shooter Wheel target RPM", m_targetSpeedRPM);
+        SmartDashboard.putNumber("Shooter Wheel target ticks", convertRpmToTicksPer100ms(m_targetSpeedRPM));
         SmartDashboard.putNumber("Shooter Wheel Error",
                 m_targetSpeedRPM - convertTicksPer100msToRPM(shooterWheelLeft.getSelectedSensorVelocity(0)));
+
+        SmartDashboard.putBoolean("Is the shooter too slow?", this.isShooterTooSlow());
+        SmartDashboard.putBoolean("Is the shooter too fast?", this.isShooterTooFast());
     }
 
     public void zero() {
@@ -109,10 +114,6 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
      * @param rpm
      */
     public void setShooterSpeed(double rpm) {
-
-        if (rpm > MAX_SPEED_RPM) {
-            rpm = MAX_SPEED_RPM;
-        }
         if (rpm < 0)
             rpm = 0;
 
@@ -152,6 +153,25 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
         } else {
             return Math.abs(m_targetSpeedRPM - getShooterSpeed()) < SPEED_TOLERANCE;
         }
+    }
+
+    public boolean isShooterTooSlow() {
+        if (m_targetSpeedRPM < 100)
+            return true;
+
+        if (getShooterSpeed() + SPEED_TOLERANCE < m_targetSpeedRPM) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isShooterTooFast() {
+        if (getShooterSpeed() - SPEED_TOLERANCE > m_targetSpeedRPM) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean isShooterWarmingUp() {
@@ -210,8 +230,8 @@ public class Shooter extends SubsystemBase implements PidTunerObject {
     }
 
     static public final double LongShot = 1750;
-    static private final double ShortShot = 700; // 975 at week 1, 700 for practice field
-    static private final double LowGoalShot = 400;
+    static private final double ShortShot = 3325; // 975 at week 1, 700 for practice field
+    static private final double LowGoalShot = 1600;
 
     static double shortShot = ShortShot;
     static double lowGoalShot = LowGoalShot;

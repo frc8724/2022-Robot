@@ -13,16 +13,15 @@ import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
 import frc.robot.autoroutines.FiveBallPath;
 import frc.robot.autoroutines.LeftSide3Balls;
+import frc.robot.autoroutines.Shoot;
 import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.TestAutoTargeting;
 import frc.robot.autoroutines.ThreeBallPath;
-import frc.robot.autoroutines.TwoBallPath;
 import frc.robot.commands.ClimberExtendFastBottom;
 import frc.robot.commands.ClimberExtendFastTop;
 import frc.robot.commands.ClimberSetArmLengthTo;
 import frc.robot.commands.ClimberSetArmPositionTo;
 import frc.robot.commands.ClimberSetVelocity;
-import frc.robot.commands.ClimberWaitForArmLengthTo;
 import frc.robot.commands.DriveBaseTeleopCommand;
 import frc.robot.commands.DriveStraightOnHeading;
 import frc.robot.commands.HoodAdjust;
@@ -107,6 +106,8 @@ public class RobotContainer {
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
     this.autoChooser.addOption("Do nothing!", new DoNothing());
+    this.autoChooser.addOption("Shoot >>>>", new Shoot());
+    this.autoChooser.addOption("ShortTargetAndShootBall", new FiveBallPath.ShortTargetAndShootBall());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
@@ -250,13 +251,13 @@ public class RobotContainer {
         .whileHeld(new SystemShootBall(() -> Shooter.LongShot, () -> Hood.LONGEST_SHOT));
 
     DRIVER_PAD.DRIVER_PAD_GREEN_BUTTON
-        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition(), true));
 
     DRIVER_PAD.DRIVER_PAD_LEFT_LOWER_TRIGGER_BUTTON
-        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getLowGoalShot(), () -> hood.getHoodClosePosition(), true));
 
     DRIVER_PAD.DRIVER_PAD_BUTTON_FIVE
-        .whileHeld(new SystemShootBall(() -> Shooter.getShortShot(), () -> hood.getHoodClosePosition()));
+        .whileHeld(new SystemShootBall(() -> Shooter.getShortShot(), () -> hood.getHoodClosePosition(), true));
 
     // DRIVER_PAD.DRIVER_PAD_YELLOW_BUTTON.whenPressed( new Hoo
     DRIVER_PAD.DRIVER_PAD_BLUE_BUTTON.whenPressed(new DriveStraightOnHeading(0.2, 12.0));

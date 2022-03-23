@@ -89,6 +89,7 @@ public class Vision {
         // loop through contours
         for (MatOfPoint contour : contours) {
             var rect = Imgproc.boundingRect(contour);
+            var center = getCenterOfRect(rect);
 
             var area = rect.area();
             var minArea = this.model.minArea();
@@ -108,7 +109,7 @@ public class Vision {
                 continue;
             }
 
-            if (!this.model.isPositionCorrect((double) rect.x / (double) source.width(), (double) rect.y /
+            if (!this.model.isPositionCorrect((double) center.x / (double) source.width(), (double) center.y /
                     (double) source.height())) {
                 continue;
             }
@@ -133,6 +134,7 @@ public class Vision {
             SmartDashboard.putNumber("Vision X", this.target.x);
             SmartDashboard.putNumber("Vision Y", this.target.y);
 
+            SmartDashboard.putNumber("Vision area", largestContour.area());
         }
 
         if (SmartDashboard.getBoolean("Vision Debug", false)) {

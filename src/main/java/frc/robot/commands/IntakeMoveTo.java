@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+@Deprecated
 public class IntakeMoveTo extends InstantCommand {
   public IntakeMoveTo() {
     // Use addRequirements() here to declare subsystem dependencies.
