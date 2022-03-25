@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
+import frc.robot.autoroutines.DriveStraightDoNothing;
 import frc.robot.autoroutines.FiveBallPath;
 import frc.robot.autoroutines.LeftSide3Balls;
 import frc.robot.autoroutines.Shoot;
@@ -95,7 +96,9 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    this.autoChooser.setDefaultOption("Test Auto Target", new TestAutoTargeting());
+    // this.autoChooser.setDefaultOption("Test Auto Target", new
+    // TestAutoTargeting());
+    this.autoChooser.setDefaultOption("Drive Straight", new DriveStraightDoNothing());
     this.autoChooser.addOption("5 Ball Auto", new FiveBallPath());
     // this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
     this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
@@ -106,8 +109,9 @@ public class RobotContainer {
     this.autoChooser.addOption("Shoot and Move Forward again", new ShootAndMoveForward());
 
     this.autoChooser.addOption("Do nothing!", new DoNothing());
-    this.autoChooser.addOption("Shoot >>>>", new Shoot());
-    this.autoChooser.addOption("ShortTargetAndShootBall", new FiveBallPath.ShortTargetAndShootBall());
+    // this.autoChooser.addOption("Shoot >>>>", new Shoot());
+    // this.autoChooser.addOption("ShortTargetAndShootBall", new
+    // FiveBallPath.ShortTargetAndShootBall());
 
     SmartDashboard.putData("Auto selector", this.autoChooser);
 
@@ -194,7 +198,7 @@ public class RobotContainer {
 
     // High goal
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_THREE.whenPressed(new InstantCommand(() -> {
-      shooter.setShooterSpeed(Shooter.getLowGoalShot());
+      shooter.setShooterSpeed(Shooter.getShortShot());
       accelerator.setAcceleratorSpeedVBus(0.4);
     }, shooter, accelerator));
 

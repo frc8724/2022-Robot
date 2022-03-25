@@ -37,7 +37,7 @@ public class ThreeBallPath extends TwoBallPath {
     if (shootBall) {
       addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 60.0, 180.0));
       addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 30.0, 130.0));
-      addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 20.0, 130.0));
+      addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 30.0, 130.0));
       addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> Shooter.getShortShot()), new WaitCommand(3.0)));
     }
   }
