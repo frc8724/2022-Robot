@@ -33,7 +33,7 @@ public class Vision {
         new Thread(() -> {
             UsbCamera camera = CameraServer.startAutomaticCapture(this.cameraIndex);
 
-            camera.setResolution(320, 240);
+            camera.setResolution(160, 120);
             camera.setFPS(10);
 
             CvSink cvSink = CameraServer.getVideo(camera);
@@ -78,10 +78,14 @@ public class Vision {
         // Dilate to fill in holes.
         var kernel = new Mat();
         Imgproc.dilate(inRange, inRange, kernel);
+
+        Imgproc.dilate(inRange, inRange, kernel);
+
         // Erode back down to normal.
         Imgproc.erode(inRange, inRange, kernel);
 
         Rect largestContour = null;
+        double tagetRatio = 0.0d;
 
         // find contours
         var contours = new ArrayList<MatOfPoint>();
@@ -117,6 +121,7 @@ public class Vision {
             if (largestContour == null || rect.area() > largestContour.area()) {
                 // System.out.println("I'm here (2)");
                 largestContour = rect;
+                tagetRatio = rect.width / rect.height;
             }
 
             Imgproc.rectangle(source, rect.tl(), rect.br(), new Scalar(0, 0, 255), 2);
@@ -135,6 +140,7 @@ public class Vision {
             SmartDashboard.putNumber("Vision Y", this.target.y);
 
             SmartDashboard.putNumber("Vision area", largestContour.area());
+            SmartDashboard.putNumber("Vision ratio", tagetRatio);
         }
 
         if (SmartDashboard.getBoolean("Vision Debug", false)) {

@@ -38,7 +38,7 @@ public final class Constants {
         public static final int CLIMBER_R = 13; // Flacon
 
         public static final int HOOD = 14; // Talon SRX
-        public static final int TURRET = 15; // Talon SRX
+        public static final int INTAKE_ROLLERS_2 = 15; // Talon SRX
 
     }
 

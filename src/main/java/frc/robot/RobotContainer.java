@@ -6,6 +6,7 @@ package frc.robot;
 
 import org.mayheminc.util.*;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,6 +14,7 @@ import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
 import frc.robot.autoroutines.DriveStraightDoNothing;
 import frc.robot.autoroutines.FiveBallPath;
+import frc.robot.autoroutines.FourBallFast;
 import frc.robot.autoroutines.LeftSide3Balls;
 import frc.robot.autoroutines.Shoot;
 import frc.robot.autoroutines.ShootAndMoveForward;
@@ -47,6 +49,7 @@ import frc.robot.subsystems.Targeting;
 import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
 import frc.robot.vision.models.BlueBallVisionModel;
+import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -90,7 +93,7 @@ public class RobotContainer {
 
   private final SettableSendableChooser<Command> autoChooser = new SettableSendableChooser<>();
 
-  public static final Vision vision = new Vision(1);
+  public static final Vision vision = new Vision(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -98,7 +101,9 @@ public class RobotContainer {
   public RobotContainer() {
     // this.autoChooser.setDefaultOption("Test Auto Target", new
     // TestAutoTargeting());
-    this.autoChooser.setDefaultOption("Drive Straight", new DriveStraightDoNothing());
+    this.autoChooser.setDefaultOption("4 ball", new FourBallFast());
+    // this.autoChooser.setDefaultOption("Drive Straight", new
+    // DriveStraightDoNothing());
     this.autoChooser.addOption("5 Ball Auto", new FiveBallPath());
     // this.autoChooser.setDefaultOption("2 Ball Auto", new TwoBallPath(true));
     this.autoChooser.addOption("3 Ball Auto", new ThreeBallPath(true));
@@ -119,9 +124,11 @@ public class RobotContainer {
     configureButtonBindings();
 
     vision.init();
-    vision.start(new BlueBallVisionModel());
+    vision.start(new TargetVisionModel());
 
-    // CameraServer.startAutomaticCapture(1);
+    // var camera = CameraServer.startAutomaticCapture(1);
+    // camera.setResolution(160, 120);
+    // camera.setFPS(10);
 
     // SmartDashboard.putNumber("h1", 0);
     // SmartDashboard.putNumber("h2", 0);
@@ -211,8 +218,8 @@ public class RobotContainer {
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     OPERATOR_PAD.OPERATOR_PAD_BUTTON_FOUR.whenPressed(new IntakePistonsSet(IntakePistons.INTAKE_UP));
 
-    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_UP.whileHeld(new ClimberSetVelocity(250));
-    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_DOWN.whileHeld(new ClimberSetVelocity(-250));
+    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_UP.whileHeld(new ClimberSetVelocity(500));
+    OPERATOR_PAD.OPERATOR_PAD_LEFT_Y_AXIS_DOWN.whileHeld(new ClimberSetVelocity(-500));
 
     // debug
     // OPERATOR_PAD.OPERATOR_PAD_BUTTON_TWO.whenPressed(() ->

@@ -57,11 +57,11 @@ public class Climber extends SubsystemBase implements PidTunerObject {
         ConfigureTalon(leftTalon);
         ConfigureTalon(rightTalon);
 
-        leftTalon.setInverted(true);
-        rightTalon.setInverted(false);
+        leftTalon.setInverted(false);
+        rightTalon.setInverted(true);
 
-        leftTalon.setSensorPhase(false);
-        rightTalon.setSensorPhase(false);
+        leftTalon.setSensorPhase(true);
+        rightTalon.setSensorPhase(true);
     }
 
     private void ConfigureTalon(MayhemTalonSRX talon) {
