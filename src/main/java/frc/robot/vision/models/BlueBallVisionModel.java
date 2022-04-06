@@ -3,7 +3,9 @@ package frc.robot.vision.models;
 import org.opencv.core.Scalar;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.vision.ContourCollection;
 import frc.robot.vision.VisionModel;
+import frc.robot.vision.VisionObject;
 
 public class BlueBallVisionModel implements VisionModel {
 
@@ -46,27 +48,11 @@ public class BlueBallVisionModel implements VisionModel {
     }
 
     @Override
-    public boolean isPositionCorrect(double x, double y) {
-        if (y < 0.3) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public boolean isRatioCorrect(double ratio) {
-        if (ratio > 1.5)
-            return false;
-
-        if (ratio < 0.75)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public Double minArea() {
-        return 800.0;
+    public VisionObject getBestObject(ContourCollection contours) {
+        return contours
+                .minArea(800.0)
+                .minRatio(0.75).maxRatio(1.5)
+                .below(0.3)
+                .largest();
     }
 }

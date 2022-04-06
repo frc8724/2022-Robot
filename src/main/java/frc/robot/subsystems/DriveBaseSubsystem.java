@@ -406,7 +406,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
     }
 
     /**
-     * Calculate the distance travelled. Return the second shortest distance. If a
+     * Calculate the distance traveled. Return the second shortest distance. If a
      * wheel is floating, it will have a larger value - ignore it. If a wheel is
      * stuck, it will have a small value
      * 

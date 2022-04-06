@@ -4,15 +4,16 @@
 
 package frc.robot.autoroutines;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DriveStraightOnHeading;
+import frc.robot.RobotContainer;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.IntakePistonsSet;
 import frc.robot.commands.IntakeRollerSuckIn;
 import frc.robot.commands.MagazinePullInBalls;
 import frc.robot.commands.SystemZero;
-import frc.robot.commands.DriveStraightOnHeading.DistanceUnits;
+import frc.robot.subsystems.CameraLights;
 import frc.robot.subsystems.IntakePistons;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,11 +26,12 @@ public class TestAutoTargeting extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(new SystemZero());
-    addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
-    addCommands(new WaitCommand(3));
-    addCommands(new IntakeRollerSuckIn());
-    addCommands(new MagazinePullInBalls());
-    addCommands(new DriveToTarget(0.3, 90));
+    addCommands(new InstantCommand(() -> RobotContainer.cameraLights.on()));
+    // addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+    // addCommands(new WaitCommand(3));
+    // addCommands(new IntakeRollerSuckIn());
+    // addCommands(new MagazinePullInBalls());
+    addCommands(new DriveToTarget(0.1, 90));
     // addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 90, 111));
   }
 }

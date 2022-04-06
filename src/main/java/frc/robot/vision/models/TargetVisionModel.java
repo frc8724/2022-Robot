@@ -3,16 +3,18 @@ package frc.robot.vision.models;
 import org.opencv.core.Scalar;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.vision.ContourCollection;
 import frc.robot.vision.VisionModel;
+import frc.robot.vision.VisionObject;
 
 public class TargetVisionModel implements VisionModel {
     public TargetVisionModel() {
-        SmartDashboard.putNumber("h1", 80);
+        SmartDashboard.putNumber("h1", 67);
         SmartDashboard.putNumber("h2", 118);
-        SmartDashboard.putNumber("s1", 155);
+        SmartDashboard.putNumber("s1", 172);
         SmartDashboard.putNumber("s2", 255);
-        SmartDashboard.putNumber("v1", 88);
-        SmartDashboard.putNumber("v2", 221);
+        SmartDashboard.putNumber("v1", 56);
+        SmartDashboard.putNumber("v2", 230);
     }
 
     @Override
@@ -33,5 +35,11 @@ public class TargetVisionModel implements VisionModel {
 
         return new Scalar(h2, s2, v2);
         // return new Scalar(55.58, 177.63, 255);
+    }
+
+    @Override
+    public VisionObject getBestObject(ContourCollection contours) {
+        return contours
+                .centermost();
     }
 }

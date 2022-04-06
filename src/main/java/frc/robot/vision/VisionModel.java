@@ -7,19 +7,5 @@ public interface VisionModel {
 
     Scalar getUpperBound();
 
-    default Double minArea() {
-        return null;
-    }
-
-    default Double maxArea() {
-        return null;
-    }
-
-    default boolean isRatioCorrect(double ratio) {
-        return true;
-    }
-
-    default boolean isPositionCorrect(double x, double y) {
-        return true;
-    }
+    VisionObject getBestObject(ContourCollection contours);
 }

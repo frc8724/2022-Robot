@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 public class Targeting extends SubsystemBase {
-  private final double fieldOfViewDegrees = 78.0;
+  private final double fieldOfViewDegrees = 45.0;
 
   /** Creates a new Targeting. */
   public Targeting() {
@@ -28,11 +28,14 @@ public class Targeting extends SubsystemBase {
    * @return
    */
   public double getHeadingToTarget() {
-    var point = RobotContainer.vision.getLargestTarget();
+    var target = RobotContainer.vision.getTarget();
 
-    if (point == null || point.x < 0) {
+    if (target == null) {
       return Double.NaN;
     }
+
+    var point = target.getCenter();
+
     double targetHeading;
     // if the target is on the right half...
     if (point.x > 0.5) {

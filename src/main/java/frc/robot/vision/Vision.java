@@ -6,7 +6,6 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
@@ -14,6 +13,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Vision {
@@ -23,17 +23,26 @@ public class Vision {
 
     public VisionModel model;
 
-    private Point target;
+    private VisionObject target;
+
+    // private Timer benchmarkTimer;
 
     public Vision(int cameraIndex) {
         this.cameraIndex = cameraIndex;
+        // this.benchmarkTimer = new Timer();
     }
+
+    // private void writeBenchmarkTime(String label) {
+    // SmartDashboard.putNumber("Vision Benchmark - " + label,
+    // this.benchmarkTimer.get());
+    // this.benchmarkTimer.reset();
+    // }
 
     public void init() {
         new Thread(() -> {
             UsbCamera camera = CameraServer.startAutomaticCapture(this.cameraIndex);
 
-            camera.setResolution(160, 120);
+            camera.setResolution(640, 480);
             camera.setFPS(10);
 
             CvSink cvSink = CameraServer.getVideo(camera);
@@ -68,13 +77,18 @@ public class Vision {
 
     private Mat processImage(Mat source) {
         // blur
-        Imgproc.medianBlur(source, source, 7);
+        Imgproc.medianBlur(source, source, 3);
+
+        // writeBenchmarkTime("Blurred");
+
         // BGR to HSV
         Mat hsv = new Mat();
         Imgproc.cvtColor(source, hsv, Imgproc.COLOR_BGR2HSV);
+
         // In Range
         Mat inRange = new Mat();
         Core.inRange(hsv, this.model.getLowerBound(), this.model.getUpperBound(), inRange);
+
         // Dilate to fill in holes.
         var kernel = new Mat();
         Imgproc.dilate(inRange, inRange, kernel);
@@ -84,63 +98,31 @@ public class Vision {
         // Erode back down to normal.
         Imgproc.erode(inRange, inRange, kernel);
 
-        Rect largestContour = null;
-        double tagetRatio = 0.0d;
-
         // find contours
         var contours = new ArrayList<MatOfPoint>();
         Imgproc.findContours(inRange, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-        // loop through contours
-        for (MatOfPoint contour : contours) {
-            var rect = Imgproc.boundingRect(contour);
-            var center = getCenterOfRect(rect);
 
-            var area = rect.area();
-            var minArea = this.model.minArea();
-            var maxArea = this.model.maxArea();
+        var contourCollection = ContourCollection.fromContours(contours, source.width(), source.height());
 
-            // Check Minimum Area
-            if (minArea != null && area < minArea) {
-                continue;
-            }
+        var target = this.model.getBestObject(contourCollection);
 
-            // check Maximum Area
-            if (maxArea != null && area > maxArea) {
-                continue;
-            }
+        this.target = target;
 
-            if (!this.model.isRatioCorrect(rect.width / rect.height)) {
-                continue;
-            }
+        if (target != null) {
+            // Imgproc.rectangle(source, new Point(50, 50), new Point(100, 100), new
+            // Scalar(255, 0, 0), 2);
+            Imgproc.rectangle(source, target.rect.tl(), target.rect.br(), new Scalar(0, 0, 255), 2);
 
-            if (!this.model.isPositionCorrect((double) center.x / (double) source.width(), (double) center.y /
-                    (double) source.height())) {
-                continue;
-            }
+            SmartDashboard.putNumber("Vision X", this.target.getCenter().x);
+            SmartDashboard.putNumber("Vision Y", this.target.getCenter().y);
 
-            if (largestContour == null || rect.area() > largestContour.area()) {
-                // System.out.println("I'm here (2)");
-                largestContour = rect;
-                tagetRatio = rect.width / rect.height;
-            }
+            SmartDashboard.putNumber("Vision area", this.target.area());
+        } else {
+            SmartDashboard.putNumber("Vision X", -1);
+            SmartDashboard.putNumber("Vision Y", -1);
 
-            Imgproc.rectangle(source, rect.tl(), rect.br(), new Scalar(0, 0, 255), 2);
-        }
+            SmartDashboard.putNumber("Vision area", -1);
 
-        if (largestContour != null) {
-            // System.out.println("I'm here!");
-            var center = getCenterOfRect(largestContour);
-
-            Imgproc.rectangle(source, largestContour.tl(), largestContour.br(), new Scalar(255, 0, 0), 2);
-
-            this.target = new Point((double) center.x / (double) source.width(),
-                    (double) center.y / (double) source.height());
-
-            SmartDashboard.putNumber("Vision X", this.target.x);
-            SmartDashboard.putNumber("Vision Y", this.target.y);
-
-            SmartDashboard.putNumber("Vision area", largestContour.area());
-            SmartDashboard.putNumber("Vision ratio", tagetRatio);
         }
 
         if (SmartDashboard.getBoolean("Vision Debug", false)) {
@@ -168,15 +150,11 @@ public class Vision {
      * 
      * @return
      */
-    public Point getLargestTarget() {
+    public VisionObject getTarget() {
         return target;
     }
 
     public void setModel(VisionModel model) {
         this.model = model;
-    }
-
-    private static Point getCenterOfRect(Rect rect) {
-        return new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
     }
 }

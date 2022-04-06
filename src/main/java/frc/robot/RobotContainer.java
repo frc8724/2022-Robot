@@ -6,17 +6,14 @@ package frc.robot;
 
 import org.mayheminc.util.*;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autoroutines.DoNothing;
 import frc.robot.autoroutines.DriveForwardShoot2;
-import frc.robot.autoroutines.DriveStraightDoNothing;
 import frc.robot.autoroutines.FiveBallPath;
 import frc.robot.autoroutines.FourBallFast;
 import frc.robot.autoroutines.LeftSide3Balls;
-import frc.robot.autoroutines.Shoot;
 import frc.robot.autoroutines.ShootAndMoveForward;
 import frc.robot.autoroutines.TestAutoTargeting;
 import frc.robot.autoroutines.ThreeBallPath;
@@ -48,7 +45,6 @@ import frc.robot.subsystems.ShooterAccelerator;
 import frc.robot.subsystems.Targeting;
 import frc.robot.utils.SettableSendableChooser;
 import frc.robot.vision.Vision;
-import frc.robot.vision.models.BlueBallVisionModel;
 import frc.robot.vision.models.TargetVisionModel;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -99,8 +95,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // this.autoChooser.setDefaultOption("Test Auto Target", new
-    // TestAutoTargeting());
+    this.autoChooser.setDefaultOption("Test Auto Target", new TestAutoTargeting());
     this.autoChooser.setDefaultOption("4 ball", new FourBallFast());
     // this.autoChooser.setDefaultOption("Drive Straight", new
     // DriveStraightDoNothing());
