@@ -74,7 +74,7 @@ public class DriveStraightOnHeading extends CommandBase {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	public void execute() {
-		double displacement = RobotContainer.drive.getWheelDistance();
+		double displacement = Math.abs(RobotContainer.drive.getWheelDistance());
 		double power = m_startingPower + displacement / m_desiredDisplacement * (this.m_finalPower - m_startingPower);
 		RobotContainer.drive.speedRacerDrive(power, 0, false);
 	}

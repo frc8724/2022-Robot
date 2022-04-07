@@ -15,85 +15,79 @@ import frc.robot.subsystems.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class FourBallFast extends SequentialCommandGroup {
-  /** Creates a new FourBallFast. */
-  public FourBallFast() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+    /** Creates a new FourBallFast. */
+    public FourBallFast() {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
 
-    addCommands(new SystemZero());
+        addCommands(new SystemZero());
 
-    addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
+        // addCommands(new DriveStraightOnHeading(-0.2, -0.5, 200.0, 111.0));
+        // addCommands(new WaitCommand(4.0));
 
-    addCommands(new HoodMove(() -> {
-      return RobotContainer.hood.getHoodClosePosition();
-    }));
+        addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
 
-    addCommands(new ShooterSetAccelerator(0.3)); // start slow
+        addCommands(new HoodMove(() -> {
+            return RobotContainer.hood.getHoodClosePosition();
+        }));
 
-    // drive to get the 2nd ball
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 20.0,
-        90.0));
-    addCommands(new DriveStraightOnHeading(0.5, DistanceUnits.INCHES, 60.0,
-        90.0));
-    addCommands(
-        new ParallelCommandGroup(//
-            new IntakeRollerSuckIn(), //
-            new MagazinePullInBalls(), //
-            new ShooterSetAccelerator(0.5), //
-            new DriveStraightOnHeading(0.5, DistanceUnits.INCHES, 20.0, 90.0)//
-        ));
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 15.0,
-        90.0));
-    addCommands(new InstantCommand(() -> RobotContainer.cameraLights.on()));
+        addCommands(new ShooterSetAccelerator(0.3)); // start slow
 
-    // drive back to hub
-    addCommands(new DriveStraightOnHeading(-0.2, DistanceUnits.INCHES, 20.0,
-        70.0));
-    addCommands(new DriveStraightOnHeading(-0.5, DistanceUnits.INCHES, 45.0,
-        70.0));
-    addCommands(new DriveStraightOnHeading(-0.1, DistanceUnits.INCHES, 25.0,
-        130.0));
+        // drive to get the 2nd ball
+        // addCommands(new DriveStraightOnHeading(0.3, 20.0, 90.0));
+        // addCommands(new DriveStraightOnHeading(0.5, 60.0, 90.0));
+        addCommands(new DriveStraightOnHeading(0.2, 0.5, 80.0, 90.0));
+        addCommands(
+                new ParallelCommandGroup(//
+                        new IntakeRollerSuckIn(), //
+                        new MagazinePullInBalls(), //
+                        new ShooterSetAccelerator(0.5), //
+                        new DriveStraightOnHeading(0.5, 20.0, 90.0)//
+                ));
+        addCommands(new DriveStraightOnHeading(0.5, 0.2, 15.0, 90.0));
+        addCommands(new InstantCommand(() -> RobotContainer.cameraLights.on()));
 
-    // fire
-    addCommands(new ParallelRaceGroup(
-        new SystemFireWhenReady(() -> Shooter.getShortShot()), //
-        new WaitForNumBalls(2), //
-        new WaitCommand(2.0)));
+        // drive back to hub
+        addCommands(new DriveStraightOnHeading(-0.2, -0.5, 20.0, 70.0));
+        addCommands(new DriveStraightOnHeading(-0.5, 45.0, 70.0));
+        addCommands(new DriveStraightOnHeading(-0.5, -0.1, 25.0, 130.0));
 
-    // drive to ball #3
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 25.0,
-        170));
-    addCommands(new DriveStraightOnHeading(0.5, DistanceUnits.INCHES, 55.0,
-        170));
-    addCommands(
-        new ParallelCommandGroup(//
-            new IntakeRollerSuckIn(), //
-            new MagazinePullInBalls(), //
-            new DriveStraightOnHeading(0.5, DistanceUnits.INCHES, 25.0, 170)));
+        // fire
+        addCommands(new ParallelRaceGroup(
+                new SystemFireWhenReady(() -> Shooter.getShortShot()), //
+                new WaitForNumBalls(2), //
+                new WaitCommand(2.0)));
 
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 25.0,
-        170));
+        // drive to ball #3
+        addCommands(new DriveStraightOnHeading(0.2, 0.5, 25.0, 170));
+        addCommands(new DriveStraightOnHeading(0.5, 55.0, 170));
+        addCommands(
+                new ParallelCommandGroup(//
+                        new IntakeRollerSuckIn(), //
+                        new MagazinePullInBalls(), //
+                        new DriveStraightOnHeading(0.5, 25.0, 170)));
 
-    addCommands(new WaitCommand(0.25));
+        addCommands(new DriveStraightOnHeading(0.5, 0.3, 25.0, 170));
 
-    addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 25.0,
-        170));
-    addCommands(new DriveStraightOnHeading(-0.5, DistanceUnits.INCHES, 65.0,
-        170));
-    addCommands(new DriveStraightOnHeading(-0.1, DistanceUnits.INCHES, 25.0,
-        120));
+        addCommands(new WaitCommand(0.25));
 
-    // fire
-    addCommands(new ParallelRaceGroup(
-        new SystemFireWhenReady(() -> Shooter.getShortShot()), //
-        new WaitForNumBalls(1), //
-        new WaitCommand(1.0)));
+        addCommands(new DriveStraightOnHeading(-0.3, -0.5, 25.0, 170));
+        addCommands(new DriveStraightOnHeading(-0.5, 65.0, 170));
+        addCommands(new DriveStraightOnHeading(-0.5, -0.1, 25.0, 120));
 
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 25.0, 180));
-    addCommands(new DriveStraightOnHeading(0.5, DistanceUnits.INCHES, 40.0, 180));
-    addCommands(new DriveStraightOnHeading(0.8, DistanceUnits.INCHES, 125.0, 180));
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 25.0, 180));
-    addCommands(new DriveStraightOnHeading(0.3, DistanceUnits.INCHES, 60.0, 135));
+        // fire
+        addCommands(new ParallelRaceGroup(
+                new SystemFireWhenReady(() -> Shooter.getShortShot()), //
+                new WaitForNumBalls(1), //
+                new WaitCommand(1.0)));
 
-  }
+        // addCommands(new DriveStraightOnHeading(0.3, 25.0, 180));
+        // addCommands(new DriveStraightOnHeading(0.5, 40.0, 180));
+        addCommands(new DriveStraightOnHeading(0.2, 0.8, 65.0, 180));
+
+        addCommands(new DriveStraightOnHeading(0.8, 145.0, 180));
+        addCommands(new DriveStraightOnHeading(0.8, 0.3, 25.0, 180));
+        addCommands(new DriveStraightOnHeading(0.3, 60.0, 135));
+
+    }
 }
