@@ -13,11 +13,11 @@ import frc.robot.Constants;
 public class CameraLights extends SubsystemBase {
   private final Solenoid lights = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.CAMERA_LIGHTS);
 
-  private final boolean CAMERA_ON = false;
-  private final boolean CAMERA_OFF = true;
+  private final boolean CAMERA_ON = true;
+  private final boolean CAMERA_OFF = false;
 
   public CameraLights() {
-    this.setDefaultCommand(new RunCommand(this::off, this));
+    this.setDefaultCommand(new RunCommand(this::on, this));
   }
 
   public void on() {

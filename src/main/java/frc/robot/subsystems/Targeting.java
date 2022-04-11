@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
@@ -17,6 +18,7 @@ public class Targeting extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Targeting: Heading", getHeadingToTarget());
   }
 
   /**
@@ -41,7 +43,7 @@ public class Targeting extends SubsystemBase {
     if (point.x > 0.5) {
       targetHeading = (point.x - 0.5) * fieldOfViewDegrees / 2;
     } else {
-      targetHeading = -point.x * fieldOfViewDegrees / 2;
+      targetHeading = -(0.5 - point.x) * fieldOfViewDegrees / 2;
     }
 
     return targetHeading;

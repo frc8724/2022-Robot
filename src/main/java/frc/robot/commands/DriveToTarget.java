@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveBaseSubsystem;
@@ -11,10 +12,15 @@ import frc.robot.subsystems.DriveBaseSubsystem;
 public class DriveToTarget extends CommandBase {
   double m_targetPower;
   double m_desiredDisplacement;
+  boolean m_targeted = false;
 
   /** Creates a new DriveToTarget. */
   public DriveToTarget(double arg_targetSpeed, double arg_distance) {
     // Use addRequirements() here to declare subsystem dependencies.
+
+    addRequirements(RobotContainer.drive);
+    addRequirements(RobotContainer.targeting);
+
     m_targetPower = arg_targetSpeed;
 
     arg_distance = arg_distance / DriveBaseSubsystem.DISTANCE_PER_PULSE_IN_INCHES;
@@ -26,23 +32,34 @@ public class DriveToTarget extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.drive.saveInitialWheelDistance();
+    m_targeted = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // get the heading to the target and set the desired heading
-    var targetHeading = RobotContainer.targeting.getHeadingToTarget();
+    double targetHeading = RobotContainer.targeting.getHeadingToTarget();
     if (Double.isNaN(targetHeading)) {
       targetHeading = 0;
     }
 
+    SmartDashboard.putNumber("DriveToTarget: targetHeading", targetHeading);
+
     // var robotHeading = RobotContainer.drive.getHeading();
-    var robotHeading = RobotContainer.drive.getHeadingForCapturedImage();
+    // var robotHeading = RobotContainer.drive.getHeadingForCapturedImage();
+    double robotHeading = RobotContainer.drive.getHeading();
+
+    SmartDashboard.putNumber("DriveToTarget: getHeadingForCapturedImage", robotHeading);
+
     RobotContainer.drive.setDesiredHeading(robotHeading + targetHeading);
 
+    if (Math.abs(targetHeading) < 0.1) {
+      m_targeted = true;
+    }
+
     // drive to the target
-    RobotContainer.drive.speedRacerDrive(m_targetPower, 0, false);
+    RobotContainer.drive.speedRacerDrive(m_targetPower, 0, true);
   }
 
   // Called once the command ends or is interrupted.
@@ -58,6 +75,7 @@ public class DriveToTarget extends CommandBase {
 
     displacement = Math.abs(displacement);
 
-    return (displacement >= m_desiredDisplacement);
+    return (// m_targeted ||
+    displacement >= m_desiredDisplacement);
   }
 }

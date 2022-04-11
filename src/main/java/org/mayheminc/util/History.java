@@ -3,7 +3,7 @@ package org.mayheminc.util;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class History {
-    private static final int HISTORY_SIZE = 50;
+    private static final int HISTORY_SIZE = 200;
 
     private double time[] = new double[HISTORY_SIZE];
     private double azimuth[] = new double[HISTORY_SIZE];
@@ -11,7 +11,8 @@ public class History {
 
     public History() {
         // ensure there is at least one element in the history
-        add(-1.0, 0.0); // make a fictitious element at t=-1 seconds, with heading of 0.0 degrees - NOPMD
+        add(-1.0, 0.0); // make a fictitious element at t=-1 seconds, with heading of 0.0 degrees -
+                        // NOPMD
     }
 
     public void add(double t, double az) {

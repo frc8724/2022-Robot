@@ -27,11 +27,15 @@ public class TestAutoTargeting extends SequentialCommandGroup {
 
     addCommands(new SystemZero());
     addCommands(new InstantCommand(() -> RobotContainer.cameraLights.on()));
+    addCommands(new WaitCommand(1.0));
     // addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     // addCommands(new WaitCommand(3));
     // addCommands(new IntakeRollerSuckIn());
     // addCommands(new MagazinePullInBalls());
-    addCommands(new DriveToTarget(0.1, 90));
+    addCommands(new DriveToTarget(0.1, 80));
     // addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 90, 111));
+
+    addCommands(new InstantCommand(() -> RobotContainer.cameraLights.off()));
+    addCommands(new WaitCommand(5.0));
   }
 }

@@ -29,7 +29,7 @@ public class DriveBaseTeleopCommand extends CommandBase {
     @Override
     public void initialize() {
         this.drive.init();
-        RobotContainer.cameraLights.on();
+        // RobotContainer.cameraLights.on();
     }
 
     @Override

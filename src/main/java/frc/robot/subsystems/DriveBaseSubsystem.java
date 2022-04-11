@@ -332,6 +332,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         headingCorrection.periodic();
+        updateHistory();
         updateSmartDashboard();
     }
 
@@ -383,9 +384,13 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
     private static final double CAMERA_LAG = 0.150; // was .200; changing to .150 at CMP
 
+    int historyCount;
+
     public void updateHistory() {
         final double now = Timer.getFPGATimestamp();
         headingHistory.add(now, headingCorrection.getHeading());
+
+        SmartDashboard.putNumber("Drive: History", historyCount++);
     }
 
     public double getHeading() {
