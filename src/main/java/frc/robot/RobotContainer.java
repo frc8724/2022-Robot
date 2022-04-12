@@ -266,7 +266,7 @@ public class RobotContainer {
         .whileHeld(new SystemShootBall(() -> Shooter.getShortShot(), () -> hood.getHoodClosePosition(), true));
 
     // DRIVER_PAD.DRIVER_PAD_YELLOW_BUTTON.whenPressed( new Hoo
-    DRIVER_PAD.DRIVER_PAD_BLUE_BUTTON.whenPressed(new DriveStraightOnHeading(0.2, 12.0));
+    DRIVER_PAD.DRIVER_PAD_BLUE_BUTTON.whileHeld(new TestAutoTargeting());
 
   }
 

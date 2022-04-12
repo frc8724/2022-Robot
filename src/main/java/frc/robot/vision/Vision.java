@@ -25,6 +25,8 @@ public class Vision {
 
     private VisionObject target;
 
+    private UsbCamera camera;
+
     // private Timer benchmarkTimer;
 
     public Vision(int cameraIndex) {
@@ -40,10 +42,10 @@ public class Vision {
 
     public void init() {
         new Thread(() -> {
-            UsbCamera camera = CameraServer.startAutomaticCapture(this.cameraIndex);
+            this.camera = CameraServer.startAutomaticCapture(this.cameraIndex);
 
-            camera.setResolution(640, 480);
-            camera.setFPS(10);
+            this.camera.setResolution(640, 480);
+            this.camera.setFPS(10);
 
             CvSink cvSink = CameraServer.getVideo(camera);
             CvSource outputStream = CameraServer.putVideo("Output " + this.cameraIndex, 640, 480);
@@ -133,7 +135,7 @@ public class Vision {
     }
 
     public void start(VisionModel model) {
-        this.model = model;
+        this.setModel(model);
         this.isRunning = true;
     }
 
@@ -156,5 +158,18 @@ public class Vision {
 
     public void setModel(VisionModel model) {
         this.model = model;
+
+        // TODO: make this work |
+        //                      v
+
+        // if (this.camera != null) {
+        //     var exposure = model.cameraExposure();
+
+        //     if (exposure == null) {
+        //         this.camera.setExposureAuto();
+        //     } else {
+        //         this.camera.setExposureManual(exposure);
+        //     }
+        // }
     }
 }

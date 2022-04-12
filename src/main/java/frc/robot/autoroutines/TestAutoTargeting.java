@@ -5,16 +5,14 @@
 package frc.robot.autoroutines;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveToTarget;
-import frc.robot.commands.IntakePistonsSet;
-import frc.robot.commands.IntakeRollerSuckIn;
-import frc.robot.commands.MagazinePullInBalls;
+import frc.robot.commands.*;
 import frc.robot.commands.SystemZero;
-import frc.robot.subsystems.CameraLights;
-import frc.robot.subsystems.IntakePistons;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,17 +23,26 @@ public class TestAutoTargeting extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    addCommands(new SystemZero());
     addCommands(new InstantCommand(() -> RobotContainer.cameraLights.on()));
-    addCommands(new WaitCommand(1.0));
+    // addCommands(new WaitCommand(1.0));
     // addCommands(new IntakePistonsSet(IntakePistons.INTAKE_DOWN));
     // addCommands(new WaitCommand(3));
     // addCommands(new IntakeRollerSuckIn());
     // addCommands(new MagazinePullInBalls());
-    addCommands(new DriveToTarget(0.1, 80));
+    addCommands(new HoodMove(() -> 7200.0));
+    // addCommands(new InstantCommand(() -> {
+    // RobotContainer.shooter.setShooterSpeed(Shooter.getShortShot());
+    // RobotContainer.accelerator.setAcceleratorSpeedVBus(0.4);
+    // }, RobotContainer.shooter, RobotContainer.accelerator));
+
+    addCommands(new DriveToTarget(-0.3, 80));
     // addCommands(new DriveStraightOnHeading(-0.3, DistanceUnits.INCHES, 90, 111));
 
     addCommands(new InstantCommand(() -> RobotContainer.cameraLights.off()));
-    addCommands(new WaitCommand(5.0));
+    // addCommands(new WaitCommand(5.0));
+
+    // fire
+    addCommands(new ParallelRaceGroup(new SystemFireWhenReady(() -> 5000.0), new WaitCommand(3.0)));
+
   }
 }

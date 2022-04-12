@@ -14,6 +14,8 @@ public class DriveToTarget extends CommandBase {
   double m_desiredDisplacement;
   boolean m_targeted = false;
 
+  final double onTargetToleranceDegrees = 1.0;
+
   /** Creates a new DriveToTarget. */
   public DriveToTarget(double arg_targetSpeed, double arg_distance) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -54,7 +56,7 @@ public class DriveToTarget extends CommandBase {
 
     RobotContainer.drive.setDesiredHeading(robotHeading + targetHeading);
 
-    if (Math.abs(targetHeading) < 0.1) {
+    if (Math.abs(targetHeading) < onTargetToleranceDegrees) {
       m_targeted = true;
     }
 
@@ -75,7 +77,7 @@ public class DriveToTarget extends CommandBase {
 
     displacement = Math.abs(displacement);
 
-    return (// m_targeted ||
-    displacement >= m_desiredDisplacement);
+    return (m_targeted ||
+        displacement >= m_desiredDisplacement);
   }
 }

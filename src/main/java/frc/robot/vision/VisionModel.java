@@ -8,4 +8,8 @@ public interface VisionModel {
     Scalar getUpperBound();
 
     VisionObject getBestObject(ContourCollection contours);
+
+    default Integer cameraExposure() {
+        return null;
+    }
 }
